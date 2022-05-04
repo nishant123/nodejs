@@ -6,8 +6,13 @@ const app = express();
 const port = 3000
 
 
-app.engine('handlebars', engine({ extname: '.hbs', defaultLayout: "home"}));
+//app.engine('handlebars', engine({ extname: '.hbs', defaultLayout: "home"}));
 app.set('view engine', 'handlebars');
+
+var hbs = exphbs.create({ /* config */ });
+
+// Register `hbs.engine` with the Express app.
+app.engine('handlebars', hbs.engine);
 
 // const abcMiddleware = (req, res, next) => {
 //     console.log(req)
