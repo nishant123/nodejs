@@ -1,0 +1,15 @@
+npm i -g express-generator
+npx express-generator --no-view api-tdd
+
+npm i
+npm i -D jest
+
+in package
+ "scripts": {
+ "test": "jest --watchAll"
+  },
+
+  npm test
+
+  npm i cookie-parser
+  npm i morgan
