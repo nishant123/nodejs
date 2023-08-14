@@ -1,0 +1,40 @@
+[
+    {
+        "policyName": "CAR_CREATE",
+        "policyDescription": "create car"
+    },
+    {
+        "policyName": "CAR_DELETE",
+        "policyDescription": "delete car"
+    },
+    {
+        "policyName": "CAR_MULTI_DELETE",
+        "policyDescription": "delete multiple car"
+    },
+    {
+        "policyName": "CAR_UPDATE",
+        "policyDescription": "update car"
+    },
+    {
+        "policyName": "CAR_GET",
+        "policyDescription": "get car list"
+    },
+    {
+        "policyName": "TRIP_TODAY",
+        "policyDescription": "get todays trip"
+    },
+    {
+        "policyName": "PICKUP_MOST",
+        "policyDescription": "get most pickup location"
+    },
+    {
+        "policyName": "DROP_MOST",
+        "policyDescription": "get most drop location"
+    },
+    {
+        "policyName": "TRIP_CUSTOMER",
+        "policyDescription": "get customer list with payments details"
+    }
+    
+]
+

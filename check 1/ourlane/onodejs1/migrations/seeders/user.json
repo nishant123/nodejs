@@ -1,0 +1,13 @@
+[
+    {
+        "fullName":"ajey",
+        "mobileNumber":"123456789",
+        "loginId": "ajey@blockgemini.com",
+        "password": "Ed3#Rf4$Tg5%",
+        "isDeleted": false,
+        "isActive": true,
+        "isEmailVerified":true,
+        "role":"SUPER_ADMIN",
+        "organizationId":"ourlane"
+    }
+]

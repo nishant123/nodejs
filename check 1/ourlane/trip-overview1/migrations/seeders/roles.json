@@ -1,0 +1,50 @@
+[
+    {
+        "roleName": "SUPER_ADMIN",
+        "roleDesc": "super admin with all powers",
+        "assignedUserCount": 0,
+        "policy": [
+            "CAR_CREATE",
+            "CAR_DELETE",
+            "CAR_UPDATE",
+            "CAR_GET",
+            "CAR_MULTI_DELETE",
+            "TRIP_TODAY",
+            "PICKUP_MOST",
+            "DROP_MOST",
+            "TRIP_CUSTOMER"  
+        ]
+    },
+    {
+        "roleName": "ADMIN",
+        "roleDesc": "Admin",
+        "assignedUserCount": 0,
+        "policy": [
+            "CAR_CREATE",
+            "CAR_DELETE",
+            "CAR_UPDATE",
+            "CAR_GET",
+            "CAR_MULTI_DELETE",
+            "TRIP_TODAY",
+            "PICKUP_MOST",
+            "DROP_MOST",
+            "TRIP_CUSTOMER"  
+        ]
+    },
+    {
+        "roleName": "CUSTOMER",
+        "roleDesc": "Customer",
+        "assignedUserCount": 0,
+        "policy": [
+            
+        ]
+    },
+    {
+        "roleName": "DRIVER",
+        "roleDesc": "Driver",
+        "assignedUserCount": 0,
+        "policy": [
+            
+        ]
+    }
+]
