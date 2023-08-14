@@ -1,0 +1,7 @@
+As discussed in the call
+PLan of action from backend team:
+1) Seeders: @Balwant ,@suresh  and @nishant  will work now.
+2) Postgres: @Sajjan  and @Nitin  will workon user and static Service in beginning.
+3) Concierge: @Sajjan  and @nishant  will work.@suresh  will assist you with any technical glitches.
+4) Mobile App and frontend Issues: @suresh  @Nitin  and @Balwant  will take.
+Hope everyone  now good to start there work..
