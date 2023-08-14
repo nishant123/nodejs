@@ -1,0 +1,57 @@
+<header>
+  <div class="filters">
+    <div class="search">
+
+    </div>
+  </div>
+  <ul class="action-button-wrap">
+    <li class="notifications" (click)="notificationPage()">
+      <img src="{{notificationsIcon}}">
+      <span *ngIf="totalNewNotification > 0" class="bazed"></span>
+    </li>
+    <li class="setting">
+      <img src="{{settingsIcon}}" (click)="settings()">
+    </li>
+
+    <li class="btn-group" dropdown #dropdown="bs-dropdown" [autoClose]="true">
+      <span id="button-alignment" dropdownToggle>
+        <span class="profile_image">
+          <img src="{{ profileImgname || userDefault }}" alt="user">
+        </span>
+      </span>
+      <ul id="dropdown-alignment" *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu"
+        aria-labelledby="button-alignment">
+        <li role="menuitem" class="user-icon">
+          <a [routerLink]="profile">
+            {{'header.myProfile' | translate }}</a>
+        </li>
+        <li role="menuitem" class="user-icon">
+          <a [routerLink]="accountsetting">
+            {{'header.settings' | translate }}</a>
+        </li>
+        <li role="menuitem" class="user-icon">
+          <a (click)="openModal(template)">
+            <img src="{{logoutImage}}" alt="logout" /> {{'button.logout' | translate }}</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+
+</header>
+<ng-template #template>
+  <div class="modal-body">
+    <img class="icon" src="./../assets/images/logout_new.png" alt="logout">
+    <h3 class="alertText font-md color-dark font-termina">Logout</h3>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <span>{{'alert.logoutText' | translate }}</span><br>
+    <span>{{'alert.logoutSure' | translate }}</span>
+    <div style="display: flex;">
+      <a class="button-secondry btn-bt" (click)="modalRef.hide()"> {{'button.cancel' | translate }}</a>
+      &nbsp;&nbsp;
+      <a class="button-red btn-bt" (click)="logout()"> {{'button.YesLogMeout' | translate }}</a>
+    </div>
+
+  </div>
+</ng-template>

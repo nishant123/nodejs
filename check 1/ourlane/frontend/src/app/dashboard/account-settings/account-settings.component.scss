@@ -1,0 +1,92 @@
+@import './../../scss/theme.scss';
+
+
+
+.learn-more{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 14px;
+  color: #888888;
+  font-family: "HelveticaNeueMed";
+  &.show{
+    overflow: initial;
+    text-overflow: initial;
+    white-space: initial;
+  }
+}
+.head-location{
+  font-size: 16px;
+  font-family: "Helvetica-Neue-Bold";
+}
+.head-sub{
+  h4{
+    font-size: 12px;
+    color: $color-light-black;
+    font-family: "Helvetica-Neue-Bold";
+  }
+}
+.header-title{
+  .head-p{
+    font-size: 14px;
+    font-family:"termina-bold";   
+  }
+}
+
+
+.content{
+  display: flex;
+  width: 100%; 
+  flex-direction: column;
+  height: 86px;
+  overflow: hidden; 
+  &.show{
+  height: auto;
+  overflow: auto;
+  }
+  h3{
+      font-size: 16px;
+      color: #3E6562;
+      font-family: "Helvetica-Neue-Bold";
+      margin-bottom: 1rem;
+      margin-top: 1rem;     
+  }
+  h4{
+      font-size: 14px;
+      color: #3E6562;
+      font-family: "Helvetica-Neue-Bold";     
+  }
+  p{
+      font-size: 14px;
+      color: #333333;
+      font-family: "HelveticaNeueLt";
+      line-height: 25px;    
+      span{
+          font-family: "HelveticaNeueMed";
+          color: #3E6562;
+      }
+  }
+  ul{
+      list-style: none;
+      padding: 0;
+      li{
+          font-size: 14px;
+          color: #333333;
+          font-family: "HelveticaNeueLt";
+          margin-bottom: 10px;
+          position: relative;
+          padding-left: 1.5rem;
+          line-height: 25px;         
+          &::after{
+              content: '';
+              background-image: url('/assets/images/tick.svg');
+              display: flex;
+              width: 15px;
+              height: 15px;
+              position: absolute;
+              top: 3px;
+              left: 0;
+          }
+      }
+    }
+}

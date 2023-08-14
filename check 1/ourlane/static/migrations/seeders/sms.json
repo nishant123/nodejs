@@ -1,0 +1,22 @@
+[
+  {
+    "type": "Registration",
+    "body": "<p>Dear Customer [CUSTOMER_NAME],<br><br> Congratulations, your account has been successfully created. Welcome to Ourlane </p>"
+  },
+  {
+    "type": "Login",
+    "body": "<p>[OTP] is your Verification Code (OTP) for mobile number verification. PLEASE DO NOT SHARE</p>"
+  },
+  {
+    "type": "tripBooking",
+    "body": "Dear [CUSTOMER_NAME],\n\nYour booking is confirmed \n\nTrip ID - [TRIPID] \n\nFrom (pick-up location) [SOURCE] \n\nTo (drop location) [DESTINATION] \n\nVehicle Number - [VEHICLE_NUMBER] \n\nOTP [OTP] - \n\nDriver Mobile Number - [DRIVER_MOBILE] \n\nThank You!"
+  },
+  {
+    "type": "oneHourBefore",
+    "body": "<p>Dear  [CUSTOMER_NAME] <p> Your ride is scheduled for [TIME] (Time). Please be there at your pick-up point on time</p>"
+  },
+  {
+    "type": "TenMinuteBefore",
+    "body": "<p>Dear  [CUSTOMER_NAME] <p> [OTP] one-time password to proceed with your ride scheduled at [TIME] </p><p> From (pick-up) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [SOURCE] </p><p> To (drop location) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [DESTINATION] </p><p> Vehicle Number  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;[VEHICLE_NUMBER] </p><p> OTP &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [OTP] </p><p> Driver Mobile Number &nbsp; &nbsp; &nbsp; &nbsp; [DRIVER_MOBILE]</p>"
+  }
+]

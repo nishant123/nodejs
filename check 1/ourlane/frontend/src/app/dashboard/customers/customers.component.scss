@@ -1,0 +1,68 @@
+@import './../../scss/theme.scss';
+
+
+
+:host ::ng-deep {
+  .datatable-body-cell {
+    min-width: 40px;
+  }
+}
+
+.star-ratings-css {
+  color: #c5c5c5;
+  font-size: 12px;
+  width: 54px;
+  position: relative;
+  padding: 0;
+  float: left;
+  margin-right: 5px;
+}
+.star-ratings-css-top {
+  color: #FFB541;
+  padding: 0;
+  position: absolute;
+  z-index: 1;
+  display: block;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
+.star-ratings-css-bottom {
+  padding: 0;
+  display: block;
+  z-index: 0;
+}
+.tableStyle {
+  width: 100%;
+  border: none;
+  background: $color-light8;
+  opacity: 1;
+  margin-top: 1rem;
+  td{
+    font-size: 12px;
+    font-family: SF-Pro-Display-Bold;
+    color: $color-light;
+  }
+}
+.table td {
+  border-top: 0px solid $color-light9;
+  border-bottom: 1px solid $color-light9;
+}
+
+.close-btn{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 22px;
+  height: 22px;
+  text-align: center;
+  line-height: 21px;
+  background: $color-light10;
+  border-radius: 22px;
+  font-size: 14px;
+  font-weight: 800;
+  color: $color-dark2;
+}
+.car-image{
+  padding-right: 10px;
+}

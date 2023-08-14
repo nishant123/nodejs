@@ -1,0 +1,44 @@
+[
+  {
+    "apiId": "CREATE_ROLE",
+    "apiEndpoint": "/api/v1/role",
+    "policyName": [
+      "ROLE_MANAGE"
+    ]
+  },
+  {
+    "apiId": "GET_ROLE",
+    "apiEndpoint": "/api/v1/role",
+    "policyName": [
+      "ROLE_MANAGE"
+    ]
+  },
+  {
+    "apiId": "LIST_USER",
+    "apiEndpoint": "/api/v1/user/list",
+    "policyName": [
+      "USER_LIST"
+    ]
+  },
+  {
+    "apiId": "DOWNLOAD_USER",
+    "apiEndpoint": "/api/v1/user/download-list",
+    "policyName": [
+      "USER_MANAGE"
+    ]
+  },
+  {
+    "apiId": "UPDATE_USER",
+    "apiEndpoint": "/api/v1/user/update-user",
+    "policyName": [
+      "UPDATE_USER_DETAILS"
+    ]
+  },
+  {
+    "apiId": "VIEW_DETAILS",
+    "apiEndpoint": "/api/v1/user/details",
+    "policyName": [
+      "VIEW_USER_DETAILS"
+    ]
+  }
+]

@@ -1,0 +1,335 @@
+<section class="content-wrap">
+  <div class="content-main">
+    <div class="content-container">
+      <div class="header-title">
+        <p class="font-sm font-termina color-dark font-w700">
+          {{'DriverManagement.title' | translate}}
+        </p>
+        <div class="filters">
+
+          <div class="search">
+            <input type="text" #searchBox (input)="onSearch(searchBox.value)" name="Search" id="Search"
+              class="form-control search-bar" placeholder="{{'DriverManagement.search' | translate}}">
+            <span class="icon">
+              <img src="./assets/images/icon-search.svg" alt="icon">
+            </span>
+          </div>
+        </div>
+        <hr>
+        <div class="custom-datatable">
+          <ngx-datatable [rows]="rows" [scrollbarH]="datatableResponsive" class="bootstrap"
+            [loadingIndicator]="loadingIndicator" [headerHeight]="32" [footerHeight]="45" [rowHeight]="'auto'"
+            [columnMode]="ColumnMode.force" [reorderable]="reorderable" [selected]="selected"
+            [selectionType]="SelectionType.checkbox" [limit]="configDataTable.limit" [selectAllRowsOnPage]="false"
+            (activate)="onActivate($event)" (select)="onSelect($event)">
+            <ngx-datatable-column [width]="30" [sortable]="false" [canAutoResize]="false" [draggable]="false"
+              [resizeable]="false" [headerCheckboxable]="true" [checkboxable]="true">
+            </ngx-datatable-column>
+            <ngx-datatable-column name="{{'DriverManagement.DriverName' | translate}}">
+              <ng-template let-column="column" ngx-datatable-header-template>
+                <span>{{'DriverManagement.DriverName' | translate}}</span>
+              </ng-template>
+              <ng-template let-row="row" ngx-datatable-cell-template let-value="value">
+                {{row.driverName}}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="{{'DriverManagement.MobileNumber' | translate}}">
+              <ng-template let-column="column" ngx-datatable-header-template>
+                <span>{{'DriverManagement.MobileNumber' | translate}}</span>
+              </ng-template>
+              <ng-template let-row="row" ngx-datatable-cell-template let-value="value">
+                {{row.countryCode}} {{row.mobileNumber}}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="{{'DriverManagement.EmailID' | translate}}">
+              <ng-template let-column="column" ngx-datatable-header-template>
+                <span>{{'DriverManagement.EmailID' | translate}}</span>
+              </ng-template>
+              <ng-template let-row="row" ngx-datatable-cell-template let-value="value">
+                {{row.emailId}}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="{{'DriverManagement.CompletedTrips' | translate}}">
+              <ng-template let-column="column" ngx-datatable-header-template>
+                <span>{{'DriverManagement.CompletedTrips' | translate}}</span>
+              </ng-template>
+              <ng-template let-row="row" ngx-datatable-cell-template let-value="value">
+                &nbsp;&nbsp;
+                <img [src]="tripCars" alt="" srcset="">
+                &nbsp;&nbsp;
+                {{row.completedTrips}} {{ 'DriverManagement.trips' | translate }}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="{{'DriverManagement.Status' | translate}}">
+              <ng-template let-column="column" ngx-datatable-header-template>
+                <span>{{'DriverManagement.Status' | translate}}</span>
+              </ng-template>
+              <ng-template let-row="row" ngx-datatable-cell-template let-value="value">
+                <span class="status"
+                  [ngClass]="row.status === 'Available' ? 'available' : row.status === 'Driving' ? 'driving' : 'unavailable'">{{
+                  row.status === 'Unassigned' ? 'Unavailable' : row.status }}</span>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="{{'DriverManagement.Action' | translate}}">
+              <ng-template let-column="column" ngx-datatable-header-template>
+                <span>{{'DriverManagement.Action' | translate}}</span>
+              </ng-template>
+              <ng-template let-row="row" ngx-datatable-cell-template let-value="value">
+                <button class="view" (click)="openModal(template, row)">
+                  <img [src]="viewIcon"> {{'DriverManagement.ViewDetails' | translate}}
+                </button>
+                &nbsp;&nbsp;
+                <button class="btn delete" (click)="openModalForDelete(delete, row)">
+                  <img [src]="deleteIcon"> {{'DriverManagement.Delete' | translate}}
+                </button>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-footer></ngx-datatable-footer>
+          </ngx-datatable>
+
+          <div class="inner-content alignment" *ngIf="numberOfRows === 0">{{'DriverManagement.noDriversFound' |
+            translate }}</div>
+          <div class="customPagination" style="right: 5rem; font-weight: 700;" *ngIf="numberOfRows > 0">
+            <ngb-pagination [collectionSize]="numberOfRows" [pageSize]="perPage" [(page)]="page"
+              (pageChange)="loadPage($event)">
+              <ng-template ngbPaginationPrevious>{{'paginationContent.Previous' | translate}}</ng-template>
+              <ng-template ngbPaginationNext>{{'paginationContent.Next' | translate}}</ng-template>
+            </ngb-pagination>
+            <input type="number" NumericInput placeholder="{{'customers.EnterPageNumber' | translate }}"
+              (input)="onPageNumber($event)">
+            <button class="btn btn-download" (click)="exportAsXLSX()"><img src="{{downloadCSV}}"> {{'button.DownloadCSV'
+              | translate}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<ng-template #template>
+  <div class="modalContainer row">
+    <div class="modalContainerLeft col-sm-5 pr-0">
+      <div class="modal-header">
+
+        <div class="heading-text">
+          <h4 class="modal-title pull-left">{{'DriverManagement.DriverProfile' | translate}}</h4>
+        </div>
+      </div>
+      <div class="modal-body ">
+        <div class="border-top">
+          <div class="row">
+            <div class="col-12">
+              <div class="data-content">
+                <div class="dataWithImage">
+                  <div class="image user">
+                    <img src="{{ openData.profileImage ? openData.profileImage : userDefault }} " alt="image">
+                  </div>
+                  <div class="text">
+                    <p class="font-sm color-dark">{{'DriverManagement.DriverName' | translate}}</p>
+                    <h4 class="font-md color-light">{{openData.driverName}}</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="border-top">
+          <div class="row">
+            <div class="col-12">
+              <div class="data-content">
+                <div class="text">
+                  <p class="font-sm color-dark">{{'DriverManagement.MobileNumber' | translate}}</p>
+                  <h4 class="font-md color-light">{{openData.countryCode}} {{openData.mobileNumber}}</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="border-top">
+          <div class="row">
+            <div class="col-12">
+              <div class="data-content">
+                <div class="text">
+                  <p class="font-sm color-dark">{{'DriverManagement.Ratings' | translate}}</p>
+                  <rating [(ngModel)]="openData.rating" [max]="max" [readonly]="isReadonly"></rating>
+                  &nbsp;&nbsp;
+                  <span *ngIf="openData.rating >= 0 && openData.rating == 1" class="stars">Poor</span>
+                  <span *ngIf="openData.rating > 1 && openData.rating <= 2" class="stars">Fair</span>
+                  <span *ngIf="openData.rating > 2 && openData.rating <= 3" class="stars">Good</span>
+                  <span *ngIf="openData.rating > 3 && openData.rating <= 4" class="stars">Very Good</span>
+                  <span *ngIf="openData.rating > 4 && openData.rating <= 5" class="stars">Excellent</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="border-top">
+          <div class="row">
+            <div class="col-12">
+              <div class="data-content">
+                <p class="font-sm color-dark">{{'DriverManagement.EmailAddress' | translate}}</p>
+                <h4 class="font-md color-light">{{openData.emailId}}</h4>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="data-content">
+                <p class="font-sm color-dark">{{'DriverManagement.Status' | translate}}</p>
+
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="data-content">
+                <span
+                  [ngClass]="openData.status === 'Available' ? 'status driver available' : openData.status === 'Driving' ? 'status driver driving' : 'status driver unavailable'">{{
+                  openData.status === 'Unassigned' ? 'Unavailable' : openData.status }}</span>
+
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="data-content">
+                <p class="font-md color-dark">{{'DriverManagement.CompletedTrips' | translate}}</p>
+                <h4 class="font-md color-light">{{ openData.completedTrips }}</h4>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="data-content">
+                <p class="font-sm color-dark">{{'DriverManagement.RejectedTrips' | translate}}</p>
+                <h4 class="font-md color-light">{{ openData.rejectedTrips }}</h4>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="data-content">
+                <p class="font-sm color-dark">{{'DriverManagement.CancelledTrips' | translate}}</p>
+                <h4 class="font-md color-light">{{ openData.cancelledTrips }}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="border-top">
+          <div class="row">
+            <div class="col-12">
+              <div class="data-content">
+
+                <div class="text">
+                  <p class="font-sm color-dark">{{'DriverManagement.TotalEarnings' | translate}}</p>
+                  <h4 class="font-md color-light">{{ openData.earnings }} AED</h4>
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="data-content">
+                <p class="font-sm color-dark">{{'DriverManagement.TotalKMsTravelled' | translate}}</p>
+                <h4 class="font-md color-light">
+                  {{ openData.kmTravelled }} KMs
+                </h4>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="border-top">
+          <div class="row">
+            <div class="col-12">
+              <div class="data-content">
+                <p class="font-sm color-dark">{{'DriverManagement.DateOfJoining' | translate}}</p>
+                <h4 class="font-md color-light">{{ openData.created_at | date: 'dd MMMM yyyy'}}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modalRightContent col-sm-7 pl-0">
+      <button type="button" class="close modalBackButton" aria-label="Close" (click)="modalRef.hide()">
+        <img [src]="allBookingsImgs.backButton" alt="image">
+      </button>
+      <div class="zoom-controls">
+        <div class="border-bottom">
+          <img (click)="zoomIn()" [src]="allBookingsImgs.zoomIn" alt="zoom-in">
+        </div>
+        <div>
+          <img (click)="zoomOut()" [src]="allBookingsImgs.zoomOut" alt="zoom-out">
+        </div>
+      </div>
+      <agm-map [latitude]="driverLiveLocation?.latitude" [longitude]="driverLiveLocation?.longitude"
+        style="height: 100%;" [zoomControl]="false" [(zoom)]="zoom">
+
+        <agm-marker [iconUrl]="mapDriverLocation" *ngIf="driverLiveLocation?.latitude && driverLiveLocation?.longitude"
+          class="mapMarker" [latitude]="driverLiveLocation?.latitude" [longitude]="driverLiveLocation?.longitude">
+
+          <agm-snazzy-info-window [isOpen]="false" [latitude]="driverLiveLocation?.latitude"
+            [longitude]="driverLiveLocation?.longitude" [panOnOpen]="false" [closeWhenOthersOpen]="false"
+            [showCloseButton]="false" [closeOnMapClick]="true" [backgroundColor]="'#284148'" [placement]="'left'"
+            [pointer]="'8px'">
+            <ng-template>
+              <div class="label-content">
+                <div class="type-name drop-off">
+                  {{ openData.status }}
+                </div>
+                <div class="label-address">
+                  {{ openData.driverName }}
+                </div>
+              </div>
+            </ng-template>
+          </agm-snazzy-info-window>
+
+        </agm-marker>
+
+        <agm-direction *ngFor="let dir of dirs" [origin]="dir.origin" [destination]="dir.destination"
+          [renderOptions]="dir.renderOptions" [panel]="myPanel" (onResponse)="dir.onResp ? dir.onResp($event): null"
+          [markerOptions]="markerOptions">
+        </agm-direction>
+        <agm-direction *ngFor="let dir of dirs2" [origin]="dir.origin" [destination]="dir.destination"
+          [renderOptions]="dir.renderOptions" [panel]="myPanel" (onResponse)="dir.onResp ? dir.onResp($event): null"
+          [markerOptions]="markerOptions2">
+        </agm-direction>
+
+        <agm-snazzy-info-window *ngFor="let label of iconLabels" [isOpen]="true" [latitude]="label.lat"
+          [longitude]="label.lng" [panOnOpen]="false" [closeWhenOthersOpen]="false" [showCloseButton]="false"
+          [closeOnMapClick]="false" [backgroundColor]="'#284148'" [placement]="'left'" [pointer]="'8px'">
+          <ng-template>
+            <div class="label-content" *ngIf="label.type=='Pickup' || label.type=='Drop'">
+              <div class="type-name" [ngClass]="(label.type=='Pickup')?'pick-up':'drop-off'">
+                {{(label.type === 'Pickup' ? 'allBookings.Pickup' : 'allBookings.Drop') | translate}}
+              </div>
+              <div class="label-address">
+                {{label.address}}
+              </div>
+            </div>
+          </ng-template>
+        </agm-snazzy-info-window>
+        <agm-snazzy-info-window *ngFor="let label of iconLabels2" [isOpen]="true" [latitude]="label.lat"
+          [longitude]="label.lng" [panOnOpen]="false" [closeWhenOthersOpen]="false" [showCloseButton]="false"
+          [closeOnMapClick]="false" [backgroundColor]="'#284148'" [placement]="'left'" [pointer]="'8px'">
+          <ng-template>
+            <div class="label-content" *ngIf="label.type=='Pickup' || label.type=='Drop'">
+              <div class="type-name" [ngClass]="(label.type=='Pickup')?'pick-up':'drop-off'">
+                {{(label.type === 'Pickup' ? 'allBookings.Pickup' : 'allBookings.Drop') | translate}}
+              </div>
+              <div class="label-address">
+                {{label.address}}
+              </div>
+            </div>
+          </ng-template>
+        </agm-snazzy-info-window>
+      </agm-map>
+    </div>
+  </div>
+</ng-template>
+<ng-template #delete>
+  <div class="modal-body ">
+    <img class="icon" src="./../assets/images/delete.svg" style="width: 58px;" alt="delete">
+    <h3 class="alertText font-md color-dark font-termina">{{'alert.deleteDriver' | translate }}</h3>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <span>{{'alert.deleteDriverSubText' | translate }}</span>
+    <div style="display: flex;">
+      <a class="button-secondry btn-bt" (click)="modalRef.hide()"> {{'button.cancel' | translate }}</a>
+      &nbsp;&nbsp;
+      <a class="button-red btn-bt" (click)="deleteDriver($event, openData.uuid, openData.driverId); modalRef.hide()">
+        {{'button.delete' | translate }}</a>
+    </div>
+  </div>
+
+</ng-template>

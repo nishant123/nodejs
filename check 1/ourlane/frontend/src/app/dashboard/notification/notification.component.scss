@@ -1,0 +1,77 @@
+@import './../../scss/theme.scss';
+
+.buttons {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+
+  button {
+    margin-right: 15px;
+  }
+}
+
+.notification-list {
+  background: $color-white;
+  box-shadow: 0 0 5px #ddd;
+
+  .list {
+    margin: 0;
+    padding: 0;
+
+    .list-item {
+      border-bottom: 1px solid #ddd;
+      list-style: none;
+
+      .list-item-content {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 25px;
+        background: #F9FFF7;
+
+        &.read {
+          background: $color-white;
+        }
+      }
+
+      .content {
+        display: flex;
+        align-items: center;
+
+        .list-icon {
+          margin-left: 10px;
+          margin-right: 10px;
+
+          img {
+            width: 25px;
+            height: 25px;
+          }
+        }
+      }
+
+      p {
+        margin: 0;
+        font-size: 14px;
+        color: #5D5D5D;
+      }
+
+      .date {
+        min-width: 107px;
+        text-align: right;
+
+        p {
+          font-size: 10px;
+          color: #555555;
+        }
+      }
+    }
+  }
+}
+
+.customPagination {
+  display: flex;
+  flex-direction: row-reverse;
+  flex-wrap: wrap;
+  padding: 10px;
+}

@@ -1,0 +1,285 @@
+<section class="content-wrap">
+  <div class="content-main">
+    <div class="content-container pl-0 pr-0">
+      <div class="row m-0" *ngIf="activeTrip">
+        <div class="col-12 col-lg-4 modal-content pr-0">
+          <div class="modal-header  mt-3">
+            <div class="heading-text">
+              <h4 class="modal-title pull-left">{{'allBookings.BookingDetails' | translate}}</h4>
+              <span class="ongoing">
+                {{activeTrip.status === 'Ongoing'? 'On going': activeTrip.status}}
+              </span>
+            </div>
+          </div>
+          <div class="modal-body">
+            <div class="border-top">
+              <div class="row">
+                <div class="col-6">
+                  <div class="data-content">
+                    <p class="font-sm color-dark">{{'allBookings.TripId' | translate}}</p>
+                    <h4 class="font-md color-light">
+                      {{activeTrip.tripId}}
+                    </h4>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="data-content">
+                    <p class="font-sm color-dark">{{'allBookings.customerBookedHours' | translate}}</p>
+                    <h4 class="font-md color-light">{{activeTrip.bookedHours || "--"}}</h4>                   
+                  </div>
+                </div>
+              </div>
+              <div class="border-top">
+                <div class="row">
+                  <div class="col-6">
+                    <div class="data-content">
+                      <p class="font-sm color-dark">{{'allBookings.TripDate' | translate}}</p>
+                      <h4 class="font-md color-light">
+                        <span>{{activeTrip.tripDate | date: 'MM/dd/yyyy'}}</span>
+                      </h4>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="data-content">
+                      <p class="font-sm color-dark">{{'allBookings.TripTime' | translate}}</p>
+                      <h4 class="font-md color-light">
+                        <span>{{activeTrip.tripDate | date: 'hh:mm a'}}</span>
+                      </h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="border-top">
+              <div class="row">
+                <div class="col-12">
+                  <div class="data-content">
+                    <div class="dataWithImage">
+                      <div class="image user">
+                        <img src="{{ activeTrip.customerImage || userDefault }}" alt="image">
+                      </div>
+                      <div class="text">
+                        <p class="font-sm color-dark">{{'allBookings.CustomerName' | translate}}</p>
+                        <h4 class="font-md color-light">
+                          {{activeTrip.customerName}}
+                        </h4>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="border-top">
+              <div class="row">
+                <div class="col-12">
+                  <div class="data-content">
+                    <div class="dataWithImage">
+                      <div class="image user">
+                        <img [src]="allBookingsImgs.iconPhone" alt="image" class="mobile-icon">
+                      </div>
+                      <div class="text">
+                        <p class="font-sm color-dark">{{'allBookings.CustomerMobileNumber' | translate}}</p>
+                        <h4 class="font-md color-light">
+                          {{activeTrip.customerCountrycode}} {{activeTrip.customerMobileNumber}}
+                        </h4>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="border-top">
+              <div class="row">
+                <div class="col-12">
+                  <div class="data-content">
+                    <div class="dataWithImage">
+                      <div class="image user">
+                        <img src="{{ activeTrip.driverImage || userDefault }}" alt="image">
+                      </div>
+                      <div class="text">
+                        <p class="font-sm color-dark">{{'allBookings.DriverName' | translate}}</p>
+                        <h4 class="font-md color-light">
+                          {{activeTrip.driverName}}
+                        </h4>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="border-top">
+              <div class="row">
+                <div class="col-12">
+                  <div class="data-content">
+                    <div class="dataWithPhoneImage">
+                      <div class="image user">
+                        <img [src]="allBookingsImgs.iconPhone" alt="image" class="mobile-icon">
+                      </div>
+                      <div class="text">
+                        <p class="font-sm color-dark">{{'allBookings.DriverMobileNumber' | translate}}</p>
+                        <h4 class="font-md color-light">
+                          {{activeTrip.driverCountryCode}} {{activeTrip.driverMobileNumber}}
+                        </h4>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="border-top trip-location">
+              <div class="row">
+                <div class="col-12">
+                  <div class="data-content">
+                    <div class="dataWithImage start-location-content">
+                      <div class="image icon">
+                        <img [src]="allBookingsImgs.origin" alt="image" class="trip-img-parent">
+                      </div>
+                      <div class="text">
+                        <p class="font-sm color-dark">{{'allBookings.TripStartLocation' | translate}}</p>
+                        <h4 class="font-md color-light">
+                          {{activeTrip.startLocationName}}
+                        </h4>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <div class="data-content">
+                    <div class="dataWithImage">
+                      <div class="image icon">
+                        <img [src]="allBookingsImgs.destination" alt="image" class="trip-img-parent">
+                      </div>
+                      <div class="text">
+                        <p class="font-sm color-dark">{{'allBookings.TripEndLocation' | translate}}</p>
+                        <h4 class="font-md color-light">
+                          {{activeTrip.endLocationName}}
+                        </h4>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="border-top">
+              <div class="row">
+                <div class="col-12">
+                  <div class="data-content">
+                    <p class="font-sm color-dark">{{'allBookings.PaymentMethod' | translate}}</p>
+                    <h4 class="font-md color-light">
+                      {{activeTrip.paymentType}}
+                    </h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="border-top">
+              <div class="row">
+                <div class="col-12">
+                  <div class="data-content">
+                    <p class="font-sm color-dark">{{'allBookings.EstimatedTripFare' | translate}}</p>
+                    <h4 class="font-md color-light">
+                      {{ ((activeTrip.estimatedTripFare * 1) -
+                      (estimatedTripMinMax * 1)).toFixed(2) }} AED -
+                      {{ ((activeTrip.estimatedTripFare * 1) +
+                      (estimatedTripMinMax * 1)).toFixed(2) }} AED
+                    </h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-lg-8 modal-content pl-0 pr-0">
+          <agm-map [zoomControl]="false" [(zoom)]="zoom">
+            <agm-direction *ngFor="let direction of directions" [origin]="direction.origin"
+              [destination]="direction.destination" [renderOptions]="direction.renderOptions" [panel]="myPanel"
+              [markerOptions]="markerOptions" (onResponse)="direction.onResp ? direction.onResp($event): null">
+            </agm-direction>
+            <agm-direction *ngFor="let direction of directions2" [origin]="direction.origin"
+              [destination]="direction.destination" [renderOptions]="direction.renderOptions" [panel]="myPanel"
+              [markerOptions]="markerOptions2" (onResponse)="direction.onResp ? direction.onResp($event): null">
+            </agm-direction>
+            <agm-snazzy-info-window *ngFor="let label of iconLabels" [isOpen]="true" [latitude]="label.lat"
+              [longitude]="label.lng" [panOnOpen]="false" [closeWhenOthersOpen]="false" [showCloseButton]="false"
+              [closeOnMapClick]="false" [backgroundColor]="'#284148'" [placement]="'left'" [pointer]="'8px'">
+              <ng-template>
+                <div class="label-content">
+                  <div class="type-name" [ngClass]="(label.type=='Pickup')?'pick-up':'drop-off'">
+                    {{(label.type === 'Pickup' ? 'allBookings.Pickup' : 'allBookings.Drop') | translate}}
+                  </div>
+                  <div class="label-address">
+                    {{label.address}}
+                  </div>
+                </div>
+              </ng-template>
+            </agm-snazzy-info-window>
+          </agm-map>
+          <div class="main-map" *ngIf="tripDuration && tripDistance">
+            <div class=" map-information">
+              <div class="map-head">Total ETA</div>
+              <div class="inner-map">
+                <div class="map-sub">
+                  <img [src]="timeBigIcon" alt="image">
+                  <span>
+                    <span class="value">
+                      {{tripDuration}}
+                    </span>
+                    <span class="unit">{{'allBookings.Minutes' | translate}}</span>
+                  </span>
+                </div>
+                <div class="map-sub">
+                  <img [src]="locationBigIcon" alt="image">
+                  <span>
+                    <span class="value">
+                      {{tripDistance}}
+                    </span>
+                    <span class="unit">{{'allBookings.Kilometers' | translate}}</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="map-information">
+              <div class="map-head">Current ETA</div>
+              <div class="inner-map">
+                <div class="map-sub">
+                  <img [src]="timeBigIcon" alt="image">
+                  <span>
+                    <span class="value">
+                      {{dynamicDuration}}
+                    </span>
+                    <span class="unit">{{'allBookings.Minutes' | translate}}</span>
+                  </span>
+                </div>
+                <div class="map-sub">
+                  <img [src]="locationBigIcon" alt="image">
+                  <span>
+                    <span class="value">
+                      {{dynamicDistance}}
+                    </span>
+                    <span class="unit">{{'allBookings.Kilometers' | translate}}</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="close pull-right back-btn" [routerLink]="routeOnGoing">
+            <div class="image icon">
+              <img class="back-icon" [src]="allBookingsImgs.backButton" alt="image">
+            </div>
+          </button>
+          <div class="zoom-controls">
+            <div class="border-bottom">
+              <img (click)="zoomIn()" [src]="allBookingsImgs.zoomIn" alt="zoom-in">
+            </div>
+            <div>
+              <img (click)="zoomOut()" [src]="allBookingsImgs.zoomOut" alt="zoom-out">
+            </div>
+          </div>
+          <div class="mypanel" #myPanel></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,173 @@
+<section class="content-wrap">
+  <div class="content-main">
+    <div class="content-container">
+      <div class="header-title">
+        <p class="font-sm font-termina color-dark font-w700">
+          {{'allBookings.title' | translate }}
+        </p>
+        <div class="filters">
+          <div class="input-select adminType">
+            <label>{{'administration.label' | translate}}</label>
+            <select class="form-control customSelect" [(ngModel)]="status" name="Status" id="Status"
+              (change)="checkStatus()">
+              <option *ngFor="let list of listOngoingStatus"  [ngValue]="list.value">
+                {{list.value}} </option>
+            </select>
+          </div>
+          <div class="search">
+            <input type="text" #searchBox (input)="onSearch(searchBox.value)" name="Search" id="Search"
+              class="form-control search-bar" placeholder="{{'allBookings.SearchTripID' | translate }}">
+            <span class="icon">
+              <img [src]="searchIcon" alt="icon">
+            </span>
+          </div>
+          <div class="header-button-group">
+            <button class="btn" [routerLink]="routeScheduleCreated">{{'allBookings.Scheduled' | translate}}</button>
+            <button class="btn active" [routerLink]="routeOnGoing">{{'allBookings.OnGoing' | translate}}</button>
+            <button class="btn" [routerLink]="routeCompletedCancel">{{'allBookings.Completed' | translate }} /
+              {{'allBookings.Cancelled' | translate }} / {{'allBookings.Rejected' | translate }}</button>
+          </div>
+        </div>
+        <hr>
+        <div class="custom-datatable">        
+          <ngx-datatable [rows]="activeTripData" [scrollbarH]="datatableResponsive" class="bootstrap"
+            [loadingIndicator]="loadingIndicator" [headerHeight]="headerHeight" [footerHeight]="footerHeight"
+            [rowHeight]="'auto'" [columnMode]="ColumnMode.force" [reorderable]="reorderable" [limit]="limit"
+            [selected]="selected" [selectionType]="SelectionType.checkbox" [selectAllRowsOnPage]="false"
+            (activate)="onActivate($event)" (select)="onSelect($event)">
+            <ngx-datatable-column [width]="width" [sortable]="false" [canAutoResize]="false" [draggable]="false"
+              [resizeable]="false" [headerCheckboxable]="false" [checkboxable]="true">
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Trip Id">
+              <ng-template let-column="column" ngx-datatable-header-template>
+                <span> {{'allBookings.TripId' | translate}}</span>
+              </ng-template>
+              <ng-template ngx-datatable-cell-template let-value="value">
+                {{value}}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Trip Date">
+              <ng-template let-column="column" ngx-datatable-header-template>
+                <span> {{'allBookings.TripDateAndTime' | translate}}</span>
+              </ng-template>
+              <ng-template ngx-datatable-cell-template let-value="value">
+                {{value | date: "dd/MM/yyyy ' ' h:mma"}}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Customer Name">
+              <ng-template let-column="column" ngx-datatable-header-template>
+                <span> {{'allBookings.CustomerName' | translate}}</span>
+              </ng-template>
+              <ng-template ngx-datatable-cell-template let-value="value">
+                {{value}}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Driver Name">
+              <ng-template let-column="column" ngx-datatable-header-template>
+                <span> {{'allBookings.DriverName' | translate}}</span>
+              </ng-template>
+              <ng-template ngx-datatable-cell-template let-value="value">
+                {{value}}
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column [sortable]="false">
+              <ng-template let-column="column" ngx-datatable-header-template>
+                <span> {{'allBookings.TripStatus' | translate}}</span>
+              </ng-template>
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                <span class="status" [ngClass]="row.status"> {{row.status === 'Ongoing'? 'On going': row.status}}</span>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column [width]="210" name="Actions" [sortable]="false" prop="id">
+              <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                <button class="view" [routerLink]="[routeOnGoing+'/',  row.tripId]">
+                  <img [src]="viewDetailsIcon"> {{'allBookings.ViewDetails' | translate}}
+                </button>
+
+                <button (click)="openModal(completePopup, row)" class="view complete">
+                  <img [src]="images.whiteCheckIcon"> {{'button.complete' | translate}}
+                </button>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+          <div class="inner-content alignment" *ngIf="totalTrip === 0">{{'paginationContent.noTripsFound' | translate }}
+          </div>
+          <div class="customPagination" *ngIf="totalTrip > 0">
+            <ngb-pagination [collectionSize]="totalTrip" [maxSize]="3" [pageSize]="perPage" [(page)]="pageNumber"
+              (pageChange)="loadPage($event)">
+              <ng-template ngbPaginationPrevious>{{'paginationContent.Previous' | translate}}</ng-template>
+              <ng-template ngbPaginationNext>{{'paginationContent.Next' | translate}}</ng-template>
+            </ngb-pagination>
+            <input type="number" NumericInput placeholder="{{'customers.EnterPageNumber' | translate }}"
+              (input)="onPageNumber($event)">
+            <button class="btn btn-download" (click)="exportAsXLSX()"><img src="{{downloadCSV}}"> {{'button.DownloadCSV'
+              | translate}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Only to calculate distance while trip is completed by admin -->
+  <div class="dummy-map">
+    <agm-map [zoomControl]="false">
+      <agm-direction *ngIf="this.selectedTrip?.origin && this.selectedTrip?.destination"
+        [origin]="this.selectedTrip.origin" [destination]="this.selectedTrip.destination"
+        (onResponse)="calculateDistance($event)">
+      </agm-direction>
+    </agm-map>
+  </div>
+
+</section>
+
+<ng-template #completePopup>
+  <div class="modal-body">
+    <div class="main-complete">
+      <div class="img-con">
+        <img src="{{images.whiteCheckIcon}}" alt="Check Icon" />
+      </div>
+      <div>
+        <div class="heading">
+          Complete the trip request
+        </div>
+        <div class="details">
+          Are you sure? You want to complete this trip
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+      <button (click)="modal.dismissAll()" class="view foot blackBg">
+        {{'button.cancel' | translate}}
+      </button>
+
+      <button (click)="completeTrip()" class="view greenBg foot">
+        {{'button.complete' | translate}}
+      </button>
+  </div>
+</ng-template>
+
+<ng-template #successPopup>
+  <div class="modal-body">
+    <div class="complete-success">
+      <div class="img-con fullImage">
+        <img src="{{images.checkCircle}}" alt="Check Icon" />
+      </div>
+      <div>
+        <div class="heading">
+          Trip request completed
+        </div>
+        <div class="details">
+          Trip request #{{selectedTrip.tripId}} has been completed
+        </div>
+      </div>
+      <div>
+        <button (click)="modalRef.hide()" class="view fullImage ok">
+          {{'button.ok' | translate}}
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>

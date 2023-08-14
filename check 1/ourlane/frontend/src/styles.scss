@@ -1,0 +1,1046 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~@swimlane/ngx-datatable/assets/icons.css';
+@import '~@swimlane/ngx-datatable/index.css';
+@import '~@swimlane/ngx-datatable/themes/bootstrap.scss';
+@import './app/scss/habtoorist.scss';
+@import '~@ctrl/ngx-emoji-mart/picker';
+
+html,
+body {
+  height: 100%;
+}
+
+// fonts
+
+@font-face {
+  font-family: "Helvetica-Neue-Bold";
+  src: url("/assets/fonts/Helvetica-Bold.ttf");
+}
+
+@font-face {
+  font-family: "HelveticaNeueMed";
+  src: url("/assets/fonts/HelveticaNeueMed.ttf");
+}
+
+@font-face {
+  font-family: "HelveticaNeueLt";
+  src: url("/assets/fonts/HelveticaNeueLt.ttf");
+}
+
+@font-face {
+  font-family: "SF-Pro-Display-Heavy";
+  src: url("/assets/fonts/SF-Pro-Display-Heavy.otf");
+}
+
+@font-face {
+  font-family: "SF-Pro-Display-Black";
+  src: url("/assets/fonts/SF-Pro-Display-Black.otf");
+}
+
+@font-face {
+  font-family: "SF-Pro-Display-Medium";
+  src: url("/assets/fonts/SF-Pro-Display-Medium.otf");
+}
+
+@font-face {
+  font-family: "SF-Pro-Display-Bold";
+  src: url("/assets/fonts/SF-Pro-Display-Bold.otf");
+}
+
+@font-face {
+  font-family: "SF-Pro-Display-Semibold";
+  src: url("/assets/fonts/SF-Pro-Display-Semibold.otf");
+}
+
+
+@font-face {
+  font-family: "termina-smart";
+  src: url("/assets/fonts/termina-smart01") format("woff2"), url("/assets/fonts/termina-smart02.woff") format("woff"), url("/assets/fonts/termina-smart03") format("opentype");
+  font-display: auto;
+  font-style: normal;
+  font-weight: 200;
+}
+
+@font-face {
+  font-family: "termina-normal";
+  src: url("/assets/fonts/terminal-normal01") format("woff2"), url("/assets/fonts/terminal-normal02.woff") format("woff"), url("/assets/fonts/terminal-normal03") format("opentype");
+  font-display: auto;
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "termina-regular";
+  src: url("/assets/fonts/terminal-regular01") format("woff2"), url("/assets/fonts/terminal-regular02.woff") format("woff"), url("/assets/fonts/terminal-regular03") format("opentype");
+  font-display: auto;
+  font-style: normal;
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: "termina-bold";
+  src: url("/assets/fonts/termina-bold01") format("woff2"), url("/assets/fonts/termina-bold02.woff") format("woff"), url("/assets/fonts/termina-bold03") format("opentype");
+  font-display: auto;
+  font-style: normal;
+  font-weight: 700;
+}
+
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.validationmsg {
+  font-size: 11px;
+  color: red;
+}
+
+.bs-rating-star {
+  &.active {
+    color: #FFB541;
+  }
+}
+
+.stars {
+  color: #0093FF;
+}
+
+.ngx-datatable.bootstrap .datatable-footer {
+  overflow: hidden !important;
+}
+
+.dark-modal .modal-dialog {
+  max-width: 696px !important;
+}
+
+.custom-datatable ngx-datatable .datatable-body .datatable-body-row .datatable-body-cell .datatable-body-cell-label,
+.ngx-datatable.bootstrap .datatable-body .datatable-body-row .datatable-body-cell {
+  display: flex;
+  align-items: center;
+  min-height: 42px;
+}
+
+.ngx-datatable.bootstrap .datatable-body .datatable-body-row .datatable-body-cell {
+  &:last-child {
+    width: auto !important;
+  }
+}
+
+.customer-table {
+  .ngx-datatable.bootstrap .datatable-body .datatable-body-row .datatable-body-cell {
+    &:nth-child(2) {
+      width: 50px !important;
+    }
+  }
+
+  .datatable-header .datatable-row-center datatable-header-cell:nth-child(2) {
+    width: 50px !important;
+  }
+}
+
+.custom-datatable {
+
+  input[type=checkbox],
+  input[type=radio] {
+    margin-top: 15px;
+  }
+
+  .inner-content {
+    &.alignment {
+      position: absolute;
+      top: 45px;
+      right: 0;
+      left: 0;
+      text-align: center;
+    }
+  }
+}
+
+.bs-rating-star {
+  font-size: 18px;
+}
+
+.tostrPosition {
+  position: absolute;
+  top: 45%;
+  left: 45%;
+
+}
+
+.k-chat .k-message-group.k-alt {
+  align-self: flex-start;
+  align-items: flex-start;
+
+}
+
+.k-chat .k-message-group:not(.k-alt) {
+
+  align-self: flex-end;
+
+}
+
+.k-chat .k-bubble {
+  border-color: transparent;
+  color: #0a0101;
+  background-color: #9CCAC7;
+  box-shadow: 0px 10px 20px #C4C4C426;
+  border-radius: 7px;
+  opacity: 1;
+}
+
+.k-chat .k-alt .k-bubble {
+  border-color: transparent;
+  color: #0a0101;
+  background-color: #F5FAF9;
+  box-shadow: 0px 10px 20px #C4C4C426;
+  border-radius: 7px;
+  opacity: 1;
+}
+
+.k-message-list {
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.k-chat::-webkit-scrollbar {
+  display: none;
+}
+
+.k-message-list::-webkit-scrollbar {
+  display: none;
+}
+
+.btn-download {
+  font-family: "SF-Pro-Display-Medium";
+  color: $color-white;
+  cursor: pointer;
+  background: $color-dark;
+  height: 29px;
+  line-height: 29px;
+  padding: 0 15px;
+  border-radius: 29px;
+  font-size: 11px;
+  margin-right: 15px;
+
+  &:hover {
+    color: $color-white;
+  }
+
+  img {
+    position: relative;
+    bottom: 1px;
+    padding-right: 4px;
+  }
+}
+
+.gmnoprint {
+  display: none !important;
+}
+
+.excel-div {
+  justify-content: flex-end;
+  display: flex;
+  padding: 5px;
+
+  .download {
+    font-family: "SF-Pro-Display-Medium";
+    color: $color-white;
+    cursor: pointer;
+    background: $color-dark;
+    height: 29px;
+    line-height: 29px;
+    padding: 0 15px;
+    border-radius: 29px;
+    font-size: 11px;
+
+    img {
+      position: relative;
+      bottom: 1px;
+      padding-right: 4px;
+    }
+  }
+}
+
+/*
+overriding bootstrap's default 15px margin and padding by 8px for columns and grid.
+changing here will have effect on whole application.
+*/
+.row {
+  margin-left: -8px;
+  margin-right: -8px;
+}
+
+.col,
+.col-1,
+.col-10,
+.col-11,
+.col-12,
+.col-2,
+.col-3,
+.col-4,
+.col-5,
+.col-6,
+.col-7,
+.col-8,
+.col-9,
+.col-auto,
+.col-lg,
+.col-lg-1,
+.col-lg-10,
+.col-lg-11,
+.col-lg-12,
+.col-lg-2,
+.col-lg-3,
+.col-lg-4,
+.col-lg-5,
+.col-lg-6,
+.col-lg-7,
+.col-lg-8,
+.col-lg-9,
+.col-lg-auto,
+.col-md,
+.col-md-1,
+.col-md-10,
+.col-md-11,
+.col-md-12,
+.col-md-2,
+.col-md-3,
+.col-md-4,
+.col-md-5,
+.col-md-6,
+.col-md-7,
+.col-md-8,
+.col-md-9,
+.col-md-auto,
+.col-sm,
+.col-sm-1,
+.col-sm-10,
+.col-sm-11,
+.col-sm-12,
+.col-sm-2,
+.col-sm-3,
+.col-sm-4,
+.col-sm-5,
+.col-sm-6,
+.col-sm-7,
+.col-sm-8,
+.col-sm-9,
+.col-sm-auto,
+.col-xl,
+.col-xl-1,
+.col-xl-10,
+.col-xl-11,
+.col-xl-12,
+.col-xl-2,
+.col-xl-3,
+.col-xl-4,
+.col-xl-5,
+.col-xl-6,
+.col-xl-7,
+.col-xl-8,
+.col-xl-9,
+.col-xl-auto {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+
+/* width */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 0px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #22d388;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #22d388;
+}
+
+.sortable .sort-btn:before {
+  content: url('./assets/images/sort.svg');
+  font-size: 8px;
+}
+
+.sortable .sort-btn.datatable-icon-down:before {
+  content: url('./assets/images/sort-up.svg');
+}
+
+.sortable .sort-btn.datatable-icon-up:before {
+  content: url('./assets/images/sort-down.svg');
+}
+
+
+.status {
+  width: auto;
+  padding: 0px 15px;
+  line-height: 19px;
+  color: $color-white;
+  font-size: 10px;
+  border-radius: 20px;
+
+  &.driver {
+    padding: 5px 15px;
+    margin-left: 5rem;
+  }
+
+  &.unavailable,
+  &.canceled,
+  &.Cancelled {
+    background: $color-red2;
+  }
+
+  &.available,
+  &.completed,
+  &.Completed {
+    background: $color-green;
+  }
+
+  &.driving,
+  &.Scheduled {
+    background: $color-orange;
+  }
+
+  &.Ongoing {
+    background: $color-blue;
+  }
+
+  &.Rejected {
+    background: $color-red2;
+  }
+}
+
+.heading-text {
+  .Scheduled {
+    width: auto;
+    padding: 0px 15px;
+    line-height: 19px;
+    color: $color-white;
+    font-size: 10px;
+    border-radius: 20px;
+    background: $color-orange;
+    font-family: "SF-Pro-Display-Semibold";
+  }
+
+  .ongoing {
+    width: auto;
+    padding: 0px 15px;
+    line-height: 19px;
+    color: $color-white;
+    font-size: 10px;
+    border-radius: 20px;
+    background: $color-blue;
+    font-family: "SF-Pro-Display-Semibold";
+  }
+}
+
+.filters {
+  display: flex;
+  margin-left: -5px;
+  margin-right: -5px;
+  margin-top: 17px;
+
+  >div {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+
+  .input-select {
+    width: 20%;
+    min-width: 180px;
+  }
+
+
+
+  .search {
+    width: 100%;
+    position: relative;
+
+    .form-control {
+      padding-left: 40px;
+    }
+
+    .icon {
+      position: absolute;
+      left: 15px;
+      top: 0;
+      bottom: 0;
+      display: flex;
+    }
+  }
+
+  .delete-div {
+    white-space: nowrap;
+
+    .btn {
+      font-size: 10px;
+      font-family: "SF-Pro-Display-Semibold";
+      color: $color-white;
+      background: $color-light-brown;
+      display: flex;
+      cursor: pointer;
+
+      img {
+        margin-right: 5px;
+      }
+    }
+  }
+
+  .header-button-group {
+    display: flex;
+    border-radius: 5px;
+
+    background: $color-white;
+    height: 30px;
+
+
+    button.btn {
+      border: 1px solid transparent;
+      padding: 0 1rem;
+      background: $color-white;
+      white-space: nowrap;
+      font-family: "SF-Pro-Display-Bold";
+      font-size: 12px;
+      border-radius: 3px;
+
+      span {
+        padding: 2px 4px;
+        background-color: $color-light-brown;
+        color: $color-white;
+        margin-left: 3px;
+        border-radius: 3px;
+        font-size: 8px;
+        position: relative;
+        bottom: 1px;
+      }
+
+      &.active {
+        background-color: $color-dark;
+        color: $color-white;
+      }
+    }
+  }
+}
+
+button.view {
+  border-radius: 4px;
+  border: 1px solid $color-light6;
+  background: $color-white;
+  font-size: 10px;
+  font-family: "SF-Pro-Display-Semibold";
+  color: $color-brown1;
+  height: 30px;
+}
+
+button.delete {
+  height: 30px;
+  background: $color-red2 0% 0% no-repeat padding-box;
+  border: 1px solid $color-light6;
+  border-radius: 4px;
+  color: $color-white;
+  opacity: 1;
+  padding: 0 0.5rem;
+  font-family: "SF-Pro-Display-Semibold";
+  font-size: 10px;
+}
+
+button.approve {
+  background: $approveBg;
+  border-radius: 4px;
+  opacity: 1;
+  color: $color-white;
+  border: 2px solid $approveBg;
+}
+
+
+.custom-datatable {
+  margin-top: 1rem;
+
+  .ngx-datatable.bootstrap .datatable-header .datatable-header-cell {
+    border-bottom: 1px solid #d1d4d740;
+  }
+
+  .ngx-datatable.bootstrap .datatable-body .datatable-body-row .datatable-body-cell {
+    border-left: 1px solid #dddddd47;
+  }
+
+  .ngx-datatable.bootstrap .datatable-body .datatable-body-row.datatable-row-even {
+    background-color: #FAFCFC;
+  }
+
+  .ngx-datatable.bootstrap .datatable-body .datatable-body-row {
+    border-top: 1px solid $color-white;
+
+    span.customerName {
+      display: flex;
+      align-items: center;
+    }
+
+    .customerImage {
+      width: 25px;
+      height: 25px;
+      display: inline-block;
+      border-radius: 50%;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        height: 100%;
+        vertical-align: middle;
+      }
+
+    }
+
+    button {
+      white-space: nowrap;
+    }
+  }
+
+  ngx-datatable {
+    background: $color-white;
+    color: $color-dark;
+
+    .datatable-scroll {
+      width: 100% !important;
+    }
+
+    .datatable-header .datatable-header-cell {
+      padding: 0.5rem;
+      font-size: 12px;
+      color: $color-dark;
+      font-weight: bold;
+    }
+  }
+}
+
+
+ngx-datatable {
+  .sortable .sort-btn:before {
+    content: url('assets/images/sort.svg');
+    font-size: 8px;
+  }
+
+  .sortable .sort-btn.datatable-icon-down:before {
+    content: url('assets/images/sort-up.svg');
+  }
+
+  .sortable .sort-btn.datatable-icon-up:before {
+    content: url('assets/images/sort-down.svg');
+  }
+}
+
+.input-select.adminType {
+  position: relative;
+
+  .customSelect {
+    padding-left: 70px;
+  }
+
+  label {
+    position: absolute;
+    background: $color-dark;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 11px;
+    font-size: 0.85rem;
+    color: $color-white;
+    border-radius: 5px 0 0 5px;
+    width: 70px;
+    font-family: "SF-Pro-Display-Bold";
+    font-size: 12px;
+  }
+}
+
+.header-title {
+  p {
+    font-size: 14px;
+    font-family: "termina-bold";
+
+  }
+}
+
+.adminType {
+  .form-control {
+    font-family: "SF-Pro-Display-Bold";
+    font-size: 12px;
+    height: 30px;
+  }
+}
+
+.search {
+  .form-control {
+    font-family: "SF-Pro-Display-Medium";
+    font-size: 12px;
+    height: 30px;
+  }
+}
+
+agm-map {
+  height: 300px;
+}
+
+.zoom-controls {
+  background: $color-white 0% 0% no-repeat padding-box;
+  box-shadow: 0px 10px 10px #49536A33;
+  border-radius: 23px;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  bottom: 33px;
+  right: 46px;
+  z-index: 2;
+
+  .border-bottom {
+    border-bottom: 1px solid #F5F5F5;
+  }
+
+  // div {
+  //   width: 45px;
+  //   height: 45px;
+  // }
+
+  img {
+    width: 24px;
+    height: 24px;
+    margin: 10.5px;
+    cursor: pointer;
+  }
+}
+
+.si-has-border .si-content-wrapper {
+  border: none;
+  padding: 0px !important;
+}
+
+.si-content-wrapper {
+  padding: 2px !important;
+  color: $color-white;
+  padding: 0px !important;
+
+  .si-content {
+    max-width: 240px !important;
+  }
+
+
+}
+
+.label-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 10px;
+
+  .label-address {
+    padding: 4px 8px;
+  }
+
+  .type-name {
+    white-space: nowrap;
+    padding: 3px 5px;
+    box-shadow: 0px 10px 10px #49536A33;
+    border-radius: 2px;
+    margin: 7px 0 7px 8px;
+
+    &.pick-up {
+      background: #F2AB3D 0% 0% no-repeat padding-box;
+    }
+
+    &.drop-off {
+      background: #5EB963 0% 0% no-repeat padding-box;
+    }
+
+    &.driver {
+      background: #c5beb3 0% 0% no-repeat padding-box;
+    }
+
+    &.customer {
+      background: #9b9893 0% 0% no-repeat padding-box;
+    }
+  }
+}
+
+.mapLocationColor {
+  background-color: $mapLocationColor;
+}
+
+.btn-bt {
+  width: 150px;
+  height: 35px;
+  border-radius: 4px;
+  opacity: 1;
+}
+
+.noData {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+
+.authContainer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  height: 100vh;
+
+  .header-button {
+    display: flex;
+    align-items: center;
+    color: $color-dark;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-family: SF-Pro-Display-Bold;
+  }
+
+  .formContainer {
+    padding: 2.80rem 1rem;
+    height: 100%;
+    width: 50%;
+
+    .formcontent {
+      max-width: 25.75rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      margin: 0 auto;
+      height: 100%;
+
+      .logo {
+        width: 6rem;
+
+        img {
+          width: 100%;
+        }
+      }
+
+      .copyright {
+        p {
+          font-size: $font-xs;
+          color: $color-dark;
+        }
+      }
+
+      .login_form {
+        .header {
+          h3 {
+            font-size: $font-xl;
+            color: $color-dark;
+            font-weight: 700;
+          }
+
+          p {
+            font-size: $font-sm;
+            font-family: $fontSfdisplaymedium;
+          }
+        }
+
+        .rememberFogot {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 0.5rem;
+        }
+      }
+    }
+
+  }
+
+  .authVectorcontent {
+    width: 50%;
+    background-color: $color-dark;
+    height: 100%;
+    padding: 2.80rem 1rem;
+
+    .vectorContent {
+      display: flex;
+      flex-direction: column;
+      max-width: 29.75rem;
+      margin: 0 auto;
+      justify-content: space-between;
+      height: 100%;
+    }
+
+    .vectorImage {
+      text-align: center;
+
+      img {
+        width: 100%;
+        height: auto;
+      }
+
+    }
+
+    .register-link {
+      text-align: right;
+
+      p {
+        font-size: $font-xs;
+        margin: 0;
+
+        a {
+          font-weight: $font-weight-xs-bold;
+          color: $color-white;
+        }
+      }
+    }
+
+    .manageContnet {
+      text-align: center;
+      padding: 1rem 2rem;
+
+      p {
+        font-size: $font-xs;
+        margin: 0;
+      }
+
+      h4 {
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        font-size: $font-md;
+        color: $color-white;
+      }
+    }
+  }
+
+  .header-button {
+    text-decoration: none;
+    color: $color-dark;
+  }
+}
+
+.link {
+  font-size: 12px;
+  font-family: "HelveticaNeueMed";
+  margin-right: 15px;
+}
+
+.custom-success-car-modal {
+  .modal-content {
+    border-color: transparent;
+
+    .modal-body {
+      padding: 0;
+    }
+  }
+}
+
+.green-botton {
+  background: $approveBg !important;
+  border-color: $approveBg !important;
+}
+
+.modal-412 {
+  max-width: 412px;
+}
+
+.static-content {
+  display: flex;
+  width: 100%;
+  padding: 2% 3.5%;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+
+  h3 {
+    font-size: 16px;
+    color: #3E6562;
+    font-family: "Helvetica-Neue-Bold";
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+
+    @media only screen and (max-width: 768px) {
+      font-size: 14px;
+    }
+  }
+
+  h4 {
+    font-size: 14px;
+    color: #3E6562;
+    font-family: "Helvetica-Neue-Bold";
+
+    @media only screen and (max-width: 768px) {
+      font-size: 14px;
+    }
+  }
+
+  p {
+    font-size: 14px;
+    color: #333333;
+    font-family: "HelveticaNeueLt";
+    line-height: 25px;
+
+    @media only screen and (max-width: 768px) {
+      font-size: 12px;
+    }
+
+    span {
+      font-family: "HelveticaNeueMed";
+      color: #3E6562;
+    }
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+
+    li {
+      font-size: 14px;
+      color: #333333;
+      font-family: "HelveticaNeueLt";
+      margin-bottom: 10px;
+      position: relative;
+      padding-left: 1.5rem;
+      line-height: 25px;
+
+      @media only screen and (max-width: 768px) {
+        font-size: 12px;
+      }
+
+      &::after {
+        content: '';
+        background-image: url('/assets/images/tick.svg');
+        display: flex;
+        width: 15px;
+        height: 15px;
+        position: absolute;
+        top: 3px;
+        left: 0;
+      }
+    }
+  }
+}
+
+.delete-modal {
+  .modal-dialog {
+    max-width: 412px;
+
+    p {
+      font-size: 18px;
+      padding: 0 65px;
+    }
+  }
+}
+
+.upload {
+  .text {
+    left: 38px !important;
+  }
+}
+
+
+.emoji-mart { 
+  position: absolute;
+  bottom: 20px;
+}

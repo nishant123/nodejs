@@ -1,0 +1,37 @@
+[
+    {
+    "name": "Dubai",
+    "country": "UAE",
+    "countryCode": "+971"
+    },
+    {
+    "name": "Abu Dhabi",
+    "country": "UAE",
+    "countryCode": "+971"
+    },
+    {
+    "name": "Sharjah",
+    "country": "UAE",
+    "countryCode": "+971"
+    },
+    {
+    "name": "Ajman",
+    "country": "UAE",
+    "countryCode": "+971"
+    },
+    {
+    "name": "RAK City",
+    "country": "UAE",
+    "countryCode": "+971"
+    },
+    {
+    "name": "Fujairah",
+    "country": "UAE",
+    "countryCode": "+971"
+    },
+    {
+    "name": "Umm al-Quwain",
+    "country": "UAE",
+    "countryCode": "+971"
+    }
+]

@@ -1,0 +1,18 @@
+<div class=" confirmation-modal forget-password">
+  <div class="modal-content">
+    <div class="modal-body">
+      <img class="icon" src="./../assets/images/success.svg" alt="signup">
+      <button type="button" class="close pull-right" aria-label="Close" (click)="decline()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <h4 class="alertText font-md color-dark font-termina">Forgot Password<br>Email Sent</h4>
+      <p class="modalContent">An email has been sent to <a class="email">{{message}}</a> Follow the directions in the
+        email to reset your password
+      </p>
+      <div class="alertFooter">
+        <p>Didn’t receive an email? <a (click)="resendMail()" class="link">Re-send Mail</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

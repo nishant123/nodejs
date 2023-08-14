@@ -1,0 +1,66 @@
+[
+  {
+    "apiId": "CREATE_CAR",
+    "apiEndpoint": "/trip/v1/car/create",
+    "policyName": [
+      "CAR_CREATE"
+    ]
+  },
+  {
+    "apiId": "DELETE_CAR",
+    "apiEndpoint": "/trip/v1/car/deleteCar",
+    "policyName": [
+      "CAR_DELETE"
+    ]
+  },
+  {
+    "apiId": "DELETE_MULTI_CAR",
+    "apiEndpoint": "/trip/v1/car/deletemultipleCar",
+    "policyName": [
+      "CAR_MULTI_DELETE"
+    ]
+  },
+  {
+    "apiId": "UPDATE_CAR",
+    "apiEndpoint": "/trip/v1/car/updateCar",
+    "policyName": [
+      "CAR_UPDATE"
+    ]
+  },
+  {
+    "apiId": "GET_CAR",
+    "apiEndpoint": "trip/v1/car/searchCar",
+    "policyName": [
+      "CAR_GET"
+    ]
+  },
+  {
+    "apiId": "TODAY_TRIP",
+    "apiEndpoint": "trip/v1trip/todayTrips",
+    "policyName": [
+      "TRIP_TODAY"
+    ]
+  },
+  {
+    "apiId": "MOST_PICKUP",
+    "apiEndpoint": "/trip/v1/trip/mostPickup",
+    "policyName": [
+      "PICKUP_MOST"
+    ]
+  },
+  {
+    "apiId": "MOST_DROP",
+    "apiEndpoint": "/trip/v1/trip/mostDrop",
+    "policyName": [
+      "DROP_MOST"
+    ]
+  },
+  {
+    "apiId": "CUSTOMER_TRIP",
+    "apiEndpoint": "/trip/v1/trip/customerTrips",
+    "policyName": [
+      "TRIP_CUSTOMER"
+    ]
+  }
+
+]

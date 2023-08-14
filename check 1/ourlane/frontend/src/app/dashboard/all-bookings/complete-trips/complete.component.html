@@ -1,0 +1,523 @@
+<section class="content-wrap">
+  <div class="content-main">
+    <div class="content-container">
+      <div class="header-title">
+        <p class="font-sm font-termina color-dark font-w700">
+          {{'allBookings.title' | translate }}
+        </p>
+        <div class="filters">
+          <div class="input-select adminType">
+            <label>{{'administration.label' | translate}}</label>
+            <select class="form-control customSelect" [(ngModel)]="status" name="Status" id="Status"
+              (change)="checkStatus()">
+              <option *ngFor="let listCompletedStatu of listCompletedStatus"  [ngValue]="listCompletedStatu.value">
+                {{listCompletedStatu.value}} </option>
+            </select>
+          </div>
+          <div class="search">
+            <input type="text" #searchBox (input)="onSearch(searchBox.value)" name="Search" id="Search"
+              class="form-control search-bar" placeholder="{{'allBookings.SearchTripID' | translate }}">
+            <span class="icon">
+              <img src="{{searchIcon}}" alt="icon">
+            </span>
+          </div>
+          <div class="header-button-group">
+            <button class="btn" [routerLink]="routeScheduleCreated">{{'allBookings.Scheduled' | translate }} </button>
+            <button class="btn" [routerLink]="routeOnGoing">{{'allBookings.OnGoing' | translate }}</button>
+            <button class="btn active" [routerLink]="routeCompletedCancel">{{'allBookings.Completed' | translate }} /
+              {{'allBookings.Cancelled' | translate }} / {{'allBookings.Rejected' | translate }}</button>
+          </div>
+        </div>
+        <hr>
+        <div class="custom-datatable">
+          <ngx-datatable [rows]="tripList" [scrollbarH]="datatableResponsive" class="bootstrap"
+            [loadingIndicator]="loadingIndicator" [headerHeight]="headerHeight" [footerHeight]="footerHeight"
+            [rowHeight]="'auto'" [columnMode]="ColumnMode.force" [reorderable]="reorderable" [limit]="limit"
+            [selected]="selected" [selectionType]="SelectionType.checkbox" [selectAllRowsOnPage]="false"
+            (select)="onSelect($event)">
+            <ngx-datatable-column [width]="30" [sortable]="false" [canAutoResize]="false" [draggable]="false"
+              [resizeable]="false" [headerCheckboxable]="true" [checkboxable]="true">
+            </ngx-datatable-column>
+            <ngx-datatable-column name="tripId">
+              <ng-template let-column="column" ngx-datatable-header-template>
+                <span> {{'allBookings.TripId' | translate}}</span>
+              </ng-template>
+              <ng-template ngx-datatable-cell-template let-value="value">
+                {{value}}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="tripDate">
+              <ng-template let-column="column" ngx-datatable-header-template>
+                <span> {{'allBookings.TripDate' | translate}}</span>
+              </ng-template>
+              <ng-template ngx-datatable-cell-template let-value="value">
+                {{value| date: 'dd/MM/yyyy'}}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Customer Name">
+              <ng-template let-column="column" ngx-datatable-header-template>
+                <span> {{'allBookings.CustomerName' | translate}}</span>
+              </ng-template>
+              <ng-template ngx-datatable-cell-template let-value="value">
+                {{value ? value:'N/A'}}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Driver Name">
+              <ng-template let-column="column" ngx-datatable-header-template>
+                <span> {{'allBookings.DriverName' | translate}}</span>
+              </ng-template>
+              <ng-template ngx-datatable-cell-template let-value="value">
+                {{value ? value:'N/A'}}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="status">
+              <ng-template let-column="column" ngx-datatable-header-template>
+                <span> {{'allBookings.TripStatus' | translate}}</span>
+              </ng-template>
+              <ng-template let-value="value" ngx-datatable-cell-template>
+                <span class="status" [ngClass]="value"> {{value}}</span>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Action" [sortable]="false" prop="id">
+              <ng-template let-column="column" ngx-datatable-header-template>
+                <span> {{'allBookings.Action' | translate}}</span>
+              </ng-template>
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                <button *ngIf="row.status === 'Rejected'" class="view" (click)="openModal(template, row)">
+                  <img src="./assets/images/icon-eye.svg"> {{'allBookings.ViewDetails' | translate}}
+                </button>
+                <button *ngIf="row.status === 'Cancelled'" class="view" (click)="openModal(template, row)">
+                  <img src="./assets/images/icon-eye.svg"> {{'allBookings.ViewDetails' | translate}}
+                </button>
+                <button *ngIf="row.status === 'Completed'" class="view"
+                  (click)="completedTripModal(completedTrip, row)">
+                  <img src="./assets/images/icon-eye.svg"> {{'allBookings.ViewDetails' | translate}}
+                </button>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+          <div class="inner-content alignment" *ngIf="totalTrip === 0">{{'paginationContent.noTripsFound' | translate }}
+          </div>
+          <div class="customPagination" *ngIf="totalTrip > 0">
+            <ngb-pagination [collectionSize]="totalTrip" [maxSize]="3" [pageSize]="perPage" [(page)]="pageNumber"
+              (pageChange)="loadPage($event)">
+              <ng-template ngbPaginationPrevious>{{'paginationContent.Previous' | translate}}</ng-template>
+              <ng-template ngbPaginationNext>{{'paginationContent.Next' | translate}}</ng-template>
+            </ngb-pagination>
+            <input type="number" NumericInput placeholder="{{'customers.EnterPageNumber' | translate }}"
+              (input)="onPageNumber($event)">
+            <button class="btn btn-download" (click)="exportAsXLSX()"><img src="{{downloadCSV}}"> {{'button.DownloadCSV'
+              | translate}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<ng-template #template>
+  <div class="modal-header">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <div class="heading-text">
+      <h4 class="modal-title pull-left">{{'allBookings.BookingDetails' | translate}}</h4>
+      <span class="status" [ngClass]="openData.status">{{openData.status}}</span>
+    </div>
+  </div>
+  <div class="modal-body ">
+    <div class="border-top">
+      <div class="row">
+        <div class="col-6">
+          <div class="data-content">
+            <p class="font-sm color-dark">{{'allBookings.TripId' | translate}}</p>
+            <h4 class="font-md color-light">{{openData.tripId}}</h4>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="data-content">
+            <p class="font-sm color-dark">{{'allBookings.TripDate' | translate}}</p>
+            <h4 class="font-md color-light">{{openData.tripDate | date: 'dd/MM/yyyy' }}<span class="pl-4">{{openData.tripDate | date: 'hh:mm a' }}</span></h4>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="border-top">
+      <div class="row">
+        <div class="col-6">
+          <div class="data-content">
+            <div class="dataWithImage">
+              <div class="image user">
+                <img src="{{ openData.customer_details.profileImage || userDefault }}" alt="image">
+              </div>
+              <div class="text">
+                <p class="font-sm color-dark">{{'allBookings.CustomerName' | translate}}</p>
+                <h4 class="font-md color-light">{{openData.customerName}}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="data-content">
+            <p class="font-sm color-dark">{{'allBookings.CustomerMobileNumber' | translate}}</p>
+            <h4 class="font-md color-light">{{openData.customerCountryCode}} {{openData.customerMobile}}</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="border-top">
+      <div class="row">
+        <div class="col-6">
+          <div class="data-content">
+            <div class="dataWithImage">
+              <div class="image user">
+                <img src="{{ openData.driver_details.profileImage || userDefault }}" alt="image">
+              </div>
+              <div class="text">
+                <p class="font-sm color-dark">{{'allBookings.DriverName' | translate}}</p>
+                <h4 class="font-md color-light">{{openData.driverName}}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="data-content">
+            <p class="font-sm color-dark">{{'allBookings.DriverMobileNumber' | translate}}</p>
+            <h4 class="font-md color-light">{{openData.driverCountryCode}} {{openData.dirverMobile}}</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="border-top">
+      <div class="row">
+        <div class="col-6">
+          <div class="data-content">
+            <div class="dataWithImage">
+              <div class="image icon">
+                <img [src]="allBookingsImgs.destination" alt="image">
+              </div>
+              <div class="text">
+                <p class="font-sm color-dark">{{'allBookings.TripStartLocation' | translate}}</p>
+                <h4 class="font-md color-light">{{openData.startLocationName}}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-6">          
+          <div class="data-content">
+            <p class="font-sm color-dark">{{'allBookings.customerBookedHours' | translate}}</p>
+            <h4 class="font-md color-light">{{openData.bookedHours || "--"}} </h4>         
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="border-top" *ngIf="openData.status == 'Rejected'">
+      <div class="row">
+        <div class="col-6">
+          <div class="data-content">
+            <p class="font-sm color-dark">{{'allBookings.ReasonOfRejection' | translate}}</p>
+            <h4 class="font-md color-light">{{openData.description || 'Not Applicable'}}</h4>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="data-content">
+            <p class="font-sm color-dark">{{'allBookings.RejectedBy' | translate}}</p>
+            <h4 class="font-md color-light">
+              Chauffeur
+            </h4>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="border-top" *ngIf="openData.status == 'Cancelled'">
+      <div class="row">
+        <div class="col-6">
+          <div class="data-content">
+            <p class="font-sm color-dark">{{'allBookings.ReasonOfCancellation' | translate}}</p>
+            <h4 class="font-md color-light">{{openData.description || 'Not Applicable' }}</h4>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="data-content">
+            <p class="font-sm color-dark">{{'allBookings.CancelledBy' | translate}}</p>
+            <h4 class="font-md color-light">
+              Customer
+            </h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+
+<ng-template #completedTrip>
+  <div class="modalContainer row">
+    <div class="modalContainerLeft col-sm-6 pr-0">
+      <div class="modal-header">
+
+        <div class="heading-text">
+          <h4 class="modal-title pull-left">{{'allBookings.BookingDetails' | translate}}</h4>
+          <span class="status" [ngClass]="openData.status">{{openData.status}}</span>
+        </div>
+      </div>
+      <div class="modal-body ">
+        <div class="border-top">
+          <div class="row">
+            <div class="col-4">
+              <div class="data-content">
+                <p class="font-sm color-dark">{{'allBookings.TripId' | translate}}</p>
+                <h4 class="font-md color-light">{{openData.tripId}}</h4>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="data-content">
+                <p class="font-sm color-dark">{{'allBookings.TripDate' | translate}}</p>
+                <h4 class="font-md color-light">{{openData.tripDate | date: 'dd/MM/yyyy' }}</h4>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="data-content">
+                <p class="font-sm color-dark">{{'allBookings.pickUpTIme' | translate}}</p>
+                <h4 class="font-md color-light">{{openData.tripDate | date: 'hh:mm a' }}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="border-top">
+          <div class="row">
+            <div class="col-6">
+              <div class="data-content">
+                <div class="dataWithImage">
+                  <div class="image user">
+                    <img src="{{ openData.customer_details.profileImage || userDefault }}" alt="image">
+                  </div>
+                  <div class="text">
+                    <p class="font-sm color-dark">{{'allBookings.CustomerName' | translate}}</p>
+                    <h4 class="font-md color-light">{{openData.customerName}}</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="data-content">
+                <p class="font-sm color-dark">{{'allBookings.CustomerMobileNumber' | translate}}</p>
+                <h4 class="font-md color-light">{{openData.customerCountryCode}} {{openData.customerMobile}}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="border-top">
+          <div class="row">
+            <div class="col-6">
+              <div class="data-content">
+                <div class="dataWithImage">
+                  <div class="image user">
+                    <img src="{{ openData.driver_details.profileImage || userDefault }}" alt="image">
+                  </div>
+                  <div class="text">
+                    <p class="font-sm color-dark">{{'allBookings.DriverName' | translate}}</p>
+                    <h4 class="font-md color-light">{{openData.driverName}}</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="data-content">
+                <p class="font-sm color-dark">{{'allBookings.DriverMobileNumber' | translate}}</p>
+                <h4 class="font-md color-light">{{openData.driverCountryCode}} {{openData.dirverMobile}}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="border-top">
+          <div class="row">
+            <div class="col-6">
+              <div class="data-content">
+                <div class="dataWithImage">
+                  <div class="image icon">
+                    <img [src]="allBookingsImgs.destination" alt="image">
+                  </div>
+                  <div class="text">
+                    <p class="font-sm color-dark">{{'allBookings.TripStartLocation' | translate}}</p>
+                    <h4 class="font-md color-light">{{openData.startLocationName}}</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="data-content">
+                <div class="dataWithImage">
+                  <div class="image icon">
+                    <img [src]="allBookingsImgs.origin" alt="image">
+
+                  </div>
+                  <div class="text">
+                    <p class="font-sm color-dark">{{'allBookings.TripEndLocation' | translate}}</p>
+                    <h4 class="font-md color-light">{{openData.endLocationName}}
+                    </h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>       
+        <div class="border-top">
+          <div class="row">
+            <div class="col-6">
+              <div class="data-content">
+                <p class="font-sm color-dark">{{'allBookings.customerBookedHours' | translate}}</p>
+                <h4 class="font-md color-light">{{openData.bookedHours || "--"}} </h4>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="data-content">
+                <p class="font-sm color-dark">{{'allBookings.customerTravelledHours' | translate}}</p>
+                <h4 class="font-md color-light">{{openData.totalTimeInMinute}} Minutes</h4>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="border-top">
+          <div class="row">
+            <div class="col-6">
+              <div class="data-content">
+                <p class="font-sm color-dark">{{'allBookings.PaymentMethod' | translate}}</p>
+                <h4 class="font-md color-light">{{openData.paymentType}}</h4>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="data-content">
+                <p class="font-sm color-dark">{{'allBookings.TripFare' | translate}}</p>
+                <h4 class="font-md color-light">{{openData.paymentAmount?.toFixed(2)}} AED</h4>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="border-top">
+          <div class="row">
+            <div class="col-6">
+              <div class="data-content">
+                <p class="font-sm color-dark">{{'allBookings.CustomerRatings' | translate}}</p>
+                <h4 class="font-md color-light">
+                  <rating [(ngModel)]="rateCustomer" [max]="max" [readonly]="isReadonly"></rating>
+                  <span class="stars">{{openData.ratingCustomer}} stars</span>
+                </h4>
+              </div>
+              <div class="data-content">
+                <div class="dataWithImage">
+                  <div class="image icon">
+                    <img src="{{feedback}}" alt="image">
+                  </div>
+                  <div class="text">
+                    <p class="font-sm color-dark">{{'allBookings.CustomerFeedback' | translate}}</p>
+                    <h4 class="font-md color-light">
+                      <a>
+                        <span *ngIf="openData.ratingCustomer == 5">{{'ratings.excellent' | translate}}</span>
+                        <span *ngIf="openData.ratingCustomer == 4">{{'ratings.veryGood' | translate}}</span>
+                        <span *ngIf="openData.ratingCustomer == 3">{{'ratings.good' | translate}}</span>
+                        <span *ngIf="openData.ratingCustomer == 2">{{'ratings.fair' | translate}}</span>
+                        <span *ngIf="openData.ratingCustomer == 1 || openData.ratingCustomer == 0 ">{{'ratings.poor' |
+                          translate}}</span>
+                        Service
+                      </a>
+                    </h4>
+                  </div>
+                </div>
+              </div>
+              <p class="comment" *ngIf="openData.customerFeedback">
+                {{openData.customerFeedback}}
+              </p>
+            </div>
+            <div class="col-6">
+              <div class="data-content">
+                <p class="font-sm color-dark">{{'allBookings.DriverRatings' | translate}}</p>
+                <h4 class="font-md color-light">
+                  <rating [(ngModel)]="rateDriver" [max]="max" [readonly]="isReadonly"></rating>
+                  <span class="stars">{{openData.ratingDriver}} stars</span>
+                </h4>
+              </div>
+              <div class="data-content">
+                <div class="dataWithImage">
+                  <div class="image icon">
+                    <img src="{{feedback}}" alt="image">
+                  </div>
+                  <div class="text">
+                    <p class="font-sm color-dark">{{'allBookings.DriverFeedback' | translate}}</p>
+                    <h4 class="font-md color-light">
+                      <a>
+                        <span *ngIf="openData.ratingDriver == 5">{{'ratings.excellent' | translate}}</span>
+                        <span *ngIf="openData.ratingDriver == 4">{{'ratings.veryGood' | translate}}</span>
+                        <span *ngIf="openData.ratingDriver == 3">{{'ratings.good' | translate}}</span>
+                        <span *ngIf="openData.ratingDriver == 2">{{'ratings.fair' | translate}}</span>
+                        <span *ngIf="openData.ratingDriver == 1 || openData.ratingDriver == 0">{{'ratings.poor' |
+                          translate}}</span>
+                        Service
+                      </a>
+                    </h4>
+                  </div>
+                </div>
+              </div>
+              <p class="comment" *ngIf="openData.driverFeedback">
+                {{openData.driverFeedback}}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modalRightContent col-sm-6 pl-0">
+      <button type="button" class="close modalBackButton" aria-label="Close" (click)="modalRef.hide()">
+        <img [src]="allBookingsImgs.backButton" alt="image">
+      </button>
+      <div class="zoom-controls">
+        <div class="border-bottom">
+          <img (click)="zoomIn()" [src]="allBookingsImgs.zoomIn" alt="zoom-in">
+        </div>
+        <div>
+          <img (click)="zoomOut()" [src]="allBookingsImgs.zoomOut" alt="zoom-out">
+        </div>
+      </div>
+      <agm-map style="height: 100%;" [zoomControl]="false" [(zoom)]="zoom">
+        <agm-direction *ngFor="let dir of dirs" [origin]="dir.origin" [destination]="dir.destination"
+          [renderOptions]="dir.renderOptions" [panel]="myPanel" [markerOptions]="markerOptions"
+          (onResponse)="dir.onResp ? dir.onResp($event): null">
+        </agm-direction>
+        <agm-snazzy-info-window *ngFor="let label of iconLabels" [isOpen]="true" [latitude]="label.lat"
+          [longitude]="label.lng" [panOnOpen]="false" [closeWhenOthersOpen]="false" [showCloseButton]="false"
+          [closeOnMapClick]="false" [backgroundColor]="'#284148'" [placement]="'left'" [pointer]="'8px'">
+          <ng-template>
+            <div class="label-content" *ngIf="label.type=='Pickup' || label.type=='Drop'">
+              <div class="type-name" [ngClass]="(label.type=='Pickup')?'pick-up':'drop-off'">
+                {{(label.type === 'Pickup' ? 'allBookings.Pickup' : 'allBookings.Drop') | translate}}
+              </div>
+              <div class="label-address">
+                {{label.address}}
+              </div>
+            </div>
+            <div class="label-content" *ngIf="label.type=='Driver'">
+              <div class="type-name" class="driver">
+                {{ openData.driverName }}
+              </div>
+              <div class="label-address">
+                {{label.address}}
+              </div>
+            </div>
+            <div class="label-content" *ngIf="label.type=='Customer'">
+              <div class="type-name" class="customer">
+                {{ openData.customerName }}
+              </div>
+              <div class="label-address">
+                {{label.address}}
+              </div>
+            </div>
+          </ng-template>
+        </agm-snazzy-info-window>
+      </agm-map>
+    </div>
+  </div>
+</ng-template>

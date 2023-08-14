@@ -1,0 +1,586 @@
+<section class="content-wrap">
+  <div class="content-main">
+    <div class="content-container">
+      <div class="header-title">
+        <div class="heading-content">
+          <h4 class="font-sm font-termina color-dark font-w700">
+            {{'administration.heading' | translate}}
+          </h4>
+          <div class="header-button-group">
+            <button (click)="changeContent('admin')" [class.active]="activeTab=='admin'">{{'button.admin' | translate}}</button>
+            <button (click)="changeContent('concierge')" [class.active]="activeTab=='concierge'">{{'button.concierge' | translate}}</button>
+          </div>
+        </div>   
+        <ng-container *ngIf="activeTab=='admin'">
+          <div class="filters">
+            <div *ngIf="isAdminTab" class="input-select adminType">
+              <label>{{'administration.label' | translate}}</label>
+              <select class="form-control customSelect" (change)="checkRole()" [(ngModel)]="roleType" name="roleType"
+                id="roleType">
+                <option *ngFor="let listStatu of listStatus" [ngValue]="listStatu.value"> {{listStatu.label}} </option>
+              </select>
+            </div>
+            <div class="search">
+              <input type="text" #searchBox (input)="onSearch(searchBox.value)" name="Search" id="Search"
+                class="form-control search-bar" placeholder=" {{'administration.searchPlaceholder' | translate}}">
+              <span class="icon">
+                <img src="{{searchIcon}}" alt="icon">
+              </span>
+            </div>
+            <div class="header-button-group">
+              <button [ngClass]="adminButton" (click)="getAllAdmin()">{{'button.admins' | translate}}</button>
+              <button [ngClass]="reqButton" (click)="requestedAdmins()">{{'button.request' |
+                translate}}<span>{{(requestedAdminsCount ? requestedAdminsCount:0) | number: '2.0' }}</span></button>
+              <button [ngClass]="InactiveButton" (click)="inActiveAdmins()">{{'button.inActive' |
+                translate}}<span>{{(inActiveAdminsCount ? inActiveAdminsCount:0) | number: '2.0' }}</span></button>
+            </div>
+          </div>
+          <div class="custom-datatable">
+            <ngx-datatable [rows]="adminList" *ngIf="totalAdmins != 0" [scrollbarH]="true" class="bootstrap material"
+              [loadingIndicator]="loadingIndicator" [headerHeight]="32" [footerHeight]="45" [rowHeight]="'auto'"
+              [columnMode]="ColumnMode.force" [reorderable]="reorderable" [selected]="selected"
+              [selectionType]="SelectionType.checkbox" [selectAllRowsOnPage]="false" (activate)="onActivate($event)"
+              (select)="onSelect($event)">
+              <ngx-datatable-column [width]="30" [sortable]="false" [canAutoResize]="false" [draggable]="false"
+                [resizeable]="false" [headerCheckboxable]="true" [checkboxable]="true">
+              </ngx-datatable-column>
+              <ngx-datatable-column name="Full Name">
+                <ng-template let-column="column" ngx-datatable-header-template>
+                  <span> {{'administration.Name' | translate}}</span>
+                </ng-template>
+  
+                <ng-template ngx-datatable-cell-template let-value="value">
+                  {{value ? value:'-'}}
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column name="Mobile Number">
+                <ng-template let-column="column" ngx-datatable-header-template>
+                  <span>{{'administration.PhoneNumber' | translate}}</span>
+                </ng-template>
+                <ng-template ngx-datatable-cell-template let-value="value">
+                  {{value ? value:'-'}}
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column [width]="200" name="Login Id">
+                <ng-template let-column="column" ngx-datatable-header-template>
+                  <span>{{'administration.EmailAddress' | translate}}</span>
+                </ng-template>
+                <ng-template ngx-datatable-cell-template let-value="value">
+                  {{value}}
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column name="Role">
+                <ng-template let-column="column" ngx-datatable-header-template>
+                  <span>{{'administration.UserPermission' | translate}}</span>
+                </ng-template>
+                <ng-template ngx-datatable-cell-template let-value="value">
+                  <span *ngIf="value == 'ADMIN'">{{'administration.admin' | translate}}</span>
+                  <span *ngIf="value == 'SUPER_ADMIN'">{{'administration.superAdmin' | translate}}</span>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column name="Actions" [width]="200" [sortable]="false" prop="id">
+                <ng-template let-column="column" ngx-datatable-header-template>
+                  <span>{{'administration.Actions' | translate}}</span>
+                </ng-template>
+                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                  <div class="d-flex">
+  
+                    <button *ngIf="accountStatus == 'isActive'" class="view mx-2" (click)="openModal(template, row)">
+                      <img src="{{viewIcon}}"> {{'button.viewDetails' | translate}}
+                    </button>
+                    <!-- <button *ngIf="accountStatus == 'isRequstedUser'" class="approve mx-2"
+                      (click)="approveUser(row.uuid)">
+                      {{'button.approve'| translate}}
+                    </button>
+                    <button *ngIf="accountStatus == 'isRequstedUser'" class="decline mx-2"
+                      (click)="declineUser(row.uuid)">
+                      {{'button.decline'| translate}} 
+                    </button> -->
+                    <button *ngIf="accountStatus == 'isRequstedUser'" class="approve mx-2"
+                      (click)="approveRejectModal(approveReject, row)">
+                      <img src="{{approveIcon}}"> {{'button.approve'| translate}}
+                    </button>
+                    <button *ngIf="accountStatus == 'isRequstedUser'" class="decline mx-2"
+                      (click)="approveRejectModal(approveReject, row)">
+                      <img src="{{declineIcon}}"> {{'button.decline'| translate}}
+                    </button>
+  
+                    <button *ngIf="accountStatus == 'isActive'" class="delete mx-2"
+                      (click)="deleteModal(delete, row.uuid)">
+                      <img src="{{deleteIcon}}"> {{'button.delete' | translate}}
+                    </button>
+                    <button *ngIf="accountStatus == 'isDeleted'" class="inactive mx-2">
+                      {{'button.inActive'| translate}}
+                    </button>
+                  </div>
+                </ng-template>
+              </ngx-datatable-column>
+            </ngx-datatable>
+            <div class="inner-content alignment" *ngIf="totalAdmins === 0">{{'paginationContent.noAdminsFound' |
+              translate}}</div>
+            <div class="customPagination" *ngIf="totalAdmins">
+              <ngb-pagination [collectionSize]="totalAdmins" [maxSize]="3" [pageSize]="perPage" [(page)]="page"
+                (pageChange)="loadPage($event)">
+                <ng-template ngbPaginationPrevious>{{'paginationContent.Previous' | translate}}</ng-template>
+                <ng-template ngbPaginationNext>{{'paginationContent.Next' | translate}}</ng-template>
+              </ngb-pagination>
+              <input type="number" NumericInput placeholder="{{'customers.EnterPageNumber' | translate }}"
+                (input)="onPageNumber($event)">
+              <button class="btn btn-download" (click)="exportAsXLSX()"><img src="{{downloadCSV}}"> {{'button.DownloadCSV'
+                | translate}}</button>
+            </div>
+          </div>
+          <div class="noData" *ngIf="adminList?.length === 0 && totalAdmins !== 0">{{'paginationContent.noAdminsFound' |
+            translate}}</div>
+        </ng-container> 
+        <ng-container *ngIf="activeTab=='concierge'">
+         
+          <div class="filters">
+            <div *ngIf="isAdminTab" class="input-select adminType">
+              <label>{{'administration.label' | translate}}</label>
+              <select class="form-control customSelect" (change)="checkRole()" [(ngModel)]="roleType" name="roleType"
+                id="roleType">
+                <option *ngFor="let listStatu of listStatus" [ngValue]="listStatu.value"> {{listStatu.label}} </option>
+              </select>
+            </div>
+            <div class="search">
+              <input type="text" #searchBox (input)="onSearch(searchBox.value)" name="Search" id="Search"
+                class="form-control search-bar" placeholder=" {{'administration.searchPlaceholder' | translate}}">
+              <span class="icon">
+                <img src="{{searchIcon}}" alt="icon">
+              </span>
+            </div>
+            
+            <div class="header-button-group">
+              <button [ngClass]="adminButton" (click)="getAllAdmin()">{{'button.concierges' | translate}}</button>
+              <button [ngClass]="reqButton" (click)="requestedAdmins()">{{'button.request' |
+                translate}}<span>{{(requestedAdminsCount ? requestedAdminsCount:0) | number: '2.0' }}</span></button>
+              <button [ngClass]="InactiveButton" (click)="inActiveAdmins()">{{'button.inActive' |
+                translate}}<span>{{(inActiveAdminsCount ? inActiveAdminsCount:0) | number: '2.0' }}</span></button>
+            </div>
+            <div class="delete-div"><button class="btn" (click)="multiDelete(deleteAll)" data-target="#deleteAll"><img src="{{trash}}">Delete All</button></div>
+          </div>
+          <div class="custom-datatable">
+            <ngx-datatable [rows]="adminList" *ngIf="totalAdmins != 0" [scrollbarH]="true" class="bootstrap material"
+              [loadingIndicator]="loadingIndicator" [headerHeight]="32" [footerHeight]="45" [rowHeight]="'auto'"
+              [columnMode]="ColumnMode.force" [reorderable]="reorderable" [selected]="selected"
+              [selectionType]="SelectionType.checkbox" [selectAllRowsOnPage]="false" (activate)="onActivate($event)"
+              (select)="onSelect($event)">
+              <ngx-datatable-column [width]="30" [sortable]="false" [canAutoResize]="false" [draggable]="false"
+                [resizeable]="false" [headerCheckboxable]="true" [checkboxable]="true">
+              </ngx-datatable-column>
+              <ngx-datatable-column name="Full Name">
+                <ng-template let-column="column" ngx-datatable-header-template>
+                  <span> {{'administration.Name' | translate}}</span>
+                </ng-template>
+  
+                <ng-template ngx-datatable-cell-template let-value="value">
+                  {{value ? value:'-'}}
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column name="Mobile Number">
+                <ng-template let-column="column" ngx-datatable-header-template>
+                  <span>{{'administration.PhoneNumber' | translate}}</span>
+                </ng-template>
+                <ng-template ngx-datatable-cell-template let-value="value">
+                  {{value ? value:'-'}}
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column [width]="200" name="Login Id">
+                <ng-template let-column="column" ngx-datatable-header-template>
+                  <span>{{'administration.EmailAddress' | translate}}</span>
+                </ng-template>
+                <ng-template ngx-datatable-cell-template let-value="value">
+                  {{value}}
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column name="Role">
+                <ng-template let-column="column" ngx-datatable-header-template>
+                  <span>{{'administration.UserPermission' | translate}}</span>
+                </ng-template>
+                <ng-template ngx-datatable-cell-template let-value="value">
+                  <span *ngIf="value == 'CONCIERGE'">{{'administration.concierge' | translate}}</span>
+                  
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column name="Actions" [width]="200" [sortable]="false" prop="id">
+                <ng-template let-column="column" ngx-datatable-header-template>
+                  <span>{{'administration.Actions' | translate}}</span>
+                </ng-template>
+                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                  <div class="d-flex">
+  
+                    <button *ngIf="accountStatus == 'isActive'" class="view mx-2" (click)="openModal(template, row)">
+                      <img src="{{viewIcon}}"> {{'button.viewDetails' | translate}}
+                    </button>
+                 
+                    <button *ngIf="accountStatus == 'isRequstedUser'" class="approve mx-2"
+                      (click)="approveRejectModal(approveReject, row)">
+                      <img src="{{approveIcon}}"> {{'button.approve'| translate}}
+                    </button>
+                    <button *ngIf="accountStatus == 'isRequstedUser'" class="decline mx-2"
+                      (click)="approveRejectModal(approveReject, row)">
+                      <img src="{{declineIcon}}"> {{'button.decline'| translate}}
+                    </button>
+  
+                    <button *ngIf="accountStatus == 'isActive'" class="delete mx-2"
+                      (click)="deleteConciergeModal(deleteConcierge, row.uuid)">
+                      <img src="{{deleteIcon}}"> {{'button.delete' | translate}}
+                    </button>
+                    <button *ngIf="accountStatus == 'isDeleted'" class="view mx-2" (click)="openModal(template, row)">
+                      <img src="{{viewIcon}}"> {{'button.viewDetails' | translate}}
+                    </button>
+                  </div>
+                </ng-template>
+              </ngx-datatable-column>
+            </ngx-datatable>
+            <div class="inner-content alignment" *ngIf="totalAdmins === 0">{{'paginationContent.noAdminsFound' |
+              translate}}</div>
+            <div class="customPagination" *ngIf="totalAdmins">
+              <ngb-pagination [collectionSize]="totalAdmins" [maxSize]="3" [pageSize]="perPage" [(page)]="page"
+                (pageChange)="loadPage($event)">
+                <ng-template ngbPaginationPrevious>{{'paginationContent.Previous' | translate}}</ng-template>
+                <ng-template ngbPaginationNext>{{'paginationContent.Next' | translate}}</ng-template>
+              </ngb-pagination>
+              <input type="number" NumericInput placeholder="{{'customers.EnterPageNumber' | translate }}"
+                (input)="onPageNumber($event)">
+              <button class="btn btn-download" (click)="exportAsXLSX()"><img src="{{downloadCSV}}"> {{'button.DownloadCSV'
+                | translate}}</button>
+            </div>
+          </div>
+          <div class="noData" *ngIf="adminList?.length === 0 && totalAdmins !== 0">{{'paginationContent.noAdminsFound' |
+            translate}}</div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</section>
+
+<ng-template #template>
+  <div class="modal-header">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <div class="heading-text">
+      <ng-container *ngIf="openData.role == 'ADMIN' || openData.role == 'SUPER_ADMIN'" >
+      <h4 class="modal-title pull-left">{{'administration.AdminProfile' | translate}}</h4>
+    </ng-container>
+    <ng-container *ngIf="openData.role == 'CONCIERGE'" >
+      <h4 class="modal-title pull-left">{{'administration.ConciergeProfile' | translate}}</h4>
+    </ng-container>
+    </div>
+  </div>
+  <div class="modal-body ">
+    <div class="border-top">
+      <div class="data-content">
+        <div class="dataWithImage">
+          <div class="image user">
+            <img src="{{openData.profileImage || './assets/images/user.png'}}" alt="image">
+          </div>
+          <div class="text">
+            <p class="font-sm color-dark">{{'administration.UserName' | translate}}</p>
+            <h4 class="font-md color-light">{{openData.fullName}}</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="border-top">
+      <div class="data-content">
+        <p class="font-sm color-dark">{{'administration.MobileNumber' | translate}}</p>
+        <h4 class="font-md color-light">{{openData.mobileNumber}}</h4>
+      </div>
+    </div>
+    <div class="border-top">
+      <div class="data-content">
+        <p class="font-sm color-dark">{{'administration.EmailAddress' | translate}}</p>
+        <h4 class="font-md color-light">{{openData.loginId}}</h4>
+      </div>
+    </div>
+    <div class="border-top">
+      <div class="data-content">
+        <p class="font-sm color-dark">{{'administration.UserPermission' | translate}}</p>
+        <h4 class="font-md color-light">{{openData.role}}</h4>
+      </div>
+    </div>
+    <button type="button" class="btn-style2 button-secondry  mt-2 w-100" aria-label="Close" (click)="modalRef.hide()">
+      {{'administration.Close' | translate}}
+    </button>
+  </div>
+
+</ng-template>
+
+<ng-template #delete>
+  <div class="modal-body deleteModal">
+    <img class="icon" src="./../assets/images/delete.svg" alt="delete">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+
+    <p class="alertText font-md color-dark ">{{'administration.DeleteAdmin' | translate}}</p>
+    <p class="font-sm color-light para-p">{{'administration.content' | translate}}</p>
+    <div class="d-flex">
+      <a class="button-secondry btn-style2 mx-2 w-100" (click)="decline()">{{'administration.Cancel' | translate}} </a>
+      <a class="button-red btn-style2  mx-2 w-100" (click)="confirm()">{{'administration.Delete' | translate}} </a>
+    </div>
+  </div>
+</ng-template>
+<ng-template #deleteConcierge>
+  <div class="modal-body deleteModal">
+    <img class="icon" src="./../assets/images/delete.svg" alt="delete">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+
+    <p class="alertText font-md color-dark ">{{'administration.DeleteConcierge' | translate}}</p>
+    <p class="font-sm color-light para-p">{{'administration.contentConcierge' | translate}}</p>
+    <div class="d-flex">
+      <a class="button-secondry btn-style2 mx-2 w-100" (click)="decline()">{{'administration.Cancel' | translate}} </a>
+      <a class="button-red btn-style2  mx-2 w-100" (click)="confirmConcierge()">{{'administration.Delete' | translate}} </a>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #approveReject>
+  <div class="modal-header">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <div class="heading-text">
+      <ng-container *ngIf="openData.role == 'ADMIN' || openData.role == 'SUPER_ADMIN'" >
+      <h4 class="modal-title pull-left">{{'administration.adminDetails' | translate}}</h4>
+    </ng-container>
+    <ng-container *ngIf="openData.role == 'CONCIERGE'" >
+      <h4 class="modal-title pull-left">{{'administration.conciergeDetails' | translate}}</h4>
+    </ng-container>
+    </div>
+  </div>
+  <div class="modal-body ">
+    <div class="border-top">
+      <div class="data-content">
+        <p class="font-sm color-dark">{{'administration.UserName' | translate}}</p>
+        <h4 class="font-md color-light">{{openData.fullName}}</h4>
+      </div>
+    </div>
+    <div class="border-top">
+      <div class="data-content">
+        <p class="font-sm color-dark">{{'administration.MobileNumber' | translate}}</p>
+        <h4 class="font-md color-light">{{openData.mobileNumber ? openData.mobileNumber:'-'}}</h4>
+      </div>
+    </div>
+    <div class="border-top">
+      <div class="data-content">
+        <p class="font-sm color-dark">{{'administration.EmailAddress' | translate}}</p>
+        <h4 class="font-md color-light">{{openData.loginId}}</h4>
+      </div>
+    </div>
+    <div class="border-top">
+      <div class="data-content">
+        <p class="font-sm color-dark">{{'administration.UserPermission' | translate}}</p>
+        <h4 class="font-md color-light">{{openData.role}}</h4>
+      </div>
+    </div>
+    <!-- <button type="button" class="btn-style2 button-secondry  mt-2 w-100" aria-label="Close" (click)="modalRef.hide()">
+      {{'administration.Close' | translate}}
+    </button> -->
+    <div class="d-flex">    
+        <ng-container *ngIf="openData.role == 'ADMIN' || openData.role == 'SUPER_ADMIN'" >
+          <a type="button" (click)="declineUser()" class="btn-style2 delete mx-2 w-100">
+            {{'button.decline' | translate}} </a>
+          <a type="button" (click)="approveUser()" class="btn-style2 approve mx-2 w-100">{{'button.approve' |
+            translate}} </a>
+        </ng-container>
+        <ng-container *ngIf="openData.role == 'CONCIERGE'" >
+          <a type="button" (click)="declineUserConcierge()" class="btn-style2 delete mx-2 w-100">
+            {{'button.decline' | translate}} </a>
+          <a type="button" (click)="approveUserConcierge()" class="btn-style2 approve mx-2 w-100">{{'button.approve' |
+            translate}} </a>
+        </ng-container>
+    </div>
+  </div>
+
+</ng-template>
+
+
+<ng-template #successPopupAdmin>
+  <div class="modal-body">
+    <div class="complete-success">
+      <div class="img-con fullImage">
+        <img src="{{checkCircle}}" alt="Check Icon" />
+      </div>
+      <div class="middle-sec">
+        <div class="heading">
+          {{'carsmanagement.success' | translate}}
+        </div>
+        <div class="details">
+          {{'administration.approvedSuccessfullyAdmin' | translate}}
+        </div>
+      </div>
+      <div>
+        <button (click)="modalRef.hide()" class="view fullImage ok">
+          {{'button.ok' | translate}}
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #successPopupConcierge>
+  <div class="modal-body">
+    <div class="complete-success">
+      <div class="img-con fullImage">
+        <img src="{{checkCircle}}" alt="Check Icon" />
+      </div>
+      <div class="middle-sec">
+        <div class="heading">
+          {{'carsmanagement.success' | translate}}
+        </div>
+        <div class="details">
+          {{'administration.approvedSuccessfullyConcierge' | translate}}
+        </div>
+      </div>
+      <div>
+        <button (click)="modalRef.hide()" class="view fullImage ok">
+          {{'button.ok' | translate}}
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #deletePopupAdmin>
+  <div class="modal-body">
+    <div class="complete-success">
+      <div class="img-con fullImage">
+        <img src="{{checkCircle}}" alt="Check Icon" />
+      </div>
+      <div class="middle-sec">
+        <div class="heading">
+          {{'carsmanagement.deleted' | translate}}
+        </div>
+        <div class="details">
+          {{'administration.deleteSuccessfullyAdmin' | translate}}
+        </div>
+      </div>
+      <div>
+        <button (click)="modalRef.hide()" class="view fullImage ok">
+          {{'button.ok' | translate}}
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #deletePopupConcierge>
+  <div class="modal-body">
+    <div class="complete-success">
+      <div class="img-con fullImage">
+        <img src="{{checkCircle}}" alt="Check Icon" />
+      </div>
+      <div class="middle-sec">
+        <div class="heading">
+          {{'carsmanagement.deleted' | translate}}
+        </div>
+        <div class="details">
+          {{'administration.deleteSuccessfullyConcierge' | translate}}
+        </div>
+      </div>
+      <div>
+        <button (click)="modalRef.hide()" class="view fullImage ok">
+          {{'button.ok' | translate}}
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+
+<ng-template #deleteAdmin>
+  <div class="modal-body">
+    <div class="complete-success">
+      <div class="img-con fullImage">
+        <img src="{{checkCircle}}" alt="Check Icon" />
+      </div>
+      <div class="middle-sec">
+        <div class="heading">
+          {{'carsmanagement.deleted' | translate}}
+        </div>
+        <div class="details">
+          {{'administration.deleteAdmin' | translate}}
+        </div>
+      </div>
+      <div>
+        <button (click)="modalRef.hide()" class="view fullImage ok">
+          {{'button.ok' | translate}}
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #deleteConciergeAdmin>
+  <div class="modal-body">
+    <div class="complete-success">
+      <div class="img-con fullImage">
+        <img src="{{checkCircle}}" alt="Check Icon" />
+      </div>
+      <div class="middle-sec">
+        <div class="heading">
+          {{'carsmanagement.deleted' | translate}}
+        </div>
+        <div class="details">
+          {{'administration.deleteConcierge' | translate}}
+        </div>
+      </div>
+      <div>
+        <button (click)="modalRef.hide()" class="view fullImage ok">
+          {{'button.ok' | translate}}
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #deleteAll let-modal>
+  <div class="modal-body">
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span class="material-icons" style="color: #DC3545;">
+        <img src="{{closeIcon}}">
+      </span>
+    </button>
+    <div class="text-center delete-sec">
+      <span class="material-icons">
+        <img src="{{deletepopupIcon}}">
+      </span>
+      <h4>{{'administration.DeleteConcierge' | translate}}</h4>
+      <p class="text-center">{{'administration.deleteAllConcierge' | translate}}</p>
+    </div>
+  </div>
+  <div class="button-style">
+    <button type="submit" style="width: 100%;" class="btn car-update" (click)="deleteAllConciere()">{{'button.delete' |
+      translate}}</button>
+    <button type="button" style="width: 100%;" class="btn btn-dark"
+      (click)="modal.dismiss('Cross click')">{{'button.cancel' | translate}}</button>
+  </div>
+</ng-template>
+
+
+<ng-template #deletePopup>
+  <div class="modal-body">
+    <div class="complete-success">
+      <div class="img-con fullImage">
+        <img src="{{checkCircle}}" alt="Check Icon" />
+      </div>
+      <div class="middle-sec">
+        <div class="heading">
+          {{'carsmanagement.deleted' | translate}}
+        </div>
+        <div class="details">
+          {{'administration.deleteSuccessfullyConcierge' | translate}}
+        </div>
+      </div>
+      <div>
+        <button (click)="modalRef.hide()" class="view fullImage ok">
+          {{'button.ok' | translate}}
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>

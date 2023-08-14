@@ -1,0 +1,206 @@
+<section class="content-wrap">
+  <div class="content-main customers">
+    <div class="content-container">
+      <div class="header-title">
+        <p class="font-sm font-termina color-dark font-w700">
+          {{'customers.heading' | translate }}
+        </p>
+        <div class="filters">
+          <div class="search">
+            <input type="text" #searchBox (input)="onSearch(searchBox.value)" name="Search" id="Search"
+              class="form-control search-bar" placeholder=" {{'customers.searchPlaceholder' | translate }}">
+            <span class="icon">
+              <img src="{{searchIcon}}" alt="icon">
+            </span>
+          </div>
+        </div>
+        <div class="custom-datatable customer-table">
+          <ngx-datatable [rows]="customerList" [scrollbarH]="datatableResponsive" class="bootstrap"
+            [loadingIndicator]="loadingIndicator" [headerHeight]="32" [footerHeight]="45" [rowHeight]="'auto'"
+            [columnMode]="ColumnMode.force" [reorderable]="reorderable" [selected]="selected"
+            [selectionType]="SelectionType.checkbox" [selectAllRowsOnPage]="false" (activate)="onActivate($event)"
+            (select)="onSelect($event)">
+            <ngx-datatable-column [width]="30" [sortable]="false" [canAutoResize]="false" [draggable]="false"
+              [resizeable]="false" [headerCheckboxable]="true" [checkboxable]="true">
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Profile Image" [sortable]="false">
+              <ng-template let-column="column" ngx-datatable-header-template>
+              </ng-template>
+              <ng-template ngx-datatable-cell-template let-value="value">
+                <span class="customerName">
+                  <span class="customerImage">
+                    <img src="{{ value || './assets/images/user.png' }}" alt="user">
+                  </span>
+                </span>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Full Name">
+              <ng-template let-column="column" class="customerNameHeading" ngx-datatable-header-template>
+                <span>{{'customers.CustomerName' | translate }}</span>
+              </ng-template>
+              <ng-template ngx-datatable-cell-template let-value="value">
+                <span class="customerName">
+
+                  {{value}}
+                </span>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Mobile Number">
+              <ng-template let-column="column" ngx-datatable-header-template>
+                <span>{{'customers.PhoneNumber' | translate }}</span>
+              </ng-template>
+              <ng-template ngx-datatable-cell-template let-row="row">
+                <span *ngIf="row.countryCode">({{row.countryCode}}) &nbsp;</span> {{row.mobileNumber}}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Login Id">
+              <ng-template let-column="column" ngx-datatable-header-template>
+                <span>{{'customers.EmailAddress' | translate }}</span>
+              </ng-template>
+              <ng-template ngx-datatable-cell-template let-value="value">
+                {{value}}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Completed Trips">
+              <ng-template let-column="column" ngx-datatable-header-template>
+                <span> {{'customers.NumberOfRides' | translate }}</span>
+              </ng-template>
+              <ng-template ngx-datatable-cell-template let-value="value">
+                <img class="car-image" src="{{ carIcon }}" alt="user"> {{value}} Rides
+              </ng-template>
+            </ngx-datatable-column>
+            <!-- <ngx-datatable-column name="cancelled Trips">
+              <ng-template let-column="column" ngx-datatable-header-template>
+                <span>{{'customers.NumberOfRides' | translate }}</span>
+              </ng-template>
+              <ng-template ngx-datatable-cell-template let-value="value">
+                {{value}}
+              </ng-template>
+            </ngx-datatable-column> -->
+            <ngx-datatable-column name="Actions" [sortable]="false" prop="id">
+              <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                <button class="view" (click)="openModal(template, row)">
+                  <img src="{{viewIcon}}"> {{'customers.ViewDetails' | translate }}
+                </button>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+          <div class="inner-content alignment" *ngIf="totalCustomers === 0">{{'customers.NoCustomersFound' | translate
+            }}</div>
+          <div class="customPagination">
+            <ng-container *ngIf="totalCustomers > 9">
+              <ngb-pagination [collectionSize]="totalCustomers" [maxSize]="3" [pageSize]="perPage" [(page)]="page"
+                (pageChange)="loadPage($event)">
+                <ng-template ngbPaginationPrevious>{{'paginationContent.Previous' | translate}}</ng-template>
+                <ng-template ngbPaginationNext>{{'paginationContent.Next' | translate}}</ng-template>
+              </ngb-pagination>
+              <input type="number" NumericInput placeholder="{{'customers.EnterPageNumber' | translate }}"
+                (input)="onPageNumber($event)">
+            </ng-container>
+            <button class="btn btn-download" (click)="exportAsXLSX()"><img src="{{downloadCSV}}"> {{'button.DownloadCSV'
+              | translate}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<ng-template #template>
+  <div class="modal-header">
+    <div type="button" class="close-btn pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </div>
+    <div class="heading-text">
+      <h4 class="modal-title pull-left">{{'customers.CustomerProfile' | translate }}</h4>
+    </div>
+  </div>
+  <div class="modal-body ">
+    <div class="border-top">
+      <div class="data-content">
+        <div class="dataWithImage">
+          <div class="image user">
+            <img src="{{ openData.profileImage || userDefault }}" alt="user">
+          </div>
+          <div class="text">
+            <p class="font-sm color-dark">{{'customers.UserName' | translate }}</p>
+            <h4 class="font-md color-light">{{openData.fullName}}</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="border-top">
+      <div class="data-content">
+        <p class="font-sm color-dark">{{'customers.Rating' | translate }}</p>
+        <h4 class="font-md color-light">
+          <!-- <rating [(ngModel)]="CustomerRating" [max]="max" [readonly]="isReadonly"></rating> -->
+          <div class="star-ratings-css">
+            <div class="star-ratings-css-top" [style.width.%]="(CustomerRating*10)*2">
+              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+            </div>
+            <div class="star-ratings-css-bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+            </div>
+          </div>
+          <span class="stars">
+            <ng-container *ngIf="CustomerRating < 1.4">Poor</ng-container>
+            <ng-container *ngIf="CustomerRating < 2.5 && CustomerRating > 1.5">Fair</ng-container>
+            <ng-container *ngIf="CustomerRating < 3.5 && CustomerRating > 2.5">Good</ng-container>
+            <ng-container *ngIf="CustomerRating < 4.5 && CustomerRating > 3.5">Very Good</ng-container>
+            <ng-container *ngIf="CustomerRating > 4.5">Excellent</ng-container>
+          </span>
+        </h4>
+      </div>
+    </div>
+    <div class="border-top">
+      <div class="data-content">
+        <p class="font-sm color-dark">{{'customers.MobileNumber' | translate }}</p>
+        <h4 class="font-md color-light">{{openData.countryCode}}&ensp;{{openData.mobileNumber}}</h4>
+      </div>
+    </div>
+    <div class="border-top">
+      <div class="data-content">
+        <p class="font-sm color-dark">{{'customers.EmailAddress' | translate }}</p>
+        <h4 class="font-md color-light">{{openData.loginId}}</h4>
+      </div>
+    </div>
+    <!-- <div class="border-top">
+      <div class="data-content">
+        <p class="font-sm color-dark">User Permission</p>
+        <h4 class="font-md color-light">{{openData.role}}</h4>
+      </div>
+    </div> -->
+    <div class="border-top">
+      <div class="data-content" style="width: 50%; display: inline-block">
+        <p class="font-sm color-dark">{{'customers.NumberOfRides' | translate }}</p>
+        <h4 class="font-md color-light">{{openData.completedTrips ? openData.completedTrips:'0' }} Rides</h4>
+      </div>
+      <div class="data-content" style="width: 50%; display: inline-block">
+        <p class="font-sm color-dark">{{'customers.CancelledOfRides' | translate }}</p>
+        <h4 class="font-md color-light">{{openData.cancelledTrips ? openData.cancelledTrips:'0' }} Rides</h4>
+      </div>
+    </div>
+    <div class="border-top">
+      <div class="data-content">
+        <p class="font-sm color-dark">{{'customers.DateofJoining' | translate }}</p>
+        <h4 class="font-md color-light">{{openData.dateOfJoining| date: 'dd MMMM yyyy, h:mm a'}}</h4>
+      </div>
+    </div>
+    <div class="border-top">
+      <div class="data-content">
+        <p class="font-sm color-dark">Payment Methods</p>
+        <table class="table tableStyle">
+          <tr>
+            <td>Cash</td>
+            <td>{{ openData?.cash }} AED</td>
+          </tr>
+          <tr *ngFor="let payment of payments">
+            <td width="50%">
+              <h4 class="font-md color-dark">{{ payment.key }}</h4>
+            </td>
+            <td>{{ payment.value}}</td>
+          </tr>
+
+        </table>
+      </div>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,497 @@
+@import '../../../../scss/theme.scss';
+
+agm-map {
+  height: 100%;
+}
+
+.filters {
+  display: flex;
+  margin-left: -5px;
+  margin-right: -5px;
+  margin-top: 17px;
+  justify-content: space-between;
+
+  >div {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+
+  .input-select {
+    width: 20%;
+    min-width: 180px;
+  }
+
+  .search {
+    width: 100%;
+    position: relative;
+
+    .form-control {
+      padding-left: 40px;
+    }
+
+    .icon {
+      position: absolute;
+      left: 15px;
+      top: 0;
+      bottom: 0;
+      display: flex;
+    }
+  }
+
+  .header-button-group {
+    display: flex;
+    border-radius: 5px;
+
+    height: 30px;
+
+
+    button.btn {
+      border: 1px solid rgb(0 0 0 / 8%);
+      padding: 0 1rem;
+      background: $color-white;
+      border-radius: 0;
+      white-space: nowrap;
+
+      span {
+        padding: 2px 3px;
+        background-color: $color-dark;
+        color: $color-white;
+        margin-left: 3px;
+        border-radius: 3px;
+      }
+
+      &.active {
+        background-color: $color-dark;
+        color: $color-white;
+      }
+    }
+  }
+}
+
+button.view {
+  border-radius: 4px;
+  border: 2px solid $color-brown1;
+}
+
+button.delete {
+  background: #e25858;
+  border-radius: 4px;
+  opacity: 1;
+  color: $color-white;
+  border: 2px solid #e25858;
+}
+
+.custom-datatable {
+  margin-top: 1rem;
+
+  ::ng-deep {
+    .ngx-datatable.bootstrap .datatable-header .datatable-header-cell {
+      border-bottom: 1px solid #d1d4d740;
+    }
+
+    .ngx-datatable.bootstrap .datatable-body .datatable-body-row .datatable-body-cell {
+      border-left: 1px solid #dddddd47;
+    }
+
+    .ngx-datatable.bootstrap .datatable-body .datatable-body-row.datatable-row-even {
+      background-color: #fafcfc;
+    }
+
+    .ngx-datatable.bootstrap .datatable-body .datatable-body-row {
+      border-top: 1px solid $color-white;
+    }
+
+    ngx-datatable {
+      background: $color-white;
+      color: $color-dark;
+
+      .datatable-header .datatable-header-cell {
+        padding: 0.5rem;
+        font-size: 12px;
+        color: $color-dark;
+        font-weight: bold;
+      }
+    }
+
+  }
+}
+
+// .close {
+//   position: absolute;
+//   top: 0;
+//   right: 0;
+// }
+
+span.ongoing {
+  width: auto;
+  padding: 5px 15px;
+  background: #00ABFC;
+  border-radius: 40px;
+  line-height: 19px;
+  color: $color-white;
+}
+
+span.completed {
+  width: 100%;
+  padding: 0px 15px;
+  background: #3FA361;
+  border-radius: 40px;
+  line-height: 19px;
+  color: $color-white;
+}
+
+span.cancelled {
+  width: 100%;
+  padding: 0px 15px;
+  background: #C6475B;
+  border-radius: 40px;
+  line-height: 19px;
+  color: $color-white;
+}
+
+.modal-content {
+  border-radius: 0;
+  border: none !important;
+
+  .modal-header {
+    position: relative;
+    padding: 0.7rem !important;
+    border-bottom: none;
+
+    button.close.pull-right {
+      margin: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+
+    .heading-text {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      justify-content: space-between;
+
+      h4 {
+        font-size: 20px;
+        color: $color-light-black;
+        margin: 0;
+        font-weight: 600;
+        letter-spacing: 1px;
+      }
+    }
+  }
+
+  .modal-body {
+    padding: 0.7rem !important;
+    padding-right: 10px !important;
+    overflow: auto;
+  }
+
+  p.comment {
+    background: #f1f1f1;
+    padding: 1rem;
+    font-size: 14px;
+    font-style: italic;
+  }
+
+  .data-content {
+    padding: 0.5rem 0;
+
+    p,
+    h4 {
+      margin-bottom: 0;
+      font-size: 12px;
+    }
+
+    p {
+      font-weight: bold;
+    }
+
+    a {
+      color: #0093ff;
+    }
+
+    .dataWithImage {
+      display: flex;
+
+      .image {
+        margin-right: 1rem;
+
+        &.user {
+          width: 33px;
+          height: 33px;
+          border-radius: 50%;
+          overflow: hidden;
+          background: #F5F5F5;
+
+          img {
+            width: 100%;
+            height: 100%;
+            vertical-align: middle;
+          }
+        }
+      }
+    }
+
+    .dataWithPhoneImage {
+      display: flex;
+
+      .image {
+        margin-right: 1rem;
+
+        &.user {
+          width: 33px;
+          height: 33px;
+          border-radius: 50%;
+          overflow: hidden;
+          background: #F5F5F5;
+
+          img {
+            width: 100%;
+            height: 100%;
+            vertical-align: middle;
+          }
+        }
+      }
+    }
+  }
+}
+
+.mobile-icon {
+  padding: 0.5rem !important;
+}
+
+.trip-location {
+  padding: 0 1.5rem !important;
+  background: #fafcfc;
+  padding: 0 1.5rem !important;
+  background: #fafcfc;
+  border: 1px solid #f5f5f5 !important;
+  position: relative;
+
+  .start-location-content {
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 15px;
+      top: 10px;
+      bottom: -20px;
+      width: 2px;
+      background: #707070;
+    }
+    .image.icon{
+      position: relative;
+    }
+  }
+}
+
+.trip-img-parent {
+  margin-right: 0px !important;
+  background: $color-white;
+  padding: 0.5rem;
+  border-radius: 50%;
+  height: 32px;
+  width: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 3px 10px #0000001a;
+}
+.main-map{
+  position: absolute;
+  border: none;
+  margin: 15px;
+  display: flex;
+}
+.map-information {
+  // left: 0 !important;
+  background-color: white;
+  margin: 15px;
+  opacity: 1 !important;
+  box-shadow: 0px 10px 10px #49536A33; 
+  max-width: 260px;
+  display: flex;
+  flex-direction: column;
+
+  @media only screen and (max-width: 600px) {
+    margin: 0;
+  }
+
+  &.right-map {
+    right: 85px;
+
+    @media only screen and (max-width: 1200px) {
+      left: 0;
+      top: 54px;
+    }
+  }
+  .map-head{
+    height: 35px;
+    background-color: #FBFBFB;
+    color: #22242A;
+    font-size: 14px;
+    font-family: "Helvetica-Neue-Bold";
+    justify-content: center;
+    display: flex;
+    align-items: center;
+  }
+  .inner-map{
+    display: flex;
+    flex-direction: row;
+    .map-sub {
+      display: flex;
+      width: 130px;
+      padding: 15px;
+      img {
+        margin-right: 9px;
+        width: 31px;
+        height: 30px;
+      }  
+      span {
+        font-size: 0.8rem;
+        text-align: left;
+        line-height: 12px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+  
+      .unit {
+        color: #939393;
+        font-size: 11px;
+        margin-top: 4px;
+        display: block;
+        font-family: "SF-Pro-Display-Bold";
+      }
+  
+      .value {
+        font-size: 15px;
+        color: #000000;
+      }
+      &:last-child{
+        border-left: 1px solid #fafafa
+      }
+    }   
+  } 
+}
+
+.back-btn {
+  background-color: white;
+  box-shadow: 0px 10px 10px #49536A33;
+  position: absolute;
+  top: 23px;
+  right: 46px;
+  border: none;
+  opacity: 1 !important;
+  height: 45px;
+  width: 45px;
+  border-radius: 50%;
+
+  @media only screen and (max-width: 600px) {
+    right: 0;
+  }
+
+  .back-icon {
+    margin-bottom: 3px;
+  }
+}
+
+.mypanel {
+  display: none !important;
+}
+
+:host ::ng-deep .gm-fullscreen-control {
+  display: none !important;
+}
+
+:host ::ng-deep .gm-svpc {
+  display: none !important;
+}
+
+:host ::ng-deep .si-wrapper-top {
+  border: none;
+  border-radius: 12px;
+}
+
+:host ::ng-deep .si-has-border .si-content-wrapper {
+  border: none;
+}
+
+:host ::ng-deep .si-content-wrapper {
+  padding: 2px !important;
+  color: $color-white;
+
+  .si-content {
+    max-width: 240px !important;
+  }
+
+  .label-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10px;
+
+    .label-address {
+      padding: 4px 8px;
+    }
+
+    .type-name {
+      white-space: nowrap;
+      padding: 3px 5px;
+      box-shadow: 0px 10px 10px #49536A33;
+      border-radius: 2px;
+      margin-left: 10px;
+
+      &.pick-up {
+        background: #F2AB3D 0% 0% no-repeat padding-box;
+      }
+
+      &.drop-off {
+        background: #5EB963 0% 0% no-repeat padding-box;
+      }
+    }
+  }
+}
+
+.content-main {
+  .modal-content {
+    border-radius: 0;
+    border: none !important;
+    height: calc(100vh - 62px);
+
+    &.col-4 {
+      position: relative;
+      z-index: 1;
+      box-shadow: 15px 0px 25px #0000000d;
+    }
+  }
+}
+
+.zoom-controls {
+  background: $color-white 0% 0% no-repeat padding-box;
+  box-shadow: 0px 10px 10px #49536A33;
+  border-radius: 23px;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  bottom: 33px;
+  right: 46px;
+
+  .border-bottom {
+    border-bottom: 1px solid #F5F5F5;
+  }
+
+  div {
+    width: 45px;
+    height: 45px;
+  }
+
+  img {
+    width: 24px;
+    height: 24px;
+    margin: 10.5px;
+    cursor: pointer;
+  }
+}

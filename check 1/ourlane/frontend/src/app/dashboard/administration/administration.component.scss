@@ -1,0 +1,31 @@
+@import './../../scss/theme.scss';
+
+.delete-sec {
+    h4 {
+      font-size: 20px;
+      color: $color-dark;
+      font-family:"termina-bold";
+    }
+    .material-icons {
+      padding: 20px 0;
+      margin-left: 20px;
+    }
+  }
+  .button-style {
+    text-align: center;
+    padding-bottom: 30px;
+  .btn-dark {
+    width: 150px!important;
+    display: inline-block;
+    font-size: 14px;
+    height: 35px;
+  }
+.car-update {
+    width: 150px!important;
+    height: 35px;
+    font-size: 14px;
+    color: $color-white;
+    background: $color-red2;
+    margin-right: 10px;
+  }
+}

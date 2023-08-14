@@ -1,0 +1,171 @@
+@import './../../../scss/theme.scss';
+
+header {
+  padding-left: 3.125rem;
+  padding-right: 3.125rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $color-white;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  box-shadow: 0px 5px 10px #0000000a;
+
+  @media only screen and (max-width: 600px) {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .action-button-wrap {
+    padding: 0;
+    margin: 0;
+
+    li {
+      display: inline-block;
+      list-style-type: none;
+      margin-left: 20px;
+      padding: 16px 0px;
+      cursor: pointer;
+      position: relative;
+
+      .bazed {
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        text-align: center;
+
+        background-color: #27FFF1;
+        border-radius: 30px;
+      }
+    }
+
+    .dropdown-menu li,
+    .dropdown-menu li a {
+      display: block;
+
+    }
+
+    .dropdown-menu li a {
+      display: flex;
+      padding: 3px 0;
+      text-align: left;
+      width: 100%;
+      text-decoration: none;
+      color: #7B7B7B;
+
+      img {
+        width: 15px;
+        margin-right: 5px;
+      }
+    }
+  }
+}
+
+.modal-body .icon {
+  width: 3.8rem;
+  margin-bottom: 0.8rem;
+}
+
+.btn-bt {
+  width: 150px;
+  height: 35px;
+  border-radius: 4px;
+  opacity: 1;
+}
+
+.profile_image {
+  width: 44px;
+  height: 30px;
+  display: block;
+  position: relative;
+
+  img {
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: auto;
+    margin: auto;
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 4px solid $color-light-brown;
+  }
+}
+
+.user-icon {
+  padding: 0 !important;
+}
+
+.filters {
+  display: flex;
+  justify-content: space-between;
+  width: calc(100% - 200px);
+
+  .input-select {
+    width: 20%;
+  }
+
+
+
+  .search {
+    width: 100%;
+    position: relative;
+
+    .form-control {
+      padding-left: 40px;
+      height: 30px;
+      font-family: "SF-Pro-Display-Medium";
+      font-size: 12px;
+    }
+
+    .icon {
+      position: absolute;
+      left: 15px;
+      top: 0;
+      bottom: 0;
+      display: flex;
+    }
+  }
+
+  .header-button-group {
+    display: flex;
+    border-radius: 5px;
+    overflow: hidden;
+
+    button.btn {
+      border: 1px solid rgb(0 0 0 / 8%);
+      padding: 0 1rem;
+      background: $color-white;
+      border-radius: 0;
+      white-space: nowrap;
+
+      span {
+        padding: 2px 3px;
+        background-color: $color-dark;
+        color: $color-white;
+        margin-left: 3px;
+        border-radius: 3px;
+      }
+
+      &.active {
+        background-color: $color-dark;
+        color: $color-white;
+      }
+    }
+  }
+}
+
+.notifications img,
+.setting img {
+  width: 15px;
+}

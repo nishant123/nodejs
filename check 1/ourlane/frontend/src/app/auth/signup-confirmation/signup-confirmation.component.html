@@ -1,0 +1,22 @@
+<div class=" confirmation-modal">
+  <div class="modal-content">
+    <div class="modal-body">
+      <img class="icon" src="./../assets/images/icon-signup.png" alt="signup">
+      <button type="button" class="close pull-right" aria-label="Close" (click)="decline()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <h4 class="alertText font-md color-dark font-termina">{{'signUpPage.modalHeader' | translate}}</h4>
+      <p class="modalContent">{{'signUpPage.modalText1' | translate}}
+        <a class="email">{{message}}</a>
+        {{'signUpPage.modalText2' |
+        translate}}
+      </p>
+      <div class="alertFooter">
+        <p>{{'signUpPage.modalFooterText' | translate}} <a (click)="resendMail()"
+            class="link">{{'signUpPage.modalFooterLink' |
+            translate}}</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

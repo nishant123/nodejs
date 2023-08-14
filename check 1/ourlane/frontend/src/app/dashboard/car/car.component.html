@@ -1,0 +1,1030 @@
+<section class="content-wrap">
+  <div class="content-main">
+    <div class="content-container">
+      <div class="header-title">
+        <div class="heading-content">
+          <h4 class="font-sm font-termina color-dark font-w700">
+            {{'carsmanagement.heading' | translate}}
+          </h4>
+          <div class="header-button-group">
+            <button [ngClass]="{'active' : carStatus}" (click)="carsOpen()">Cars</button>
+            <button [ngClass]="{'active' : carTypeStatus}" (click)="carTypeOpen()">Car Type</button>
+          </div>
+        </div>
+        <div *ngIf="carStatus" class="cars">
+          <div class="filters">
+            <div class="search">
+              <input type="text" #searchBox (input)="carSearch($event)" name="Search" id="Search"
+                class="form-control search-bar" placeholder="{{'carsmanagement.searchCar' | translate}}">
+              <span class="icon">
+                <img src="{{searchIcon}}" alt="icon">
+              </span>
+            </div>
+            <div class="header-button-group add-car">
+              <button class="add" (click)="addCar(carModal)">{{'carsmanagement.addCar' | translate}} +</button>
+            </div>
+          </div>
+
+          <div class="custom-datatable">
+            <ngx-datatable [rows]="car" [scrollbarH]="datatableResponsive" class="bootstrap"
+              [loadingIndicator]="loadingIndicator" [headerHeight]="32" [footerHeight]="45" [rowHeight]="'auto'"
+              [columnMode]="ColumnMode.force" [reorderable]="reorderable">
+
+
+              <ngx-datatable-column [width]="100" name="{{'carsmanagement.carNumber' | translate}}">
+                <ng-template let-column="column" ngx-datatable-header-template>
+                  <span>{{'carsmanagement.carNumber' | translate}}</span>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template let-value="value">
+                  {{row.carNumber}}
+                </ng-template>
+              </ngx-datatable-column>
+
+              <ngx-datatable-column [width]="90" name="{{'carsmanagement.carModel' | translate}}">
+                <ng-template let-column="column" ngx-datatable-header-template>
+                  <span>{{'carsmanagement.carModel' | translate}}</span>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template let-value="value">
+                  {{row.carModel}}
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column [width]="120" name="">
+                <ng-template let-column="column" ngx-datatable-header-template>
+                  <span>Car Type Name</span>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template let-value="value">
+                  {{row.carTypeName}}
+                </ng-template>
+              </ngx-datatable-column>
+
+              <ngx-datatable-column [width]="90" name="{{'carsmanagement.carCapacity' | translate}}">
+                <ng-template let-column="column" ngx-datatable-header-template>
+                  <span>{{'carsmanagement.carCapacity' | translate}}</span>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template let-value="value">
+                  {{row.carCapacity}} Seated
+                </ng-template>
+              </ngx-datatable-column>
+
+              <ngx-datatable-column [width]="110" name="{{'carsmanagement.driverStatus' | translate}}">
+                <ng-template let-column="column" ngx-datatable-header-template>
+                  <span>{{'carsmanagement.driverStatus' | translate}}</span>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template let-value="value">
+                  {{row.driverStatus && row.driverStatus !== null ? row.driverStatus :""}}
+                </ng-template>
+              </ngx-datatable-column>
+
+              <ngx-datatable-column [width]="100" name="{{'carsmanagement.carFactor' | translate}}">
+                <ng-template let-column="column" ngx-datatable-header-template>
+                  <span>{{'carsmanagement.carFactor' | translate}}</span>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template let-value="value">
+                  {{row.carFactor}}
+                </ng-template>
+              </ngx-datatable-column>
+
+              <ngx-datatable-column [width]="95" name="{{'carsmanagement.carOdometer' | translate}}">
+                <ng-template let-column="column" ngx-datatable-header-template>
+                  <span>{{'carsmanagement.carOdometer' | translate}}</span>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template let-value="value">
+                  {{row.carOdometer}}
+                </ng-template>
+              </ngx-datatable-column>
+
+              <ngx-datatable-column [width]="110" name="{{'carsmanagement.driverName' | translate}}">
+                <ng-template let-column="column" ngx-datatable-header-template>
+                  <span>{{'carsmanagement.driverName' | translate}}</span>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template let-value="value">
+                  {{row.driverName && row.driverName !== null ? row.driverName :""}}
+                </ng-template>
+              </ngx-datatable-column>
+
+              <ngx-datatable-column [width]="130" name="action" prop="uuid" [sortable]="false">
+                <ng-template let-column="column" ngx-datatable-header-template>
+                  <span>{{'carsmanagement.action' | translate}}</span>
+                </ng-template>
+                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                  <button class="view" (click)="updateCarEvent($event, value, carUpdateModal)" data-toggle="modal"
+                    data-target="#carUpdateModal" data-whatever="@mdo">
+                    <img src="{{editIcon}}" class="edit">
+                  </button>
+                  <ng-container *ngIf="row.driverStatus != 'Driving'">
+                    <button class="delete" (click)="deleteEvent(exampleModal); deleteCarId=value" data-toggle="modal"
+                      data-target="#exampleModal">
+                      <img src="{{deleteIcon}}"> Delete
+                    </button>
+                  </ng-container>
+                  <ng-container *ngIf="row.driverStatus == 'Driving'">
+                    <button class="delete" (click)="deleteEventDriving()">
+                      <img src="{{deleteIcon}}"> Delete
+                    </button>
+                  </ng-container>
+                </ng-template>
+              </ngx-datatable-column>
+            </ngx-datatable>
+            <div class="inner-content alignment" *ngIf="car?.length === 0 || totalCars === 0">
+              {{'carsmanagement.nocarFound' | translate}}</div>
+            <div class="customPagination" *ngIf="totalCars">
+              <ng-container>
+                <ngb-pagination [collectionSize]="totalCars" [pageSize]="perPage" [(page)]="pageNumber"
+                  (pageChange)="loadPage($event)">
+                  <ng-template ngbPaginationPrevious>{{'paginationContent.Previous' | translate}}</ng-template>
+                  <ng-template ngbPaginationNext>{{'paginationContent.Next' | translate}}</ng-template>
+                </ngb-pagination>
+                <input type="text" NumericInput placeholder="{{'customers.EnterPageNumber' | translate }}"
+                  (input)="onPageNumber($event)">
+
+                <button class="btn btn-download" (click)="getCarDetailsExcel()"><img src="{{downloadCSV}}">
+                  {{'button.DownloadCSV' | translate}}</button>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="carTypeStatus" class="carType">
+          <div class="filters">
+            <div class="search">
+              <input type="text" #searchBox (input)="carTypeSearch($event)" name="Search" id="Search"
+                class="form-control search-bar" placeholder="{{'carsmanagement.searchCarType' | translate}}">
+              <span class="icon">
+                <img src="{{searchIcon}}" alt="icon">
+              </span>
+            </div>
+            <div class="header-button-group add-car">
+              <button class="add" (click)="addTypeCar(carTypeModal)">Add Car Type +</button>
+            </div>
+            <div class="header-button-group add-car">
+              <button class="delete new deleteAll" (click)="multiDelete(deleteAll)" data-target="#deleteAll"
+                [ngClass]="{'disabled': selected.length == 0}"> <img class="mr-1" src="{{deleteIcon}}"> Delete Car
+                Types</button>
+            </div>
+          </div>
+
+          <div class="custom-datatable">
+            <ngx-datatable [rows]="carType" [scrollbarH]="datatableResponsive" class="bootstrap"
+              [loadingIndicator]="loadingIndicator" [headerHeight]="32" [footerHeight]="45" [rowHeight]="'auto'"
+              [columnMode]="ColumnMode.force" [reorderable]="reorderable" [selected]="selected"
+              [selectionType]="SelectionType.checkbox" [selectAllRowsOnPage]="false" (activate)="onActivate($event)"
+              (select)='onSelect($event)'>
+              <ngx-datatable-column [width]="30" [sortable]="false" [canAutoResize]="false" [draggable]="false"
+                [resizeable]="false" [headerCheckboxable]="true" [checkboxable]="true"
+                (change)="onCheckboxChangeFn($event)">
+              </ngx-datatable-column>
+
+              <ngx-datatable-column [width]="90" [sortable]="false">
+                <ng-template let-column="column" ngx-datatable-header-template>
+                  <span>Car Type Image</span>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template let-value="value">
+                  <img src="{{row.carImage}}" alt="" class="image-fix">
+                </ng-template>
+              </ngx-datatable-column>
+
+              <ngx-datatable-column [width]="100" name="">
+                <ng-template let-column="column" ngx-datatable-header-template>
+                  <span>Car Type Name</span>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template let-value="value">
+                  {{row.carTypeName}}
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column [width]="100" name="">
+                <ng-template let-column="column" ngx-datatable-header-template>
+                  <span>Booking Fee</span>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template let-value="value">
+                  {{row.bookingFee}}
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column [width]="100" name="">
+                <ng-template let-column="column" ngx-datatable-header-template>
+                  <span>Price per Km</span>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template let-value="value">
+                  {{row.pricePerHourKM}}
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column [width]="100" name="">
+                <ng-template let-column="column" ngx-datatable-header-template>
+                  <span>Price per Min</span>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template let-value="value">
+                  {{row.pricePerMin}}
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column [width]="100" name="">
+                <ng-template let-column="column" ngx-datatable-header-template>
+                  <span>Price per Hour</span>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template let-value="value">
+                  {{row.pricePerHour}}
+                </ng-template>
+              </ngx-datatable-column>
+
+
+
+              <ngx-datatable-column [width]="130" name="action" prop="uuid" [sortable]="false">
+                <ng-template let-column="column" ngx-datatable-header-template>
+                  <span>{{'carsmanagement.action' | translate}}</span>
+                </ng-template>
+                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                  <button class="view" (click)="updateCarTypeEvent($event, value, carTypeUpdateModal)"
+                    data-toggle="modal" data-target="#carTypeUpdateModal" data-whatever="@mdo">
+                    <img src="{{editIcon}}" class="edit">
+                  </button>
+                  <ng-container>
+                    <button class="delete" (click)="deleteEvent(deleteCarTypeModal); deleteCarId=value"
+                      data-toggle="modal" data-target="#deleteCarTypeModal">
+                      <img src="{{deleteIcon}}"> Delete
+                    </button>
+                  </ng-container>
+
+                </ng-template>
+              </ngx-datatable-column>
+            </ngx-datatable>
+
+            <div class="customPagination">
+              <ng-container>
+                <ngb-pagination [collectionSize]="totalCarsCarType" [pageSize]="perPage" [(page)]="pageNumber"
+                  (pageChange)="loadPage($event)">
+                  <ng-template ngbPaginationPrevious>{{'paginationContent.Previous' | translate}}</ng-template>
+                  <ng-template ngbPaginationNext>{{'paginationContent.Next' | translate}}</ng-template>
+                </ngb-pagination>
+                <input type="number" NumericInput placeholder="{{'customers.EnterPageNumber' | translate }}"
+                  (input)="onPageNumber($event)">
+
+                <button class="btn btn-download"><img src="{{downloadCSV}}">
+                  {{'button.DownloadCSV' | translate}}</button>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- add carType popup -->
+<ng-template #carTypeModal let-modal>
+  <div class="add-car-popup">
+    <div class="modal-header">
+      <h3 class="modal-title" id="exampleModalLabel">Add new car type</h3>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span class="material-icons">
+          <img src="{{closeIcon}}">
+        </span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="carTypeForm">
+        <div class="row">
+          <div class="col-6">
+            <label for="carTypeName"> {{'carsmanagement.carTypeName' | translate}}<span
+                class="error require">*</span></label>
+            <input class="form-control" type="text" name="carTypeName" formControlName="carTypeName"
+              placeholder="Enter car type name">
+            <div *ngIf="carTypeNamet.invalid && (carTypeNamet.dirty || carTypeNamet.touched)">
+              <div *ngIf="carTypeNamet.errors.required">
+                <span class="error sum">{{'carsmanagement.carTypeName' | translate}} {{'carsmanagement.isRequired' |
+                  translate}}</span>
+              </div>
+            </div>
+            <div *ngIf="alreadyExistMsg">
+              <span class="error sum"> {{alreadyExistMsg}}</span>
+            </div>
+          </div>
+          <div class="col-6 ">
+            <label for="ex1">{{'carsmanagement.bookingFees' | translate}} <span class="error require">*</span></label>
+            <input class="form-control" NumericInput type="text" name="bookingFee" formControlName="bookingFee"
+              placeholder="{{'carsmanagement.enterBooking' | translate}}">
+
+            <div *ngIf="bookingFeest.invalid && (bookingFeest.dirty || bookingFeest.touched)">
+              <div *ngIf="bookingFeest.errors.required">
+                <span class="error sum">{{'carsmanagement.bookingFees' | translate}} {{'carsmanagement.isRequired' |
+                  translate}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row pt-2">
+          <div class="col-6">
+            <label for="pricePerhour">{{'carsmanagement.pricehour' | translate}} <span
+                class="error require">*</span></label>
+            <input NumericInput class="form-control" type="text" name="pricePerHour" formControlName="pricePerHour"
+              placeholder="{{'carsmanagement.enterpricehour' | translate}}">
+
+            <div *ngIf="pricePerHourt.invalid && (pricePerHourt.dirty || pricePerHourt.touched)">
+              <div *ngIf="pricePerHourt.errors.required">
+                <span class="error sum">{{'carsmanagement.pricePerhour' | translate}} {{'carsmanagement.isRequired' |
+                  translate}}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-6">
+            <label for="ex1">{{'carsmanagement.pricePerKilo' | translate}} <span class="error require">*</span></label>
+            <input class="form-control" NumericInput type="text" name="pricePerHourKM" formControlName="pricePerHourKM"
+              placeholder="{{'carsmanagement.enterkilometer' | translate}}">
+
+            <div *ngIf="pricePerKilometert.invalid && (pricePerKilometert.dirty || pricePerKilometert.touched)">
+              <div *ngIf="pricePerKilometert.errors.required">
+                <span class="error sum">{{'carsmanagement.pricePerKilo' | translate}} {{'carsmanagement.isRequired' |
+                  translate}}</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="row pt-2">
+          <div class="col-6 ">
+            <label for="ex1">{{'carsmanagement.priceMin' | translate}} <span class="error require">*</span></label>
+            <input NumericInput class="form-control" type="text" name="pricePerMin" formControlName="pricePerMin"
+              placeholder="{{'carsmanagement.enterPrice' | translate}}">
+
+            <div *ngIf="pricePerminutet.invalid && (pricePerminutet.dirty || pricePerminutet.touched)">
+              <div *ngIf="pricePerminutet.errors.required">
+                <span class="error sum">{{'carsmanagement.pricePerminute' | translate}} {{'carsmanagement.isRequired' |
+                  translate}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 ">
+            <label for="ex1">Waiting charge per Minute <span class="error require">*</span></label>
+            <input NumericInput class="form-control" type="text" name="waitingChargePerMin"
+              formControlName="waitingChargePerMin" placeholder="Enter waiting charge per minute">
+
+            <div *ngIf="waitingChargePerMint.invalid && (waitingChargePerMint.dirty || waitingChargePerMint.touched)">
+              <div *ngIf="waitingChargePerMint.errors.required">
+                <span class="error sum">Waiting charge per Minute {{'carsmanagement.isRequired' |
+                  translate}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 p-0 discrip">
+          <label for="ex1">{{'carsmanagement.addDescription' | translate}} <span class="error require">*</span></label>
+          <textarea type="text" #experiencePro id="addDescription" formControlName="addDescription"
+            class="form-control mb-1 fix-width" maxlength="max"
+            placeholder="{{'carsmanagement.enterDescription' | translate}}"></textarea>
+          <span class="character">{{experiencePro?.value.length || 0}}/{{max}}</span>
+          <div *ngIf="addDescriptiont.invalid && (addDescriptiont.dirty || addDescriptiont.touched)">
+            <div *ngIf="addDescriptiont.errors.required">
+              <span class="error sum">{{'carsmanagement.addDescriptiont' | translate}} {{'carsmanagement.isRequired' |
+                translate}}</span>
+            </div>
+
+          </div>
+          <div *ngIf="experiencePro?.value.length > 300">
+            <span class="error sum">{{'carsmanagement.errorMsg' | translate}}</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <label for="ex1">{{'carsmanagement.uploadCar' | translate}}
+              <span class="error require">*</span>
+            </label>
+            <div class="clearfix"></div>
+            <input id="fileupload" style="display: none;" (change)="picked1($event)" type="file" name="carImage"
+              formControlName="carImage" class="browse-file" />
+            <label for="fileupload" class="upload">
+              <div for="fileupload" class="droparea">
+                <div class="col-12 row">
+                  <div class="col-1 mt-2 p-0">
+                    <span><img src="{{uploadIcon}}"></span>
+                  </div>
+                  <div class="col-11 pl-0" *ngIf="uploadfile">
+                    <div id="spanfile" class="mt-2">{{uploadfile}}</div>
+                  </div>
+                  <div *ngIf="uploadfile" class="check"><img src="{{check}}"></div>
+                </div>
+                <div class="text" *ngIf="!uploadfile">
+                  <h6>{{'carsmanagement.dropFile' | translate}}</h6>
+                  <p>{{'carsmanagement.maxLimit' | translate}}</p>
+                  <div class="col-11 pl-0" *ngIf="uploadfile">
+                    <div id="spanfile" class="mt-2">{{uploadfile}}</div>
+                  </div>
+
+                </div>
+              </div>
+            </label>
+            <h6 id="file_detail" class="error"></h6>
+            <div class="clearfix"></div>
+          </div>
+          <div class="col-6">
+            <label for="ex1">{{'carsmanagement.upload3dImage' | translate}}
+              <span class="error require">*</span>
+            </label>
+            <div class="clearfix"></div>
+            <input id="fileupload3d" style="display: none;" (change)="image3dpicked1($event)" type="file"
+              name="car3dImage" formControlName="car3dImage" class="browse-file" />
+            <label for="fileupload3d" class="upload">
+              <div for="fileupload3d" class="droparea">
+                <div class="col-12 row">
+                  <div class="col-1 mt-2 p-0">
+                    <span><img src="{{uploadIcon}}"></span>
+                  </div>
+                  <div class="col-11 pl-0" *ngIf="uploadfile3d">
+                    <div id="spanfile3d" class="mt-2">{{uploadfile3d}}</div>
+                  </div>
+                  <div *ngIf="uploadfile3d" class="check"><img src="{{check}}"></div>
+                </div>
+                <div class="text" *ngIf="!uploadfile3d">
+                  <h6>{{'carsmanagement.dropFile' | translate}}</h6>
+                  <p>{{'carsmanagement.maxLimit3dImage' | translate}}</p>
+                </div>
+              </div>
+            </label>
+            <h6 id="file_detail_3d" class="error"></h6>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary btn-dark" (click)="modal.dismiss('Cross click')">{{'button.cancel'
+        | translate}}</button>
+      <button type="submit" class="btn  btn-primary green-botton car-update" (click)="carTypeSubmit()"
+        [disabled]="carTypeForm.invalid">{{'carsmanagement.addCar' | translate}}</button>
+    </div>
+  </div>
+</ng-template>
+
+<!-- edit carType popup -->
+<ng-template #carTypeUpdateModal let-modal>
+  <div class="add-car-popup">
+    <div class="modal-header">
+      <h3 class="modal-title" id="exampleModalLabel">Update Car type</h3>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span class="material-icons">
+          <img src="{{closeIcon}}">
+        </span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="carTypeUpdateForm">
+        <input type="hidden" name="carTypeId" formControlName="carTypeId">
+        <div class="row">
+          <div class="col-6">
+            <label for="carTypeName"> {{'carsmanagement.carTypeName' | translate}}<span
+                class="error require">*</span></label>
+            <input class="form-control" type="text" name="carTypeName" formControlName="carTypeName"
+              placeholder="Enter car type name">
+            <!-- <div *ngIf="carTypeNamet.invalid && (carTypeNamet.dirty || carTypeNamet.touched)">
+              <div *ngIf="carTypeNamet.errors.required">
+                <span class="error sum">{{'carsmanagement.carTypeName' | translate}} {{'carsmanagement.isRequired' |
+                  translate}}</span>
+              </div>
+            </div> -->
+          </div>
+          <div class="col-6 ">
+            <label for="ex1">{{'carsmanagement.bookingFees' | translate}} <span class="error require">*</span></label>
+            <input class="form-control" NumericInput type="text" name="bookingFee" formControlName="bookingFee"
+              placeholder="{{'carsmanagement.enterBooking' | translate}}">
+
+            <!-- <div *ngIf="bookingFeest.invalid && (bookingFeest.dirty || bookingFeest.touched)">
+              <div *ngIf="bookingFeest.errors.required">
+                <span class="error sum">{{'carsmanagement.bookingFees' | translate}} {{'carsmanagement.isRequired' |
+                  translate}}</span>
+              </div>
+            </div> -->
+          </div>
+        </div>
+        <div class="row pt-2">
+          <div class="col-6">
+            <label for="pricePerhour">{{'carsmanagement.pricehour' | translate}} <span
+                class="error require">*</span></label>
+            <input NumericInput class="form-control" type="text" name="pricePerHour" formControlName="pricePerHour"
+              placeholder="{{'carsmanagement.enterpricehour' | translate}}">
+
+            <!-- <div *ngIf="pricePerHourt.invalid && (pricePerHourt.dirty || pricePerHourt.touched)">
+              <div *ngIf="pricePerHourt.errors.required">
+                <span class="error sum">{{'carsmanagement.pricePerhour' | translate}} {{'carsmanagement.isRequired' |
+                  translate}}</span>
+              </div>
+            </div> -->
+          </div>
+
+          <div class="col-6">
+            <label for="ex1">{{'carsmanagement.pricePerKilo' | translate}} <span class="error require">*</span></label>
+            <input class="form-control" NumericInput type="text" name="pricePerHourKM" formControlName="pricePerHourKM"
+              placeholder="{{'carsmanagement.enterkilometer' | translate}}">
+
+            <!-- <div *ngIf="pricePerKilometert.invalid && (pricePerKilometert.dirty || pricePerKilometert.touched)">
+              <div *ngIf="pricePerKilometert.errors.required">
+                <span class="error sum">{{'carsmanagement.pricePerKilo' | translate}} {{'carsmanagement.isRequired' |
+                  translate}}</span>
+              </div>
+            </div> -->
+          </div>
+
+        </div>
+        <div class="row pt-2">
+          <div class="col-6 ">
+            <label for="ex1">{{'carsmanagement.priceMin' | translate}} <span class="error require">*</span></label>
+            <input NumericInput class="form-control" type="text" name="pricePerMin" formControlName="pricePerMin"
+              placeholder="{{'carsmanagement.enterPrice' | translate}}">
+          </div>
+          <div class="col-6 ">
+            <label for="ex1">Waiting charge per Minute <span class="error require">*</span></label>
+            <input NumericInput class="form-control" type="text" name="waitingChargePerMin"
+              formControlName="waitingChargePerMin" placeholder="Enter waiting charge per minute">
+          </div>
+        </div>
+
+        <div class="col-12 p-0 discrip">
+          <label for="ex1">{{'carsmanagement.addDescription' | translate}} <span class="error require">*</span></label>
+          <textarea type="text" #experiencePro id="addDescription" formControlName="addDescription"
+            class="form-control mb-1 fix-width" maxlength="max"
+            placeholder="{{'carsmanagement.enterDescription' | translate}}"></textarea>
+
+        </div>
+        <div class="row">
+          <div class="col-6  mt-2">
+            <label for="ex1">{{'carsmanagement.uploadCar' | translate}}
+              <span class="error require">*</span>
+            </label>
+            <div class="clearfix"></div>
+            <input id="fileupload1" style="display: none;" (change)="picked2($event)" type="file" class="browse-file"
+              name="carImage" formControlName="carImage" value="" />
+            <label for="fileupload1" class="upload">
+              <div for="fileupload1" class="droparea">
+                <div class="col-12 row">
+                  <div class="col-1 mt-2 p-0">
+                    <span>
+                      <img src="{{uploadIcon}}">
+                    </span>
+                  </div>
+                  <div class="col-11 pl-0">
+                    <div id="spanfile" class="pt-2">{{uploadfile1}}</div>
+                  </div>
+                  <div *ngIf="uploadfile1" class="check"><img src="{{check}}"></div>
+                </div>
+              </div>
+            </label>
+            <h6 id="file_detail1" class="error"></h6>
+          </div>
+          <div class="col-6   mt-2">
+            <label for="ex1">{{'carsmanagement.upload3dImage' | translate}}
+              <span class="error require">*</span>
+            </label>
+            <div class="clearfix"></div>
+            <input id="fileupload3d1" style="display: none;" (change)="image3dpicked2($event)" type="file"
+              name="car3dImage" formControlName="car3dImage" class="browse-file" />
+            <label for="fileupload3d1" class="upload">
+              <div for="fileupload3d1" class="droparea">
+                <div class="col-12 row">
+                  <div class="col-1 mt-2 p-0">
+                    <span><img src="{{uploadIcon}}"></span>
+                  </div>
+                  <div class="col-11 pl-0" *ngIf="uploadfile3d1">
+                    <div id="spanfile3d1" class="mt-2">{{uploadfile3d1}}</div>
+                  </div>
+                  <div *ngIf="uploadfile3d1" class="check"><img src="{{check}}"></div>
+                </div>
+                <div class="text" *ngIf="!uploadfile3d1">
+                  <h6>{{'carsmanagement.dropFile' | translate}}</h6>
+                  <p>{{'carsmanagement.maxLimit3dImage' | translate}}</p>
+                </div>
+              </div>
+            </label>
+            <h6 id="file_detail_3d1" class="error"></h6>
+            <div class="clearfix"></div>
+          </div>
+
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary btn-dark" (click)="modal.dismiss('Cross click')">{{'button.cancel'
+        | translate}}</button>
+      <button type="submit" class="btn  btn-primary green-botton car-update " (click)="carTypeUpdateSubmit()"
+        [disabled]="carTypeUpdateForm.invalid">Update</button>
+    </div>
+  </div>
+</ng-template>
+<!-- add Car popup -->
+<ng-template #carModal let-modal>
+  <div class="add-car-popup">
+    <div class="modal-header">
+      <h3 class="modal-title" id="exampleModalLabel">{{'carsmanagement.addNewCar' | translate}}</h3>
+      <button type="button" class="close" aria-label="Close" (click)="carForm.reset(); modal.dismiss('Cross click')">
+        <span class="material-icons">
+          <img src="{{closeIcon}}">
+        </span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="carForm">
+        <div class="row">
+          <div class="col-6">
+            <label for="ex1">{{'carsmanagement.carNumber' | translate}} <span class="error require">*</span></label>
+            <input class="form-control" type="text" name="carNumber" formControlName="carNumber"
+              placeholder="{{'carsmanagement.enterCarNumber' | translate }}">
+            <div *ngIf="carNumber.invalid && (carNumber.dirty || carNumber.touched)">
+              <div *ngIf="carNumber.errors.required">
+                <span class="error sum">{{'carsmanagement.carNumber' | translate}} {{'carsmanagement.isRequired' |
+                  translate}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <label for="ex1">{{'carsmanagement.selectDriver' | translate}}</label>
+            <select class="form-control" name="driverId" formControlName="driverId" placeholder="selectDriver"
+              #driverselection (change)="changeLab(driverselection, 'add')">
+              <option class="form-control" value="">{{'carsmanagement.selectDriver' | translate}}</option>
+              <option class="form-control" *ngFor="let drivers of driverData" [value]="drivers.id">{{drivers.fullName}}
+              </option>
+            </select>
+          </div>
+          <div class="col-6 pt-2">
+            <label for="ex1">{{'carsmanagement.car' | translate}} {{'carsmanagement.carCapacity' | translate}} <span
+                class="error require">*</span></label>
+            <input class="form-control" type="text" name="carCapacity" formControlName="carCapacity"
+              placeholder="{{'carsmanagement.enterCapacity' | translate}}">
+            <div *ngIf="carCapacity.invalid && (carCapacity.dirty || carCapacity.touched)">
+              <div *ngIf="carCapacity.errors.required">
+                <span class="error sum">{{'carsmanagement.carCapacity' | translate}} {{'carsmanagement.isRequired' |
+                  translate}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 pt-2">
+            <label for="ex1">{{'carsmanagement.car' | translate}} {{'carsmanagement.carModel' | translate}} <span
+                class="error require">*</span></label>
+            <input class="form-control" type="text" name="carModel" formControlName="carModel"
+              placeholder="{{'carsmanagement.enterModel' | translate}}">
+            <div *ngIf="carModel.invalid && (carModel.dirty || carModel.touched)">
+              <div *ngIf="carModel.errors.required">
+                <span class="error sum">{{'carsmanagement.carModel' | translate}} {{'carsmanagement.isRequired' |
+                  translate}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 pt-2">
+            <label for="ex1">{{'carsmanagement.car' | translate}} {{'carsmanagement.carFactor' | translate}}</label>
+            <input class="form-control" type="text" NumericInput name="carFactor" formControlName="carFactor"
+              placeholder="{{'carsmanagement.enterFactor'| translate}}">
+          </div>
+          <div class="col-6 pt-2">
+            <label for="ex1">{{'carsmanagement.driverStatus' | translate}}</label>
+            <select class="form-control" formControlName="driverStatus" placeholder="Select status"
+              [ngClass]="{'mychanges': driverselection.value.length == 0}">
+              <option class="form-control" value="" *ngIf="driverselection.value.length == 0"
+                [disabled]="driverselection.value.length == 0">Unavailable</option>
+              <option class="form-control" *ngFor="let StatusL of driverStatus" [value]="StatusL"
+                [disabled]="driverselection.value.length == 0">{{StatusL}}</option>
+            </select>
+
+          </div>
+          <div class="col-6 pt-2">
+            <label for="ex1">{{'carsmanagement.car' | translate}} {{'carsmanagement.carOdometer' | translate}}</label>
+            <input NumericInput class="form-control" type="text" name="carOdometer" formControlName="carOdometer"
+              placeholder="{{'carsmanagement.enterOdometer' | translate}}">
+
+          </div>
+          <div class="col-6 pt-2">
+            <label for="carType">Select Car Type</label>
+            <select class="form-control" formControlName="carTypeId" name="carTypeId" (change)="selectCarType()"
+              placeholder="Select status" #carTypeId>
+              <option class="form-control" value="">{{'carsmanagement.selectCarType' | translate}}</option>
+              <option class="form-control" *ngFor="let car of carType" [value]="car.id">
+                {{car.carTypeName}}
+              </option>
+            </select>
+
+          </div>
+          <div class="col-12  discrip">
+            <label for="ex1">{{'carsmanagement.addDescription' | translate}} <span
+                class="error require">*</span></label>
+            <textarea type="text" #experiencePro id="addDescription" formControlName="addDescription"
+              class="form-control mb-1 fix-width" maxlength="max"
+              placeholder="{{'carsmanagement.enterDescription' | translate}}"></textarea>
+            <span class="character">{{experiencePro?.value.length || 0}}/{{max}}</span>
+            <div *ngIf="addDescription.invalid && (addDescription.dirty || addDescription.touched)">
+              <div *ngIf="addDescription.errors.required">
+                <span class="error sum">{{'carsmanagement.addDescription' | translate}} {{'carsmanagement.isRequired' |
+                  translate}}</span>
+              </div>
+
+            </div>
+            <div *ngIf="experiencePro?.value.length > 300">
+              <span class="error sum">{{'carsmanagement.errorMsg' | translate}}</span>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary btn-dark"
+        (click)="carForm.reset(); modal.dismiss('Cross click')">{{'button.cancel'
+        | translate}}</button>
+      <button type="submit" class="btn  btn-primary green-botton car-update" (click)="carSubmit()"
+        [disabled]="carForm.invalid">{{'carsmanagement.addCar' | translate}}</button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #carUpdateModal let-modal>
+  <div class="add-car-popup">
+    <div class="modal-header">
+      <h3 class="modal-title" id="exampleModalLabel">{{'carsmanagement.updateCar' | translate}}</h3>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span class="material-icons">
+          <img src="{{closeIcon}}">
+        </span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="carUpdateForm">
+        <div class="row">
+          <div class="col-6">
+            <label for="ex1">{{'carsmanagement.carNumber' | translate}} <span class="error require">*</span></label>
+            <input class="form-control" type="text" name="carNumber" formControlName="carNumber">
+            <div *ngIf="carNumber1.invalid && (carNumber1.dirty || carNumber1.touched)">
+              <div *ngIf="carNumber1.errors.required">
+                <span class="error sum">{{'carsmanagement.carNumber' | translate}} {{'carsmanagement.isRequired' |
+                  translate}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <label for="ex1">{{'carsmanagement.selectDriver' | translate}}</label>
+            <select id="ddldriver" class="form-control" name="driverId" formControlName="driverId" #driverselectionEdit
+              (change)="changeLab(driverselectionEdit, 'edit')">
+              <option class="form-control" value="">{{'carsmanagement.selectDriver' | translate}}</option>
+              <option class="form-control" *ngFor="let driverSelect of driverData" [value]="driverSelect.id">
+                {{driverSelect.fullName}}
+              </option>
+            </select>
+          </div>
+          <div class="col-6 pt-2">
+            <label for="ex1">{{'carsmanagement.car' | translate}} {{'carsmanagement.carCapacity' | translate}} <span
+                class="error require">*</span></label>
+            <input class="form-control" type="text" name="carCapacity" formControlName="carCapacity">
+            <div *ngIf="carCapacity1.invalid && (carCapacity1.dirty || carCapacity1.touched)">
+              <div *ngIf="carCapacity1.errors.required">
+                <span class="error sum">{{'carsmanagement.carCapacity' | translate}} {{'carsmanagement.isRequired' |
+                  translate}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 pt-2">
+            <label for="ex1">{{'carsmanagement.car' | translate}} {{'carsmanagement.carModel' | translate}} <span
+                class="error require">*</span></label>
+            <input class="form-control" type="text" name="carModel" formControlName="carModel">
+            <div *ngIf="carModel1.invalid && (carModel1.dirty || carModel1.touched)">
+              <div *ngIf="carModel1.errors.required">
+                <span class="error sum">{{'carsmanagement.carModel' | translate}} {{'carsmanagement.isRequired' |
+                  translate}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 pt-2">
+            <label for="ex1">{{'carsmanagement.car' | translate}} {{'carsmanagement.carFactor' | translate}}</label>
+            <input NumericInput class="form-control" type="text" name="carFactor" formControlName="carFactor">
+          </div>
+          <div class="col-6 pt-2">
+            <label for="ex1">{{'carsmanagement.driverStatus' | translate}}</label>
+            <select id="carState" class="form-control" formControlName="driverStatus"
+              [ngClass]="{'mychanges': driverselectionEdit.value.length == 0}">
+              <option class="form-control" value="" [disabled]="driverselectionEdit.value.length == 0">Unavailable
+              </option>
+              <option class="form-control" *ngFor="let driverSelect of driverStatus" [value]="driverSelect"
+                [disabled]="driverselectionEdit.value.length == 0">{{driverSelect}}
+              </option>
+            </select>
+
+          </div>
+          <div class="col-6 pt-2">
+            <label for="ex1">{{'carsmanagement.car' | translate}} {{'carsmanagement.carOdometer' | translate}}</label>
+            <input NumericInput class="form-control" type="text" name="carOdometer" formControlName="carOdometer"
+              placeholder="{{'carsmanagement.enterOdometer' | translate}}">
+
+          </div>
+
+          <div class="col-6 pt-2">
+            <label for="carType">Select Car Type</label>
+            <select id="carUpdateCarType" class="form-control" formControlName="carTypeId" name="carTypeId"
+              (change)="selectUpdateCarType()" placeholder="Select status">
+              <option class="form-control" *ngFor="let car of carType" [value]="car.id">
+                {{car.carTypeName}}
+              </option>
+            </select>
+          </div>
+
+
+          <div class="col-12 discrip">
+            <label for="ex1">{{'carsmanagement.addDescription' | translate}} <span
+                class="error require">*</span></label>
+            <textarea type="text" #experiencePro id="addDescription" formControlName="addDescription"
+              class="form-control mb-1 fix-width" maxlength="max"
+              placeholder="{{'carsmanagement.enterDescription' | translate}}"></textarea>
+            <span class="character update">{{experiencePro?.value.length || 0}}/{{max}}</span>
+            <div *ngIf="addDescription1.invalid && (addDescription1.dirty || addDescription1.touched)">
+              <div *ngIf="addDescription1.errors.required">
+                <span class="error sum">{{'carsmanagement.addDescription1' | translate}} {{'carsmanagement.isRequired' |
+                  translate}}</span>
+              </div>
+            </div>
+            <div *ngIf="experiencePro?.value.length > 300">
+              <span class="error sum">{{'carsmanagement.errorMsg' | translate}}</span>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+
+      <button type="button" class="btn btn-secondary btn-dark" (click)="modal.dismiss('Cross click')">{{'button.cancel'
+        | translate}}</button>
+      <button type="submit" class="btn  btn-primary green-botton  car-update" [disabled]="carUpdateForm.invalid"
+        (click)="carUpdateSubmit()">{{'button.update' | translate}}</button>
+
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #exampleModal let-modal>
+  <div class="modal-body">
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span class="material-icons" style="color: #DC3545;">
+        <img src="{{closeIcon}}">
+      </span>
+    </button>
+    <div class="text-center delete-sec">
+      <span class="material-icons">
+        <img src="{{deletepopupIcon}}">
+      </span>
+      <h4>{{'carsmanagement.deleteCar' | translate}}</h4>
+      <p class="text-center">{{'carsmanagement.removeList' | translate}}</p>
+    </div>
+  </div>
+  <div class="button-style">
+    <button type="button" style="width: 100%;" class="btn btn-dark mr-3"
+      (click)="modal.dismiss('Cross click')">{{'button.cancel' | translate}}</button>
+    <button type="submit" style="width: 100%;" class="btn car-update"
+      (click)="deleteCar($event,deleteCarId)">{{'button.delete' | translate}}</button>
+  </div>
+</ng-template>
+<ng-template #deleteCarTypeModal let-modal>
+  <div class="modal-body">
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span class="material-icons" style="color: #DC3545;">
+        <img src="{{closeIcon}}">
+      </span>
+    </button>
+    <div class="text-center delete-sec">
+      <span class="material-icons">
+        <img src="{{deletepopupIcon}}">
+      </span>
+      <h4>Delete a car type</h4>
+      <p class="text-center">Are you sure you want to delete this car type from the list?</p>
+    </div>
+  </div>
+  <div class="button-style">
+    <button type="button" style="width: 100%;" class="btn btn-dark mr-3"
+      (click)="modal.dismiss('Cross click')">{{'button.cancel' | translate}}</button>
+    <button type="submit" style="width: 100%;" class="btn car-update"
+      (click)="deleteCarType($event,deleteCarId)">{{'button.delete' | translate}}</button>
+  </div>
+</ng-template>
+
+<ng-template #deleteAll let-modal>
+  <div class="modal-body">
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span class="material-icons" style="color: #DC3545;">
+        <img src="{{closeIcon}}">
+      </span>
+    </button>
+    <div class="text-center delete-sec">
+      <span class="material-icons">
+        <img src="{{deletepopupIcon}}">
+      </span>
+      <h4>Delete car types</h4>
+      <p class="text-center">Are you sure you want to delete all car types from the list?</p>
+    </div>
+  </div>
+  <div class="button-style">
+    <button type="submit" style="width: 100%;" class="btn car-update" (click)="deleteAllCarType()">{{'button.delete' |
+      translate}}</button>
+    <button type="button" style="width: 100%;" class="btn btn-dark"
+      (click)="modal.dismiss('Cross click')">{{'button.cancel' | translate}}</button>
+  </div>
+</ng-template>
+
+<ng-template #updatePopup>
+  <div class="modal-body">
+    <div class="complete-success">
+      <div class="img-con fullImage">
+        <img src="{{checkCircle}}" alt="Check Icon" />
+      </div>
+      <div class="middle-sec">
+        <div class="heading">
+          {{'carsmanagement.updated' | translate}}
+        </div>
+        <div class="details">
+          {{'carsmanagement.updatedDetails' | translate}}
+        </div>
+      </div>
+      <div>
+        <button (click)="modalRef.hide()" class="view fullImage ok">
+          {{'button.ok' | translate}}
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #updateCarTypePopup>
+  <div class="modal-body">
+    <div class="complete-success">
+      <div class="img-con fullImage">
+        <img src="{{checkCircle}}" alt="Check Icon" />
+      </div>
+      <div class="middle-sec">
+        <div class="heading">
+          {{'carsmanagement.updated' | translate}}
+        </div>
+        <div class="details">
+          {{'carsmanagement.updatedCarTypeDetails' | translate}}
+        </div>
+      </div>
+      <div>
+        <button (click)="modalRef.hide()" class="view fullImage ok">
+          {{'button.ok' | translate}}
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #successPopup>
+  <div class="modal-body">
+    <div class="complete-success">
+      <div class="img-con fullImage">
+        <img src="{{checkCircle}}" alt="Check Icon" />
+      </div>
+      <div class="middle-sec">
+        <div class="heading">
+          {{'carsmanagement.success' | translate}}
+        </div>
+        <div class="details">
+          {{'carsmanagement.successDetails' | translate}}
+        </div>
+      </div>
+      <div>
+        <button (click)="modalRef.hide()" class="view fullImage ok">
+          {{'button.ok' | translate}}
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #successCarTypePopup>
+  <div class="modal-body">
+    <div class="complete-success">
+      <div class="img-con fullImage">
+        <img src="{{checkCircle}}" alt="Check Icon" />
+      </div>
+      <div class="middle-sec">
+        <div class="heading">
+          {{'carsmanagement.success' | translate}}
+        </div>
+        <div class="details">
+          {{'carsmanagement.successCarTypeDetails' | translate}}
+        </div>
+      </div>
+      <div>
+        <button (click)="modalRef.hide()" class="view fullImage ok">
+          {{'button.ok' | translate}}
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #deletePopup>
+  <div class="modal-body">
+    <div class="complete-success">
+      <div class="img-con fullImage">
+        <img src="{{checkCircle}}" alt="Check Icon" />
+      </div>
+      <div class="middle-sec">
+        <div class="heading">
+          {{'carsmanagement.deleted' | translate}}
+        </div>
+        <div class="details">
+          {{'carsmanagement.deletedDetails' | translate}}
+        </div>
+      </div>
+      <div>
+        <button (click)="modalRef.hide()" class="view fullImage ok">
+          {{'button.ok' | translate}}
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>

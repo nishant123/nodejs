@@ -1,0 +1,159 @@
+<section class="authContainer">
+  <div class="formContainer">
+    <div class="formcontent">
+      <div class="logo">
+        <img src="./../assets/images/logo.svg" alt="ourlane">
+      </div>
+      <form class="login_form" [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">
+        <div class="header">
+          <h3 class="font-termina">{{'loginPage.title' | translate }}</h3>
+          <p>{{'loginPage.subTitle' | translate }}</p>
+        </div>
+        <div class="form-group">
+          <label for="email">{{'label.email' | translate }}</label>
+          <div class="input">
+            <input type="email" class="form-control" placeholder="{{'label.enterEmail' | translate }}"
+              formControlName="email" name="email" id="email" [(ngModel)]="userEmail" (keypress)="ONCHANGE($event)" (keyup)="emailChanges()" />
+            <span class="icon">
+              <img src="./../assets/images/icon-email.png" alt="email" />
+            </span>
+          </div>
+          <!-- <div class="form_error_blk" *ngIf="
+                    loginForm.controls['email'].touched &&
+                    loginForm.controls['email'].errors &&
+                    loginForm.controls['email'].errors.email &&
+                    loginForm.controls['email'].errors.required
+                  ">
+            <span class="error-list" class="form_error_class">{{'errors.emailRequired' | translate }}</span>
+          </div> -->
+          <div class="form_error_blk">
+            <span
+              *ngIf="loginForm.controls['email'].touched && loginForm.controls['email'].errors && loginForm.controls['email'].errors.required"
+              class="error-list" class="form_error_class">{{'errors.emailRequired' | translate }}</span>
+            <span *ngIf="loginForm.controls['email'].errors && loginForm.controls['email'].errors.email"
+              class="error-list" class="form_error_class">Please enter valid Email ID.</span>
+
+            <span *ngIf="errorResponse && !loginForm.controls['email'].errors" class="error-list"
+              class="form_error_class">{{errorResponse}}</span>
+
+          </div>
+
+
+        </div>
+        <div class="form-group">
+          <label for="password">{{'label.password' | translate }}</label>
+          <div class="input">
+            <input [type]="fieldTextType ? 'text' : 'password'" class="form-control"
+              placeholder="{{'label.enterPassword' | translate }}" formControlName="password" name="password"
+              id="password" [(ngModel)]="password" (cut)="$event.preventDefault()" />
+            <span class="icon">
+              <img src="./../assets/images/icon-key.png" alt="password" />
+            </span>
+            <span class="icon viewPassword" (click)="toggleFieldTextType()">
+              <img *ngIf="!fieldTextType" src="./../assets/images/icon-red-eye.png" alt="password" />
+              <img *ngIf="fieldTextType" src="./../assets/images/icon-red-eye-active.png" alt="password" />
+            </span>
+          </div>
+          <div class="form_error_blk">
+            <span *ngIf="
+            loginForm.controls['password'].touched &&
+            loginForm.controls['password'].errors &&
+            loginForm.controls['password'].errors.required" class="error-list"
+              class="form_error_class">{{'errors.passwordRequired' | translate }}</span>
+            <span *ngIf="errorResponsePassword && !loginForm.controls['password'].errors" class="error-list"
+              class="form_error_class">{{errorResponsePassword}}</span>
+          </div>
+
+        </div>
+        <div class="rememberFogot">
+          <div class="checkbox-blk color-dark">
+            <input type="checkbox" id="rememberMe" value="false" name="rememberMe" formControlName="rememberMe" />
+            <label class="ml-2 mb-0" for="rememberMe"> <span>{{'label.rememberMe' | translate }}</span></label>
+          </div>
+          <p>{{'loginPage.forgotPassword' | translate }} <a (click)="forgotPasswordModal.show()"
+              class="linkBtn">{{'loginPage.reset' | translate }}</a></p>
+        </div>
+    
+        <div class="btnsGroup">
+          <button type="submit" [disabled]="loginForm.invalid" class="button-primary btn-bt">
+            {{'button.login' | translate }}
+          </button>
+          <a routerLink="/signup" class="button-secondry btn-bt">
+            {{'button.createAccount' | translate }}
+          </a>
+        </div>
+        
+      </form>
+      
+      <div class="copyright">
+        <p class="mb-0">{{'copyRights.text' | translate }}  </p>
+            
+      </div>
+    </div>
+  </div>
+  <div class="authVectorcontent">
+    <div class="vectorContent">
+      <div class="register-link text-right">
+        <p>{{'loginPage.dontHaveAnAccount' | translate }} <a routerLink="/signup">{{'loginPage.singUp' | translate
+            }}</a></p>
+      </div>
+      <div class="vectorImage">
+        <img src="./../assets/images/login.svg" alt="vector image">
+      </div>
+      <div class="manageContnet">
+        <h4 class="font-termina">{{'loginPage.manageHeading' | translate}}</h4>
+        <p>{{'loginPage.manageText' | translate}}</p>
+      </div>
+    </div>
+  </div>  
+</section>
+
+<div bsModal #forgotPasswordModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+  aria-labelledby="dialog-sizes-name2">
+  <div class="modal-dialog confirmation-modal forgotPassword">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="forgotPasswordModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="alertText font-md color-dark font-termina">{{'forgotPassword.title' | translate}}</h4>
+        <p class="modalContent">{{'forgotPassword.subTitle' | translate}}
+        </p>
+        <form class="login_form" [formGroup]="forgotPasswordForm" (ngSubmit)="forgotPassword(forgotPasswordForm.value)">
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <div class="input">
+              <input type="email" class="form-control" placeholder="{{'label.enterEmail' | translate }}"
+                formControlName="email" name="email" id="email" (keyup)="emailChanges()"/>
+              <span class="icon">
+                <img src="./../assets/images/icon-email.png" alt="email" />
+              </span>
+            </div>
+            <div class="form_error_blk">
+              <span
+                *ngIf="forgotPasswordForm.controls['email'].errors && forgotPasswordForm.controls['email'].errors.required && forgotPasswordForm.controls['email'].touched"
+                class="error-list" class="form_error_class">Email cannot be left blank</span>
+              <span
+                *ngIf="forgotPasswordForm.controls['email'].errors && forgotPasswordForm.controls['email'].errors.email"
+                class="error-list" class="form_error_class">Please enter valid Email Address.</span>
+              <span *ngIf="errorResponse && !forgotPasswordForm.controls['email'].errors" class="error-list"
+                class="form_error_class">{{errorResponse}}</span>
+            </div>
+          </div>
+          <div class="btnsGroup">
+            <button type="submit" class="button-primary btn-bt my-0">
+              {{'button.submit' | translate }}
+            </button>
+          </div>
+
+        </form>
+        <!-- <div class="alertFooter">
+          <p>{{'forgotPassword.footer' | translate}} <a class="link"
+              (click)="forgotPassword(forgotPasswordForm.value)">{{'forgotPassword.footerBtn' |
+              translate}}</a>
+          </p>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</div>

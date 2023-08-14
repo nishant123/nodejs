@@ -1,0 +1,263 @@
+<section class="content-wrap">
+    <div class="content-main">
+        <div class="content-container">
+            <div class="header-title">
+                <p class="head-p font-termina color-dark font-w700">                   
+                    {{'accountsettingsManage.AccountSettings' | translate}}
+                </p>
+                
+                <div class="custom-datatable" style="background-color: #fff;">
+                    <div class="col-md-12" style="padding: 20px;">
+                        <p class="head-location color-dark ">
+                            {{'accountsettingsManage.LocationLanguageSettings' | translate}}
+                        </p>
+                        <div class=" row head-sub" style="color: #000;">
+                            <div class="col-md-6">
+                                <h4>{{'accountsettingsManage.Location' | translate}}</h4>
+                            </div>
+                            <div class="col-md-6">
+                                <h4>{{'accountsettingsManage.Language' | translate}}</h4>
+                            </div>
+                        </div>
+                        <div class=" row">
+                            
+                            <div class="col-md-6">
+                                <select class="form-control customSelect"  [(ngModel)]="location" >                                                                
+                                    <option *ngFor="let list of cityList" value="{{list.id}}">                                       
+                                        {{list.name}}
+                                    </option>
+                                </select>                    
+                            </div>
+                            <div class="col-md-6">
+                                  <select #langSelect class="form-control language-select" [(ngModel)]="language" (change)="translate.use(langSelect.value)">                                                                  
+                                    <option value="en">{{language2}}</option>
+                                    <option value="Arabic">{{language3}}</option>
+                                    <option value="Hindi">{{language1}}</option>                                 
+                                  </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="custom-datatable" style="background-color: #fff;">
+                    <div class="col-md-12" style="padding: 20px 20px 0 20px;">
+                        <p class="head-location color-dark mb-1">
+                            {{'accountsettingsManage.TermsandPolicies' | translate}}
+                        </p>
+                    </div>
+                    <div class="col-md-12" style="padding: 0px 20px 20px 20px;">
+                        <div class="row">
+                            <div class="col-md-10">                              
+                                <div class="content" [class.show]="show">    
+                                    <p>These Terms of Service constitute a legally binding agreement (the “Agreement”) between you and <span>OurLane Networks FZ-LLC</span>, its parents, subsidiaries, representatives, affiliates, officers and directors (collectively, “OurLane”) governing your use of the OurLane application (the “OurLane App”), and OurLane website (collectively, the “OurLane Platform”).</p>
+                                <p>By entering into this Agreement, and/or by using or accessing the OurLane Platform you expressly acknowledge that you understand this Agreement (including the dispute resolution and arbitration provisions hereof) and accept all of its terms. <span>If you do not agree to be bound by the terms and conditions of this agreement, you may not use or access the OurLane platform or any of the services provided through the OurLane platform.</span>
+                                </p>
+                                <p>When using the OurLane Platform, you also agree to conduct yourself in accordance with our Conduct Guidelines, and other supplemental terms which shall form part of this Agreement between you and OurLane. Supplemental terms may apply to certain services, such as policies for a particular event, loyalty programme, activity or promotion, and such supplemental terms will be disclosed to you in connection with the applicable services. Supplemental terms are in addition to and shall be deemed a part of, this Agreement for the purposes of the applicable services. Supplemental terms shall prevail over this Agreement in the event of a conflict with respect to the applicable services.
+                                </p>
+                                <p>OurLane may amend this Agreement from time to time. Amendments will be effective upon OurLane’s posting of an updated Agreement at this location or the amended policies or supplemental terms on the applicable service. Your continued access or use of the OurLane Platform after such posting constitutes your consent to be bound by this Agreement, as amended. Notwithstanding anything to the contrary, OurLane may immediately terminate this Agreement with respect to you, or generally, cease offering or deny access to the OurLane Platform or any portion thereof, at any time for any reason without notice.</p>
+                                <p>The collection and use of personal information in connection with the OurLane Platform is as provided in OurLane’s Privacy Policy. OurLane may provide to a claims processor or an insurer any necessary information (including your contact information) if there is a complaint, dispute or conflict, which may include an accident, involving you and a third-party provider and such information or data is necessary to resolve the complaint, dispute or conflict.
+                                </p>
+                                <h3>1. GENERAL CONDITION OF USE
+                                </h3>
+                                <h4>1.1. Scope and Definitions</h4>
+                                <p>These General Conditions of Use apply to all services provided by OurLane (defined hereinbelow). OurLane owns and operates the OurLane Platform (defined hereinbelow) in the United Arab Emirates.</p>
+                                <h4>1.2. Defined Terms
+                                </h4>
+                                <ul>
+                                    <li>“OurLane” means OurLane Networks FZ-LLC, a company registered in Dubai Internet City, Dubai, UAE with its registered address at Office 409, Floor 4, DSC Tower, Dubai Studio City, Dubai, UAE, and hereafter referred to as OurLane.</li>
+                                    <li>“Car Booking” means the booking of a chauffeur-driven luxury Vehicle for a Trip by a Passenger through OurLane Platform.</li>
+                                    <li>“Car Owner” means an entity who through the OurLane Platform offers Vehicles to Members in exchange for Payment.</li>
+                                    <li>“Chauffeur” means a Member who through the OurLane Platform accepts Car Booking and ride Passengers in their hired Vehicle.</li>
+                                    <li>“Conditions” mean these General Conditions of Use, including the Conduct Guidelines and Privacy Policy of OurLane as notified on the OurLane Platform.</li>
+                                    <li>“Payments” means the amount calculated and fixed by the OurLane Platform in relation to the Trip which is payable by the Passenger either through the third-party online payment methods available on OurLane Platform or in cash to the concerned Chauffeur.
+                                    </li>
+                                    <li>“Passenger” means a Member who has availed Car Booking services and includes all other persons who accompany such Member in the Vehicle for the Trip.
+                                    </li>
+                                    <li>“Member” refers to a registered user of the OurLane Platform.</li>
+                                    <li>“Service” refers to any service provided by OurLane through the OurLane Platform to any Member.
+                                    </li>
+                                    <li>“OurLane Platform” means www.OurLane.com and any other websites or web applications maintained or operated by OurLane which offers similar services including any microsite or subsite offered through any such website or web applications.</li>
+                                    <li>“Trip” means a given journey in relation to which a Passenger and Chauffeur have agreed upon a transaction through the OurLane Platform.</li>
+                                    <li>“User Account” means an account with the OurLane Platform opened by a Member and used in order to access the Service provided by OurLane through the OurLane Platform.</li>
+                                    <li>“Vehicle” means the vehicle offered by a Chauffeur on OurLane Platform for Car Booking.</li>   
+                                </ul>
+                                <h4>1.3. Acceptance of Conditions</h4>
+                                <p>The Conditions apply to any and all use of the OurLane Platform by a Member. By using the OurLane Platform, the Members signify their acceptance of these Conditions in full and agree to be bound by them.</p>
+                                <p>No access to the Services will be permitted unless the Conditions are accepted in full. No Member is entitled to accept the Conditions partially. If a Member does not fully agree to the Conditions, such Member may not use the Services.</p>
+                                <p>All Members agree to comply with the Conditions and accept that their personal data may be processed in accordance with the Privacy Policy.</p>
+                                <p>In the event that any Member fails to comply with any of the Conditions, OurLane reserves the right, but not the obligation at its own discretion, to withdraw the User Account in question and suspend or withdraw all Services to that Member without notice.
+                                </p>
+                                <p>These Conditions are intended to create binding rights and obligations between Members and OurLane in accordance with the UAE Federal Law Number 5 of 1985 on Civil Transactions Law (i.e., the UAE Civil Code).</p>
+                                <h4>1.4. Variation of the Conditions, OurLane Platform and Service</h4>
+                                <p>OurLane reserves the right to modify the Conditions at any time. In addition, OurLane may vary or amend the Services provided through the OurLane Platform, the OurLane Platform functionality and/ or the “look and feel” of the OurLane Platform at any time without notice and without liability to Members.</p>
+                                <p>Any modification to the OurLane Platform, Services or Conditions will take effect as soon as such changes are published on the OurLane Platform, subject to communication of any material change to the Conditions to the Members in an e-mail.
+                                </p>
+                                <p>Members will be deemed to have accepted any varied Conditions in the event that they use any Services offered through the OurLane Platform following the publication of the varied Conditions. Changes will not apply to any bookings which have been made prior to publication of the varied Conditions.
+                                </p>
+                                <h3>2. USE OF THE SERVICE</h3>
+                                <h4>2.1. User Account and Accuracy of Information
+                                </h4>
+                                <p>In order to use the Services, each Member must create a User Account and agrees to provide any personal information requested by OurLane. In particular, Members will be required to provide their first name, last name, age, title, valid telephone number and email address. Use of the OurLane Platform is limited to those over the age of 18 years at the time of registration.
+                                </p>
+                                <p>Members agree and accept that all of the information they provide to OurLane when setting up their User Account and at any other time shall be true, correct, complete and accurate in all respects. Members also agree that any information supplied to OurLane or posted on the OurLane Platform in connection with any Trip, Vehicle or Car Booking will be true, accurate and complete.</p>
+                                <p>Members agree and understand that OurLane does not undertake any verification to confirm the accuracy of any information provided by the Members on the OurLane Platform or to a Chauffeur or Passenger, as the case may be. OurLane will not be liable to any Member in the event that any information provided by another Member is false, incomplete, inaccurate, misleading or fraudulent.</p>
+                                <p>Unless expressly agreed by OurLane, Members are limited to one User Account per Member. No User Account may be created on behalf of or in order to impersonate another person.</p>
+                                <h4>2.2. Commercial Activity and Status of OurLane</h4>
+                                <p>The OurLane Platform and the Services are strictly limited to providing a Service for Chauffeurs and Passengers to connect and communicate with each other in a private capacity to facilitate Car Booking for hire in a commercial and professional context. The Services are used only to offer or accept Car Booking in exchange for Payments.</p>
+                                <p>All Trips, collection points and destinations must be pre-agreed through the OurLane Platform between the Chauffeur and Passenger. Chauffeurs may not collect any Passengers from any location which has not been pre-agreed with the Passenger through the OurLane Platform.
+                                </p>
+                                <p>Chauffeurs and Car Owners are reminded that using the Services and accepting Car Booking offers or listing Vehicles for hire or reward or in a commercial or professional capacity through OurLane Platform is subject to additional permits and licenses from the concerned regulatory authorities and government departments. OurLane shall not be in for any loss or damage incurred by a Member as a result of any breach of regulatory compliance. Any offering of Vehicles or acceptance of Trips in violation of the regulatory compliance shall be at the sole risk of such Member and OurLane shall have no liability towards Members for such violations.</p>
+                                <p>Neither OurLane nor the OurLane Platform provides any transport services. The OurLane Platform is a communications platform for Members to transact with one another. OurLane does not interfere with Trips, destinations or timings. The agreement for Car Booking is between the Chauffeur and the Passenger. OurLane is not a party to any agreement or transaction between Members, nor is OurLane liable in respect of any matter arising which relates to a booking between Members. OurLane is not and will not act as an agent for any Member.
+                                </p>
+                                <h4>2.3. Booking and Payment</h4>
+                                <p>OurLane offers to its Members an online booking service (hereinafter, the “Booking Service”) with a view to facilitating the booking of chauffeured luxury rides by Passengers.
+                                </p>
+                                <p>OurLane reserves the right not to offer the Booking Service to a Trip due to: (i) changes to applicable law, or changes in the practice of regulatory authorities (ii) changes to market practices or technology changes, (iii) change of business considerations underlying the Booking Services, and (iv) other important and valid reasons
+                                </p>
+                                <p>Car Booking Process: The Passenger provides details of his or her Trip on the OurLane Platform, specifying the pick-up and drop-off location and then choose one of the luxury vehicles listed on the OurLane Platform. The Passenger books the chosen Vehicle for that Trip from the OurLane Platform exclusively by clicking on the button “Book” (hereinafter, the “Booking”). OurLane will then notify the Booking to the apt Chauffeurs present in and around the pick-up area. If a Chauffeur accepts the Booking then OurLane will send a confirmation notification to the Chauffeur and the Passenger confirming the Booking (hereinafter, the “Booking Confirmation”). Once a Booking Confirmation has been sent, the Booking is complete and a separate binding agreement for Car Booking relating to the Trip shall be formed between the Chauffeur and Passenger(s).</p>
+                                <p>Members accept that given the nature of the service Chauffeurs and Passengers will have no recourse to OurLane for any aspect of the transaction including in relation to the cancellation or last-minute changes to the Trip, failure by the Chauffeur or the Passenger to turn up or non-payment of the Payment. In particular, it is the Chauffeur’s responsibility to collect payment from the Passenger at the time of the Trip.</p>
+                                <p>OurLane is not obliged to contact either party and will take no other steps whatsoever than those described above to manage the Booking. The operation of the Trip is solely managed by the respective Chauffeur and Passenger(s).
+                                    Please note that OurLane reserves the right to change any aspect of the OurLane Platform or the Service which may include adding new services (which may require payment) or withdrawing any existing Services. OurLane does not guarantee that the OurLane Platform will be functional at all times and Services may be suspended during such period when the OurLane Platform is not in operation. OurLane will not be liable to any of the Members in the case where the OurLane Platform is non-operational.
+                                    </p>
+                                    <h4>2.4. Chauffeur and Passenger Obligations</h4>
+                                    <p>The Chauffeur agrees:</p>
+                                    <ul>
+                                        <li>That the Trip shall not be for any fraudulent, unlawful or criminal activity.</li>
+                                        <li>That they will make sure that the vehicle they drive is covered under a comprehensive insurance policy, which provides insurance cover to the Passengers/occupants in the Vehicle and covers third party liability.</li>
+                                        <li>That they will present themselves on time and at the place agreed with the specified Vehicle;</li>
+                                        <li>That they will immediately inform all Passengers of any change whatsoever to the Trip. If a Passenger refuses the change, they are entitled to a full refund and without any compensation being paid to the Chauffeur.</li>
+                                        <li>The Chauffeur must comply with the Conduct Guidelines at all times.
+                                        </li>
+                                        <li>The Chauffeur must wait for the Passenger at the pickup point for at least 5 minutes after the agreed time (however, the Passenger is expected to be punctual).</li>
+                                      
+                                    </ul>
+                                    <p>The Passenger agrees:</p>
+                                    <ul>
+                                        <li>That the Trip shall not be for any fraudulent, unlawful or criminal activity.</li>
+                                        <li>That they will present themselves on time and at the place agreed with the Chauffeur;</li>
+                                        <li>That they will immediately inform the Chauffeur or OurLane if they are required to cancel a Trip.
+                                        </li>
+                                        <li>That they will comply with the Conduct Guidelines at all times.</li>
+                                        <li>The Passenger agrees to wait at the pickup point for at least 5 minutes after the agreed time for the Chauffeur to arrive.</li>
+                                        <li>That they will pay the Payment to the Chauffeur.</li>
+                                        <li>That they shall ensure that all other persons who accompany the Passenger in the Trip comply with these Conditions as applicable to a Passenger.</li>
+                                        
+                                    </ul>
+                                    <p>If the Passenger or Chauffeur fail to comply with any of these terms or any other Conditions OurLane reserves the right to keep information relating to the breach, to publish or disclose this information on the Member’s online profile and to suspend or withdraw the Member’s access to the OurLane Platform.</p>
+                                    <h4>2.5. Insurance</h4>
+                                    <p>The Car Owner agrees and undertakes to take out and maintain comprehensive insurance to cover third-party liability, the occupants of the Vehicle and the Trip offered or booked through the OurLane Platform. The Chauffeur agrees that they will, on request, provide the Passenger with evidence, in advance or during the Trip, of the complete validity of its insurance policy and other regulatory compliances. The Chauffeur also undertakes to hold a valid driving licence. The Car Owner must be entitled to list/register the Vehicle on OurLane Platform and that the Vehicle will have valid permits and license certifications to entertain the Car Booking and the Passenger is entitled to request evidence of the Vehicle’s insurance, registration certificate, driving licence and other applicable permits and license certificate at any time up to the completion of the Trip.</p>
+                                    <p>It is up to each Chauffeur and Passenger to confirm with each other that the Vehicle is covered under valid insurance. The Car Owner and Chauffeur must confirm that their insurance policy allows them to carry Passengers and that their insurance policy covers all Passengers and any accident or incident which may occur during a Trip.</p>
+                                    <p>The Chauffeur and the Passenger are aware that standard non-commercial insurance policies may refuse to cover loss or damage arising during the Trip.
+                                        If the insurers repudiate or refuse to accept any claim arising during a Trip for any reason, the Car Owner will be responsible for the financial consequences, losses and damages arising and OurLane will not be liable under any circumstances to the Car Owner, Chauffeur or the Passenger.
+                                        </p>
+                                        <p>The Chauffeur may collect no payment from the Passenger other than the Payment notified on the OurLane Platform and the Passenger is not obliged in any event to pay or reward the Chauffeur in any form.</p>
+                                        <h4>2.6. Management of disputes between Members</h4>
+                                        <p>OurLane may at its sole discretion provide its Members with an online service for resolving disputes. This service is non-binding. OurLane is under no obligation to seek to resolve disputes and this service is offered at OurLane’s sole discretion and may be withdrawn at any time.</p>
+                                        <h4>2.7. Verification of IDs and Phone number</h4>
+                                        <p>By accepting this Agreement, every Member or any person who wishes to register as a Member hereby agrees and consents to the fact that OurLane may collect IDs/documents belonging to them including but not limited to passport and Emirates ID card for the purpose of verification of the information contained in such IDs/documents by third-party service providers.</p>
+                                        <p>In order to increase trustworthiness, prevent typos and wrong numbers, Member has to verify their mobile number. The Member at the time of registration will provide OurLane with their mobile phone number, after which the Member will receive an SMS with a digit code that can be validated on the OurLane Platform. This service is free of charge, except for the possible cost levied by a Member’s mobile phone operator for receiving the SMS.</p>
+                                        <h4>2.8. International Trips and International Bookings
+                                        </h4>
+                                        <p>Bookings may be made through the OurLane Platform for international Trips. An International Trip means any Trip which includes any travel outside of the United Arab Emirates. If a booking is made for an International Trip Chauffeurs must ensure that their insurance covers travel outside of UAE. The Chauffeur must also ensure that their vehicle is compliant with all relevant rules and restrictions applicable in any overseas country.
+                                        </p>
+                                        <h4>2.9. Messages between Members</h4>
+                                        <p>OurLane may review, scan, and moderate the messages the Members exchange with each other through the OurLane Platform in particular for fraud prevention, customer support purposes, enforcement of the contracts entered into with OurLane’s members (such as the Conditions) and ensure compliance with applicable law. For example, in order to prevent the circumventing of its Booking Service, OurLane may scan and analyse messages sent through the platform to check that they do not include any contact details or references to other web platforms.</p>
+                                        <p>By using the OurLane Platform and accepting this Agreement, the Member agrees that OurLane, in its sole discretion, may review, analyse and moderate the messages exchanged through the OurLane Platform.
+                                            By using the messaging feature of the OurLane Platform, the Member undertakes not to write and/or send any message prohibited by applicable law. In particular, the Member undertakes to refrain from writing/sending any message which content:
+                                            </p>
+                                            <ul>
+                                                <li>belongs to another person and to which the Member does not have any right to;</li>
+                                                <li>is grossly harmful, harassing, blasphemous defamatory, obscene, pornographic;</li>
+                                                <li>harms minors in any way;</li>
+                                                <li>infringes any patent, trademark, copyright or other proprietary rights;</li>
+                                                <li>violates any law for the time being in force;</li>
+                                                <li>deceives or misleads the addressee about the origin of such messages or communicates any information which is grossly offensive or menacing in nature;</li>
+                                                <li>impersonates another person;</li>
+                                                <li>contains software viruses that limit the functionality of any computer resource; and</li>
+                                                <li>threatens the unity, integrity, defence, security or sovereignty of the United Arab Emirates, friendly relations with foreign states, or public order or causes incitement to the commission of any cognizable offence or prevents investigation of any offence or is insulting any other nation.
+                                                </li>
+                                            </ul>
+                                            <p>In addition, the Member undertakes to send messages only with respect to the Car Booking and in line with the purposes of the OurLane Platform. The Member undertakes to refrain from using the messages for private or confidential communications.</p>
+                                            <p>OurLane reserves the right to filter or delete the messages and suspend or terminate the User Account of the Member and the access of the Member to the OurLane Platform if it appears during the moderation of the messages sent by the Member that s/he does not comply with the Conditions and/or applicable law.
+                                            </p>
+                                      <h4>2.10. OurLance Communications
+                                    </h4>
+                                    <p>By accepting this Agreement or using the OurLane Platform, the Members agree to receive communications from OurLane or communications related to the OurLane Platform at any of the phone numbers provided to OurLane by the Members or on Members’ behalf, including via e-mail, text message, calls, and push notifications. Members agree that texts, calls or prerecorded messages may be generated by automatic telephone dialling systems. Communications from OurLane, its affiliated companies and/or Chauffeurs, may include but are not limited to: operational communications concerning Member’s User account or use of the OurLane Platform or Services, use of Vehicles through the OurLane Platform, updates concerning new and existing features on the OurLane Platform, communications concerning marketing or promotions run by OurLane or its third-party partners, and news concerning OurLane and industry developments. If Members change or deactivate the phone number provided to OurLane then they agree to update their account information to help prevent OurLane from inadvertently communicating with anyone who acquires the old number. Standard text messaging charges applied by Members’ cell phone carrier will apply to text messages that OurLane send.
+                                    </p>
+                                    <h4>2.11. Promotions, Referrals, and Loyalty Programs</h4>
+                                    <p>OurLane, at its sole discretion, may make available promotions, referral programs and loyalty programs with different features to any Members or prospective Members. OurLane reserves the right to withhold or deduct credits or benefits obtained through a promotion or program in the event that OurLane determines or believes that the redemption of the promotion or receipt of the credit or benefit was in error, fraudulent, illegal, or in violation of the applicable supplemental terms of this Agreement. OurLane reserves the right to terminate, discontinue or cancel any promotions or referral/loyalty programs at any time and in its sole discretion without notice to Members. Members' participation in any referral and loyalty programs are subject to this Agreement and the additional supplemental terms if any.</p>
+                                    <h4>2.12. Repair or Cleaning Charges</h4>
+                                    <p>Passengers will be held responsible for the cost of damage to, or necessary cleaning of, Vehicles and their accessories resulting from its use through the OurLane Platform in excess of normal wear and tear (“Repair or Cleaning”). In the event that a Chauffeur or Car Owner reports the need for Repair or Cleaning, and such Repair or Cleaning request is verified by OurLane in OurLane’s reasonable discretion, OurLane reserves the right to facilitate payment for the reasonable cost of such Repair or Cleaning on behalf of the Chauffeur or Car Owner using any of Passengers' payment methods. Such amounts will be transferred by OurLane to the applicable Chauffeur or Car Owner and are non-refundable.</p>
+                                    <h3>3. DISCLAIMER OF LIABILITY</h3>
+                                    <p>3.1. Members may access the Services on the OurLane Platform at their own risk and using their best and prudent judgment before entering into any arrangements with other Members through the OurLane Platform. OurLane will neither be liable nor responsible for any actions or inactions of Members nor any breach of conditions, representations or warranties by the Members. OurLane hereby expressly disclaims and any and all responsibility and liability arising out of the use of the OurLane Platform.</p>
+                                    <p>3.2. OurLane expressly disclaims any warranties or representations (express or implied) in respect of Trips, accuracy, reliability and completeness of the information provided by Members, or the content on the OurLane Platform. While OurLane will take precautions to avoid inaccuracies in the content of the OurLane Platform, all content and information, are provided on an as-is-where-is basis, without warranty of any kind. OurLane does not implicitly or explicitly support or endorse any of the Members availing Services from the OurLane Platform.</p>
+                                    <p>3.3. OurLane is not a party to any agreement between Car Owner and/or the Members and will not be liable to either the Chauffeur or the Members unless the loss or damage incurred arises due to OurLane’s negligence.
+                                    </p>
+                                    <p>3.4. OurLane shall not be liable for any loss or damage arising as a result of:
+                                    </p>
+                                    <ul>
+                                        <li>false, misleading, inaccurate or incomplete information being provided by a Member;</li>
+                                        <li>the cancellation of a Trip by a Chauffeur or Passenger;</li>
+                                        <li>any failure to make the Payment; and/or</li>
+                                        <li>any fraud, fraudulent misrepresentation or breach of duty or breach of any of these Conditions by a Car Owner or Chauffeur or Passenger before, during or after a Trip.</li>        
+                                    </ul>
+                                    <p>3.5. OurLane will not be liable to any Member for any business, financial or economic loss or for any consequential or indirect loss such as lost reputation, lost bargain, lost profit, loss of anticipated savings or lost opportunity arising as a result of the services provided by OurLane (whether suffered or incurred as a result of the OurLane’s negligence or otherwise) except in the case of fraud, wilful concealment or theft.</p>
+                                    <p>3.6. OurLane’s liability to any Member for all losses in respect of any Trip is capped at the sum of AED 200.00 (Two Hundred United Arab Emirates Dirhams only).</p>
+                                    <p>3.7. OurLane will not be liable to any Member in relation to any Trip unless OurLane is notified of a claim relating to that Trip within 1 month of completion of the Trip
+                                    </p>
+                                    <p>3.8. Given that the Car Owners are required to hold valid insurance to cover a Trip and given that OurLane’s service is limited to putting Chauffeurs and Passengers in touch with each other and cannot oversee any Trip, Members accept that the limitations on the OurLane’s liability set out above are reasonable.</p>
+                                    <h3>4. INDEMNITY AND RELEASE</h3>
+                                    <p>4.1. Members will indemnify and hold harmless OurLane, its subsidiaries, affiliates and their respective officers, directors, agents and employees, from any claim or demand, or actions including reasonable attorney’s fees, made by any third party or penalty imposed due to or arising out of your breach of these Conditions or any document incorporated by reference, or your violation of any law, rules, regulations or the rights of a third party.</p>
+                                    <p>4.2. Members release OurLane and/or its affiliates and/or any of its officers and representatives from any cost, damage, liability or other consequence of any of the actions/inactions of the Members and specifically waiver any claims or demands that they may have in this behalf under any statute, contract or otherwise.</p>
+                                    <h3>5. GENERAL TERMS</h3>
+                                    <h4>5.1. Relationship</h4>
+                                    <p>No arrangement between the Members and OurLane shall constitute or be deemed to constitute an agency, partnership, joint venture or the like between the Members and OurLane.
+                                    </p>
+                                    <h4>5.2. Suspension or withdrawal of OurLane Platform access</h4>
+                                    <p>In the event of non-compliance on Member’s part with all or some of the Conditions, the Member acknowledge and accept that OurLane can at any time, without prior notification, interrupt or suspend, temporarily or permanently, all or part of the service or access to the OurLane Platform (including in particular Member’s User Account).</p>
+                                    <h4>5.3. Intellectual Property</h4>
+                                    <p>The format and content included on the OurLane Platform, such as text, graphics, logos, button icons, images, audio clips, digital downloads, data compilations, and software, is the property of OurLane, its affiliates or its content suppliers and is protected by applicable copyright, authors’ rights and database right laws. All rights are reserved in relation to any registered and unregistered trademarks (whether owned or licensed to OurLane) which appear on the OurLane Platform.</p>
+                                    <p>The OurLane Platform or any portion of the OurLane Platform may not be reproduced, duplicated, copied, sold, resold or otherwise exploited without the express written consent of OurLane. No person is entitled to systematically extract and/or re-utilise parts of the contents of the OurLane Platform without the express written consent of OurLane. In particular, the use of data mining, robots, or similar data gathering and extraction tools to extract (whether once or many times) for re-utilisation of any substantial parts of this OurLane Platform is strictly prohibited.
+                                    </p>
+                                    <h4>5.4. Members’ contents on the OurLane Platform</h4>
+                                    <p>By displaying content on this OurLane Platform, Members expressly grant a license to OurLane to display the content and to use it for any of our other business purposes.
+                                    </p>
+                                    <p>Members of this OurLane Platform are expressly asked not to publish any defamatory, misleading or offensive content or any content which infringes any other persons intellectual property rights (e.g. copyright). If any such content is contrary to OurLane’s policy then OurLane does not accept liability in respect of such content and the Member responsible will be personally liable for any damages or other liability arising and agrees to indemnify OurLane in relation to any liability it may suffer as a result of any such content. However, as soon as OurLane becomes aware of infringing content, OurLane shall do everything it can to remove such content from the OurLane Platform as soon as possible.</p>
+                                    <h4>5.5. Confidentiality and Non-Disclosure Obligations</h4>
+                                    <p>Members agree not to use any technical, financial, strategic and other proprietary and confidential information relating to OurLane’s business, operations and properties, information about a Member made available in connection with such Member’s use of the Platform, which may include the Member’s name, pick-up location, contact information and photo (“Confidential Information”) disclosed to Members by OurLane for Members' own use or for any purpose other than as contemplated herein. Members shall not disclose or permit disclosure of any Confidential Information to third parties, and Members agree not to store separate and outside of the OurLane Platform any Information obtained from the OurLane Platform.</p>
+                                    <h4>5.6. Partner OurLane Platforms
+                                    </h4>
+                                    <p>OurLane reserves the right to reproduce any information that appears on the OurLane Platform or on the partner OurLane Platforms. In particular, ads published on one of the OurLane Platforms maintained or co-maintained by OurLane may be reproduced on other OurLane Platforms maintained or co-maintained by OurLane or third parties.</p>
+                                    <h4>5.7. Law and Jurisdiction</h4>
+                                    <p>These terms shall be governed by the law of Dubai, the United Arab Emirates and any disputes arising in relation to these terms shall be subject to the jurisdiction of the applicable Courts of Dubai, UAE.</p>
+                                    <h4>5.8. Notices</h4>
+                                    <p>Any notices to OurLane shall be given by certified mail, postage prepaid and return receipt requested to OurLane Networks FZ-LLC, Office 409, DSC Tower, Dubai Studio City, Dubai, United Arab Emirates. Alternatively, Members may also give notice to OurLane by written communication to OurLane's email address at legal@ourlane.com. Any notices to Members shall be provided to Members through the OurLane Platform or given to Members via the email address Members provide to OurLane during the registration process.
+                                    </p>
+                                    <h4>5.9. Headings</h4>
+                                    <p>Headings are for reference purposes only and in no way define, limit, construe or describe the scope or extent of such section. The words “include”, “includes” and “including” are deemed to be followed by the words “without limitation”.</p>
+                                    <h4>5.10. Waiver</h4>
+                                    <p>A party’s failure to act with respect to a breach by the other party does not constitute a waiver of the party’s right to act with respect to subsequent or similar breaches.</p>
+                                    <h4>5.11. Entire Agreement</h4>
+                                    <p>This Agreement sets forth the entire understanding and agreement between Members and OurLane with respect to the subject matter hereof and supersedes all previous understandings and agreements between the parties, whether oral or written</p>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="button" (click)="show = !show" class="btn btn-secondary btn-light">{{ show
+                                    ? ('accountsettingsManage.LearnLess' | translate) : ('accountsettingsManage.LearnMore' | translate) }}</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="learn-more" [class.show]="show">
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                      </div>
+                      <button (click)="show = !show">{{ show ? 'Learn less': 'Learn More' }}</button> -->
+                </div>
+                <div class="clearfix"></div> <br>
+                <button type="button" class="btn btn-secondary" style="background-color: #3E6562;"
+                    (click)="updateProfile()">{{'accountsettingsManage.SaveChanges' | translate}}</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+

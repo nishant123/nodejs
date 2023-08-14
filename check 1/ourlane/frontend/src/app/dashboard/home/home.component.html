@@ -1,0 +1,223 @@
+<section class="content-wrap">
+  <div class="content-main">
+    <div class="content-container">
+      <div class="header-title">
+        <p class="color-dark ">
+          {{'profile.heading' | translate}}
+        </p>
+      </div>
+      <form profileForm="ngForm" (ngSubmit)="editProfileFormSubmit()" autocomplete="off">
+        <div class="card p-4 mb-3">
+          <div class="row editProfileContent">
+            <div class="col-12 col-lg-4 profile">
+              <div class="profile_image">
+                <img (click)="open()" src="{{ profileImgname || userDefault }}" alt="user">
+              </div>
+              <div class="profile_content">
+                <h4 class="color-dark  mb-1" style="text-transform: capitalize;">{{userDetails.fullName}}
+                </h4>
+                <p class="mb-0">{{userDetails.role}} </p>
+              </div>
+            </div>
+            <div class="col-12 col-lg-8 profileBtnContent">
+              <div class="row">
+                <div class="col-12 col-lg-7">
+                  <div class="profileContentLabel">
+                    <p class="color-light"> {{'profile.changePictureText' | translate}}</p>
+                  </div>
+                </div>
+                <div class="col-12 col-lg-5">
+                  <div style="display: flex;">
+                    <a class="btn-style2 button-color3" (click)="removePic($event)">{{'button.remove' | translate}} </a>
+                    &nbsp;&nbsp;
+                    <a class="btn-style2 button-color2" (click)="openModal(template)">{{'button.upload'|
+                      translate}} </a>
+                    <input type="file" class="form-control" style="display: none;" name="profile" id="profile"
+                      #profileImg (change)="fileChangeEvent($event, 'profile')" data-title="Drag & drop or Upload"
+                      accept=" image/jpeg, image/png" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card p-4 mb-3">
+          <h4 class="heading color-dark mb-1"> {{'profile.personalDetails' | translate}}</h4>
+          <div class="row">
+            <div class="inputGroup col-12 col-lg-4">
+              <label for="fullName">{{'label.fullName' | translate}}</label>
+              <input type="text" [(ngModel)]="userDetails.fullName" onKeyPress="if(this.value.length==40) return false;"
+                (keypress)="keyPress1($event)" name="fullName" id="fullName" />
+            </div>
+            <div class="inputGroup col-12 col-lg-4">
+              <label for="mobileNumber">{{'label.mobileNumber' | translate}}</label><br>
+              <ngx-intl-tel-input [cssClass]="'custom'" [enableAutoCountrySelect]="true" [searchCountryFlag]="true"
+                [selectFirstCountry]="false" [enablePlaceholder]="true" [maxLength]="15" [phoneValidation]="true"
+                [inputId]="my-input-id" name="phone" [(ngModel)]="userDetails.mobileNumber"></ngx-intl-tel-input>
+            </div>
+            <div class="inputGroup col-12 col-lg-4">
+              <label for="email">{{'label.emailAddress' | translate}}</label>
+              <input type="text" [(ngModel)]="userDetails.loginId" name="loginId" id="email" readonly />
+            </div>
+          </div>
+        </div>
+        <div class="d-flex align-items-center justify-content-between">
+          <button type="submit" class="btn-style2 button-color2">{{'profile.UpdateProfile' | translate }}</button>
+          <div class="success-message" *ngIf="profileSuccessMessage">
+            <img [src]="iconSuccess" alt="success icon" />
+            <span>{{profileSuccessMessage}}</span>
+          </div>
+          <div class="error-message" *ngIf="profileErrorMessage">
+            <img [src]="iconError" alt="error icon" />
+            <span>{{profileErrorMessage}}</span>
+          </div>
+
+        </div>
+      </form>
+      <form class="mt-4 pt-2" [formGroup]="resetPassword" (ngSubmit)="resetPasswordSubmit(resetPassword.value)"
+        autocomplete="off">
+        <div class="card p-4 mb-3">
+          <h4 class="heading font-md color-dark mb-1">{{'profile.changePassword' | translate}}</h4>
+          <div class="row">
+            <div class="col-12 col-lg-4 inputGroup">
+              <label for="currentPassword">{{'label.currentPassword' | translate}}</label>
+              <input [type]="fieldTextType ? 'text' : 'password'" [ngClass]="errorMessage? 'error' : ''"
+                placeholder="{{'label.currentPassword' | translate }}" formControlName="currentPassword"
+                name="currentPassword" id="currentPassword" />
+              <span class="icon" (click)="toggleFieldTextType()">
+                <img [src]="eyeActiveIcon" alt="password" />
+              </span>
+            </div>
+            <div class="col-12 col-lg-4 inputGroup">
+              <label for="password">{{'label.newPassword' | translate }}</label>
+              <div class="input">
+                <input [type]="fieldTextType ? 'text' : 'password'"
+                  [ngClass]="cpassword !== password && !resetPassword.controls['cpassword'].errors? 'error' : ''"
+                  class="form-control" formControlName="password" placeholder="{{'label.enterPassword' | translate }}"
+                  name="password" id="password" [(ngModel)]="password" (cut)="$event.preventDefault()"
+                  (keyup)="passwordCheck(resetPassword.value.password)" />
+                <span class="icon" (click)="toggleFieldTextType()">
+                  <img [src]="eyeActiveIcon" alt="password" />
+                </span>
+              </div>
+
+              <div class="form_error_blk">
+                <span
+                  *ngIf="resetPassword.controls['password'].errors && resetPassword.controls['password'].errors.required && resetPassword.controls['password'].touched "
+                  style="color: red" class="form_error_class">{{'profile.PasswordRequired' | translate }}</span>
+                <span *ngIf=" resetPassword.controls['password'].hasError('minlength') " style="color: red"
+                  class="form_error_class">
+                  {{'profile.Must8Characters' | translate }}</span>
+                <span style="color: red" *ngIf=" resetPassword.controls['password'].hasError('maxlength') "
+                  class="form_error_class">
+                  {{'profile.Not15Characters' | translate }}</span>
+                <span *ngIf="capitalLetterExists || LetterExists">
+                  <span style="color: red" class="form_error_class">
+                    {{'profile.MustLowerUpperCase' | translate }}
+                  </span>
+                </span>
+                <span *ngIf="numberExists">
+                  <span style="color: red" class="form_error_class">
+                    {{'profile.MustLeastOneNumber' | translate }}
+                  </span>
+                </span>
+                <span *ngIf="specialCharExists">
+                  <span style="color: red" class="form_error_class">
+                    {{'profile.MustLeastOneSpecialCharacter' | translate }}
+                  </span>
+                </span>
+              </div>
+            </div>
+            <div class="col-12 col-lg-4 inputGroup">
+              <label for="cpassword">{{'label.confirmPassword' | translate }}</label>
+              <div class="input">
+                <input [type]="fieldTextType ? 'text' : 'password'" class="form-control"
+                  [ngClass]="cpassword !== password && !resetPassword.controls['cpassword'].errors? 'error' : ''"
+                  placeholder="{{'label.confirmYourPassword' | translate }}" name="cpassword" id="cpassword"
+                  formControlName="cpassword" [(ngModel)]="cpassword" />
+                <span class="icon" (click)="toggleFieldTextType()">
+                  <img src="./../assets/images/icon-red-eye-active.png" alt="password" />
+                </span>
+              </div>
+
+              <div class="form_error_blk">
+                <span
+                  *ngIf="resetPassword.controls['cpassword'].touched && resetPassword.controls['cpassword'].errors && resetPassword.controls['cpassword'].errors.required"
+                  style="color: red" class="form_error_class">{{'profile.ConfirmPasswordRequired' | translate }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex align-items-center justify-content-between">
+          <button type="submit"
+            [disabled]="resetPassword.invalid || cpassword !== password || invalidPassword === false"
+            class="btn-style2 button-secondry">{{'profile.UpdatePassword' | translate }}</button>
+          <div class="error-message" *ngIf="cpassword !== password && !resetPassword.controls['cpassword'].errors">
+            <img [src]="iconError" alt="error icon" />
+            <span>{{'profile.newPasswordsAndConfirmPasswordDoesNotMatch' |
+              translate }}</span>
+          </div>
+          <div class="error-message" *ngIf="errorMessage">
+            <img [src]="iconError" alt="error icon" />
+            <span>{{errorMessage}}</span>
+          </div>
+          <div class="success-message" *ngIf="successMessage">
+            <img [src]="iconSuccess" alt="success icon" />
+            <span>{{successMessage}}</span>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <ng-template #template>
+    <div class="modal-body">
+      <div *ngIf="showWebcam">
+        <webcam [height]="500" [width]="500" [trigger]="triggerObservable" (imageCapture)="handleImage($event)"
+          *ngIf="showWebcam" [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable"
+          [videoOptions]="videoOptions" (cameraSwitched)="cameraWasSwitched($event)"
+          (initError)="handleInitError($event)" class="webcam"></webcam>
+        <button (click)="triggerSnapshot()" class="snapshot-btn">{{'profile.TakeSnapshot' | translate }}</button>
+      </div>
+      <h3 class="alertText">{{ 'alert.uplaodHeader' | translate}}</h3>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide(); showWebcam=false;">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <div class="docname">
+        <img src="../../../assets/images/doc.svg" class="doc" alt="">
+
+        <span class="doc-name">&nbsp;&nbsp;{{ profileImageName }}</span>
+
+      </div>
+      <div class="takephoto" (click)="toggleWebcam();">
+
+        <img src="../../../assets/images/camera.svg" class="doc" alt="">
+        <span class="photo">{{'profile.TakePhoto' | translate }}</span>
+
+      </div>
+      <br>
+      <ngx-dropzone multiple="false" class="drag" (change)="onSelect($event)">
+        <ngx-dropzone-label>
+          <img src="../../../assets/images/cloud-upload.svg" alt="">
+          <br>
+          <h4 class="drag-text">
+            {{'profile.DragFilesClickHere' | translate }}
+          </h4>
+          <span class="drag-subtext">
+            {{'profile.maximumLimit' | translate }}
+          </span>
+        </ngx-dropzone-label>
+        <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+          <ngx-dropzone-label>{{ f.name }} </ngx-dropzone-label>
+        </ngx-dropzone-preview>
+      </ngx-dropzone>
+
+      <div style="display: flex;">
+        <a class="btn-style2 button-color4 custom-width" (click)="modalRef.hide(); removePic($event)">{{'button.cancel'
+          | translate}} </a>
+        &nbsp;&nbsp;
+        <a class="btn-style2 button-color2 custom-width" (click)="saveProfilePic(); modalRef.hide();">{{'button.save' |
+          translate}} </a>
+      </div>
+    </div>
+  </ng-template>
+</section>

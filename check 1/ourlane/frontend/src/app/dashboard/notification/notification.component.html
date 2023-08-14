@@ -1,0 +1,106 @@
+<section class="content-wrap">
+  <div class="content-main customers">
+    <div class="content-container">
+      <div class="header-title">
+        <p class="font-sm font-termina color-dark font-w700">
+          {{ 'notifications.heading' | translate}}
+        </p>
+        <div class="buttons d-flex justify-content-between ">
+          <div class="d-flex">
+            <button (click)="CheckAllOptions()" class="dark-button btn-md"> {{ 'notifications.selectAll' |
+              translate}}</button>
+            <button class="blue-button btn-md" (click)="markAsRead()"> {{ 'notifications.markAllAsRead' |
+              translate}}</button>
+          </div>
+          <div class="d-flex" *ngIf="notificationSelected > 0">
+            <button class="white-button btn-md"> {{notificationSelected}} {{ 'notifications.notificationSelected' |
+              translate}}</button>
+            <button class="red-button btn-md mr-0" (click)="deleteModal(delete)">{{ 'notifications.deleteSelected' |
+              translate}}</button>
+          </div>
+        </div>
+      </div>
+      <div class="notification-list">
+        <ul class="list">
+          <li class="list-item" *ngFor="let notfication of notficationList">
+            <div class="list-item-content" [ngClass]="{'read': notfication.isRead === true}">
+              <div class="content">
+                <div class="custom-checkbox">
+                  <input type="checkbox" [(ngModel)]="notfication.checked" [value]="notfication.uuid"
+                    value="{{notfication.uuid}}" (change)="checkboxClicked()" />
+                </div>
+                <div class="list-icon" (click)="read(notfication)">
+                  <img *ngIf="notfication.name == 'carAdd'" src='{{carAddIcon}}' alt="list" />
+                  <img *ngIf="notfication.name == 'carRemove'" src='{{carRemoveIcon}}' alt="list" />
+                  <img *ngIf="notfication.name == 'driverAdd'" src='{{userAddIcon}}' alt="list" />
+                  <img *ngIf="notfication.name == 'driverRemove'" src='{{userRemoveIcon}}' alt="list" />
+                </div>
+                <div class="notification-content" (click)="read(notfication)">
+                  <p> {{notfication.message}}</p>
+                </div>
+              </div>
+              <div class="date">
+                <p>{{notfication.updatedAt | date: 'dd/MM/yyyy hh:mm a'}}</p>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <div class="customPagination">
+          <ngb-pagination [collectionSize]="totalNotifications" [maxSize]="3" [pageSize]="perPage" [(page)]="page"
+            (pageChange)="loadPage($event)">
+            <ng-template ngbPaginationPrevious>{{'paginationContent.Previous' | translate}}</ng-template>
+            <ng-template ngbPaginationNext>{{'paginationContent.Next' | translate}}</ng-template>
+          </ngb-pagination>
+          <input type="number" NumericInput placeholder="{{'customers.EnterPageNumber' | translate }}"
+            (input)="onPageNumber($event)">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<ng-template #delete>
+  <div class="modal-body deleteModal">
+    <img class="icon" src="{{deletepopupIcon}}" alt="delete">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+
+    <p class="alertText font-md color-dark ">{{'notifications.delete' | translate}}
+      <span *ngIf="notificationSelected == 0 || notificationSelected == 1"> {{'notifications.notification' |
+        translate}}</span>
+      <span *ngIf="notificationSelected > 1">{{notificationSelected}} {{'notifications.heading' | translate}}</span>
+
+    </p>
+    <p class="font-sm color-light para-p">{{'notifications.notificationDeleteContent' | translate}}</p>
+    <div class="d-flex">
+      <a class="button-secondry btn-style2 mx-2 w-100" (click)="decline()">{{'administration.Cancel' | translate}} </a>
+      <a class="button-red btn-style2  mx-2 w-100" (click)="confirm()">{{'administration.Delete' | translate}} </a>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #deletePopup>
+  <div class="modal-body">
+    <div class="complete-success">
+      <div class="img-con fullImage">
+        <img src="{{checkCircle}}" alt="Check Icon" />
+      </div>
+      <div class="middle-sec">
+        <div class="heading">
+          {{'carsmanagement.deleted' | translate}}
+        </div>
+        <div class="details">
+          <span *ngIf="notificationSelected == 0 || notificationSelected == 1"> {{'alert.deleteANoti' |
+            translate}}</span>
+          <span *ngIf="notificationSelected > 1"> {{'alert.deleteNoti' | translate}} {{notificationSelected}}
+            {{'alert.deleteSuccessfully' | translate}}</span>
+        </div>
+      </div>
+      <div>
+        <button (click)="modalRef.hide()" class="view fullImage ok">
+          {{'button.ok' | translate}}
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>

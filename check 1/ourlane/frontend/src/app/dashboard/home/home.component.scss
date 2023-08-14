@@ -1,0 +1,202 @@
+@import './../../scss/theme.scss';
+
+.header-title{
+  p{
+    font-size: 14px;
+    font-family:"termina-bold";
+  }
+}
+.profile_content{
+  h4{
+    font-size: 16px;
+    font-family: "Helvetica-Neue-Bold";
+  }
+  p{
+    font-size: 13px;
+    color: #555555;
+    font-family: "SF-Pro-Display-Medium";
+  }
+}
+.editProfileContent {
+
+  .profile {
+    display: flex;
+    width: 100%;
+    align-items: center;
+
+    .profile_image {
+      width: 3.9rem;
+      height: 3.9rem;
+      overflow: hidden;
+      border-radius: 50%;
+      margin-right: 1rem;
+      display: flex;
+
+      img {
+        width: 100%;
+      }
+    }
+  }
+
+  .profileBtnContent {
+    .profileContentLabel {
+      padding-top: 0.6rem;
+      p{
+        font-size: 13px;
+      }
+    }
+  }
+
+}
+.heading{
+  font-size: 16px;
+  font-family: "Helvetica-Neue-Bold";
+}
+.icon {
+  position: absolute;
+  right: 10px;
+  top: 36px;
+  padding-right: 5px;
+}
+.custom-width {
+  margin-top: 1.5rem;
+  width: 9.6rem;
+}
+.modal-body {
+  width: 376px;
+  height: 546px;
+  display: inline;
+  background: $color-white 0% 0% no-repeat padding-box;
+  opacity: 1;
+}
+.modal-body .alertText {
+  text-align: left;
+  font-weight:  bold;
+  font-size:  25px;
+  letter-spacing: 0px;
+  color: $color-light-black;
+  opacity: 1;
+  font-size: 20px;
+}
+.docname {
+  width: 100%;
+  background: #F8F8F8 0% 0% no-repeat padding-box;
+  border-radius: 4px;
+  opacity: 1;
+  line-height: 38px;
+  display: flex;
+  padding: 0 12px;
+}
+.docname .doc{
+ float: left;
+}
+.docname .doc-name{
+  float: left;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 10;
+  -webkit-box-orient: vertical;
+  font-size: 12px;  
+  font-family: "Helvetica-Neue-Bold";
+ }
+.takephoto {
+  margin-top: 1.5rem;
+  width: 100%;
+  border: 2px solid $color-brown1;
+  border-radius: 4px;
+  opacity: 1;
+  padding: 0 15px;
+  line-height: 34px;
+  cursor: pointer;
+}
+.takephoto .doc{
+  float: left;
+  padding: 9px 0;
+ }
+ .takephoto .photo {
+  width: 80px;
+  text-align: left;
+  font-weight: bold;
+  font-size:  16px;
+  letter-spacing: 0px;
+  color: $color-brown1;
+  opacity: 1;
+ }
+ .drag {
+  width: 274px;
+  height: 240px;
+  margin-top: 1rem;
+  background: #FCFCFC 0% 0% no-repeat padding-box;
+  border: 1px dashed #DEDEDE;
+  border-radius: 4px;
+  opacity: 1;
+  display: table-cell;
+  vertical-align: middle;
+  cursor: pointer;
+ }
+ .drag .drag-text {
+  height: 15px;
+  text-align: center; 
+  font-size: 12px;
+  font-family: "Helvetica-Neue-Bold";
+  color: $color-dark1;
+  opacity: 1;
+  margin-top: 15px;
+  margin-bottom: 0;
+ }
+ .drag .drag-subtext {
+  width: 192px;
+    height: 24px;
+    text-align: center;
+    font-family: "HelveticaNeueMed";
+    font-size: 10px;
+    color: #909090;
+    opacity: 1;
+    display: block;
+    margin: auto;
+ }
+input[type=number] {
+  -moz-appearance: textfield;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.webcam {
+  position: absolute;
+  top: 8%;
+  left: -15%;
+  z-index: 99
+}
+.snapshot-btn {
+  margin-top: 1.5rem;
+  width: 274px;
+  position: absolute;
+  height: 38px;
+  top: 400px;
+  left: 50px;
+  border: 2px solid $color-brown1;
+  border-radius: 4px;
+  opacity: 1;
+  padding: 0.5rem;
+  cursor: pointer
+}
+.inputGroup{
+  label{
+    font-size: 12px;
+    font-family: "Helvetica-Neue-Bold";
+  }
+  input{
+    color: #555555;
+    font-size: 16px;
+  }
+}
+
+:host ::ng-deep .iti {
+  display: block;
+}
+
+.row {
+  align-items: center;
+}

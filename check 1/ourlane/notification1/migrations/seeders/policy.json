@@ -1,0 +1,22 @@
+[
+    {
+        "policyName": "USER_MANAGE",
+        "policyDescription": "which manage users of application"
+    },
+    {
+        "policyName": "USER_LIST",
+        "policyDescription": "view user list"
+    },
+    {
+        "policyName": "ROLE_MANAGE",
+        "policyDescription": "manage roles of application"
+    },
+    {
+        "policyName": "UPDATE_USER_DETAILS",
+        "policyDescription": "update user details"
+    },
+    {
+        "policyName": "VIEW_USER_DETAILS",
+        "policyDescription": "view user details"
+    }
+]

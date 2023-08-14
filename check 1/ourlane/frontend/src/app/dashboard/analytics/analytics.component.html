@@ -1,0 +1,791 @@
+<section class="content-wrap">
+    <div class="content-main">
+        <div class="content-container">
+            <div class="header-title">
+                <p class="color-dark ">
+                    {{'Analytics.heading' | translate}}
+                </p>
+            </div>
+            <div class="row analytics-div">
+                <div class="col-lg-12 col-xl-9 analytics-left marginBottom">
+                    <div class="sub-one bg-white">
+                        <div class="head-analytics">
+                            <h3>{{'Analytics.userActivity' | translate}}</h3>
+                            <ul>
+                                <li>
+                                    <a (click)="changeContent('drivers')" [class.active]="activeTab=='drivers'">
+                                        <img src="{{DriversIcon}}" />{{'Analytics.drivers' | translate}}
+                                    </a>
+                                </li>
+                                <li><a (click)="changeContent('customers')" [class.active]="activeTab=='customers'">
+                                        <img src="{{CustomerIcon}}" />{{'Analytics.customers' | translate}}</a></li>
+                            </ul>
+                        </div>
+                        <div *ngIf="activeTab=='drivers'" class="analytics-tap-main">
+                            <div class="analytics-tap">
+                                <div class="left-analytics-tap">
+                                    <div class="profile-image">
+                                        <img src="{{driverImg || userDefault}}">
+                                    </div>
+                                    <div class="profile-content">
+                                        <h4>{{driverName}}</h4>
+                                        <p>{{driverrole === 'DRIVER' ? 'Chauffeur' : driverrole}}</p>
+                                    </div>
+                                    <div class="view-modal" (click)="openModalDriver(templateDriver)"><img
+                                            src="{{downArrow}}"></div>
+                                </div>
+                                <div class="right-analytics-tap">
+                                    <div class="list">
+                                        <span (click)="loadChart('week')"
+                                            [class.active]="activeTabChat=='week'">{{'Analytics.weekly' |
+                                            translate}}</span>
+                                        <span (click)="loadChart('month')"
+                                            [class.active]="activeTabChat=='month'">{{'Analytics.monthly' |
+                                            translate}}</span>
+                                        <span (click)="loadChart('year')"
+                                            [class.active]="activeTabChat=='year'">{{'Analytics.yearly' |
+                                            translate}}</span>
+                                    </div>
+                                    <div class="view" (click)="openModalLg(viewMore)">{{'Analytics.viewMore' |
+                                        translate}}</div>
+                                </div>
+                            </div>
+                            <div class="row chart-div">
+                                <div class="col-md-12 col-lg-6 col-xl-6 chart-left">
+                                    <div class="head-chart" *ngIf="chartData && chartData.length > 0">
+                                        <div class="img-chart">
+                                            <img src="{{locationIcon}}" />
+                                        </div>
+                                        <div class="info-chart">
+                                            <p>{{TripsEarnings}} {{'Analytics.trips' |
+                                                translate}} </p>
+                                            <h4>{{chartTrip}} {{'Analytics.trips' |
+                                                translate}}</h4>
+                                        </div>
+                                    </div>
+                                    <ng-container *ngIf="chartData && chartData.length > 0">
+                                        <highcharts-chart [Highcharts]="highcharts" [options]="chartOptions"
+                                            [(update)]="updateFromInput" [callbackFunction]="chartCallback"
+                                            class="chart-responsive">
+                                        </highcharts-chart>
+                                    </ng-container>
+                                    
+                                </div>
+                                <div class="col-md-12 col-lg-6 col-xl-6 chart-left">
+                                    <div class="head-chart" *ngIf="chartData1 && chartData1.length > 0">
+                                        <div class="img-chart">
+                                            <img src="{{dollarIcon}}" />
+                                        </div>
+                                        <div class="info-chart">
+                                            <p>{{TripsEarnings}} Earnings</p>
+                                            <h4>{{math.round(chartAmount) | number}} {{'Analytics.aed' | translate}}</h4>                                          
+                                        </div>
+                                    </div>
+                                    <ng-container *ngIf="chartData1 && chartData1?.length > 0">
+                                        <highcharts-chart [Highcharts]="highcharts" [options]="chartOptions1"
+                                            [(update)]="updateFromInput1" [callbackFunction]="chartCallback1"
+                                            class="chart-responsive">
+                                        </highcharts-chart>
+                                    </ng-container>
+                                </div>
+                                <div class="col-md-12 ">
+                                    <div class="data-not-found" *ngIf="chartData?.length <= 0 && chartData1?.length <= 0"><img src="{{error}}" /> <br>{{'errors.noDataFound' | translate}}</div>
+                                </div>
+                            </div>
+                            <div class="excel-div" *ngIf="chartExcel && chartExcel?.length > 0">
+                                <span class="download" (click)="exportAsXLSXLoadChart()"><img src="{{downloadCSV}}"> {{'button.DownloadCSV' | translate}}</span>
+                            </div>
+                        </div>
+                        <div *ngIf="activeTab=='customers'" class="analytics-tap-main">
+                            <div class="analytics-tap">
+                                <div class="left-analytics-tap">
+                                    <div class="profile-image">
+                                        <img src="{{customerImg || userDefault}}">
+                                    </div>
+                                    <div class="profile-content">
+                                        <h4>{{customerName}}</h4>
+                                        <p>{{customerrole}}</p>
+                                    </div>
+                                    <div class="view-modal" (click)="openModalCustomer(templateCustomer)"><img
+                                            src="{{downArrow}}"></div>
+                                </div>
+                                <div class="right-analytics-tap">
+                                    <span class="reset-btn" (click)="resetDate()"><img src="{{reset}}"/> {{'button.Reset' | translate}}</span>
+                                    <input type="date" class="div-date" [(ngModel)]="date" (change)="onChangeCustomerDay($event)">
+                                </div>                                 
+                            </div>
+                            <ng-container *ngIf="dayData">
+                                <div class="customer-div" *ngFor="let dayDatalist of dayData">
+                                    <h3>{{'Analytics.trips' | translate}} </h3>
+                                    <div class="row customer-inner">
+                                        <div class="col-12 col-sm-6 col-lg-3  head-customer">                                      
+                                                <div class="img-chart">
+                                                    <img src="{{Location4Icon}}" />
+                                                </div>
+                                                <div class="info-chart">
+                                                    <p>{{'Analytics.totalTrips' | translate}}</p>
+                                                    <h4>{{dayDatalist.perDayTrips | number}} {{'Analytics.trips' | translate}}</h4>
+                                                </div>                                        
+                                        </div>                 
+                                    </div>
+                                    <h3 class="mt-3">{{'Analytics.payment' | translate}}</h3>
+                                    <div class="row customer-inner">
+                                        <div class="col-12 col-sm-6 col-lg-3  head-customer">                                        
+                                                <div class="img-chart">
+                                                    <img src="{{dollarIcon}}" />
+                                                </div>
+                                                <div class="info-chart">
+                                                    <p>{{'Analytics.TotalEarnings' | translate}}</p>                               
+                                                        <h4>
+                                                           {{math.round(dayDatalist.perDayAmount) | number}} {{'Analytics.aed' | translate}}
+                                                        </h4>
+                                                </div>                                        
+                                        </div>                   
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="!dayData">
+                                <div class="customer-div" *ngFor="let list of totalCustomerDataList">
+                                    <h3>{{'Analytics.Rides' | translate}} </h3>
+                                    <div class="row customer-inner">
+                                        <div class="col-12 col-sm-6 col-lg-3 head-customer">
+                                            <div class="img-chart">
+                                                <img src="{{Location1Icon}}" />
+                                            </div>
+                                            <div class="info-chart">
+                                                <p>{{'Analytics.totalRides' | translate}}</p>
+                                                <h4>{{list.totalTrips | number}} {{'Analytics.trips' | translate}}
+                                                </h4>
+                                            </div>                                       
+                                        </div>
+                                        <div class="col-12 col-sm-6 col-lg-3 head-customer">
+                                            <div class="img-chart">
+                                                <img src="{{Location2Icon}}" />
+                                            </div>
+                                            <div class="info-chart">
+                                                <p>{{'Analytics.todaysRides' | translate}}</p>
+                                                <h4>{{list.todayTrips | number}} {{'Analytics.trips' | translate}}
+                                                </h4>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-6 col-lg-3 head-customer">
+                                            <div class="img-chart">
+                                                <img src="{{Location3Icon}}" />
+                                            </div>
+                                            <div class="info-chart">
+                                                <p>{{'Analytics.weekRides' | translate}}</p>
+                                                <h4>{{list.totalCurrentWeekTrips | number}} {{'Analytics.trips' |
+                                                    translate}}</h4>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-6 col-lg-3 head-customer">
+                                            <div class="img-chart">
+                                                <img src="{{Location4Icon}}" />
+                                            </div>
+                                            <div class="info-chart">
+                                                <p>{{'Analytics.monthRides' | translate}}</p>
+                                                <h4>{{math.round(list.totalCurrentMonthTrips) | number}}
+                                                    {{'Analytics.trips' | translate}}</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h3>{{'Analytics.payment' | translate}}</h3>
+                                    <div class="row customer-payment">
+                                        <div class="col-md-4 col-lg-3 left-payment">
+                                            <div class="head-customer">
+                                                <div class="img-chart">
+                                                    <img src="{{dollarIcon}}" />
+                                                </div>
+                                                <div class="info-chart">
+                                                    <p>{{'Analytics.overallPayment' | translate}}</p>                                                   
+                                                    <h4>{{math.round(list.totalAmount) | number}}  {{'Analytics.aed' | translate}}</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8 col-lg-9 right-payment">
+                                            <div class="row customer-inner">
+                                                <div class="col-12 col-sm-6 col-md-6 col-lg-3 head-customer">
+                                                    <div class="img-chart">
+                                                        <img src="{{CardIcon}}" />
+                                                    </div>
+                                                    <div class="info-chart">
+                                                        <p>{{'Analytics.cardPayment' | translate}}</p>                                                        
+                                                        <h4>{{math.round(list.totalCardPayment) | number}}</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-sm-6 col-md-6 col-lg-3 head-customer">
+                                                    <div class="img-chart">
+                                                        <img src="{{CashIcon}}" />
+                                                    </div>
+                                                    <div class="info-chart">
+                                                        <p>{{'Analytics.cashPayment' | translate}}</p>
+                                                        
+                                                        <h4>{{math.round(list.totalCashPayment) | number}}</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-sm-6 col-md-6 col-lg-3 head-customer">
+                                                    <div class="img-chart">
+                                                        <img src="{{PaypalIcon}}" />
+                                                    </div>
+                                                    <div class="info-chart">
+                                                        <p>{{'Analytics.payPal' | translate}}</p>
+                                                        <h4>0</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-sm-6 col-md-6 col-lg-3 head-customer">
+                                                    <div class="img-chart">
+                                                        <img src="{{WalletIcon}}" />
+                                                    </div>
+                                                    <div class="info-chart">
+                                                        <p>{{'Analytics.walLet' | translate}}</p>                                                       
+                                                        <h4>{{math.round(list.totalWalletPayment) | number}}</h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <div class="col-md-12 ">
+                                <div class="data-not-found" *ngIf="totalCustomerDataList?.length <= 0 && dayData?.length <= 0"><img src="{{error}}" /> <br>{{'errors.noDataFound' | translate}}</div>                              
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-xl-3 analytics-right marginBottom">
+                    <div class="sub-one bg-white fullHeight">
+                        <h3>{{'Analytics.leaderboard' | translate}} <span><img  routerLink="/driver-management" src="{{menu}}"></span></h3>
+                        <ng-container *ngFor="let tripsLeader of tripsLeaders; index as i">
+                            <div class="leaderboard-rap" *ngIf="i<5">
+                                <img src="{{tripsLeader.driver_details.profile_image || userDefault}}">
+                                <span class="person">
+                                    <div class="progress-info">
+                                        <h4>{{tripsLeader.driver_details.fullName}}</h4>
+                                        <h5>{{math.round(tripsLeader.totalAmount)}} AED</h5>
+                                    </div>
+                                    <progress id="file" max="100"
+                                        value="{{(((tripsLeader.totalAmount)/10000)*100).toFixed(2)}}">
+                                        <span class="progress-label"></span>
+                                    </progress>
+                                </span>
+                            </div>
+                        </ng-container>
+
+                        <div class="excel-div" *ngIf="tripsLeaders?.length > 0">
+                            <span class="download" (click)="exportAsXLSXTripsLeaders()"><img src="{{downloadCSV}}"> {{'button.DownloadCSV' | translate}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row analytics-div">
+                <div class="col-lg-12 col-xl-9 analytics-left">
+                    <div class="row analytics-sub">
+                        <div class="col-6 col-sm-6 col-md-6 col-lg-3 marginBottom">
+                            <div class="sub-four bg-white">
+                                <img class="img-trip" src="{{dollarIcon}}" />
+                                <h2 *ngIf="totalAmountHigh">{{math.round(totalAmountHigh) | number}}k</h2>
+                                <h2 *ngIf="totalAmountLow">{{math.round(totalAmountLow)}}</h2>
+                                <p>{{'Analytics.totalRevenue' | translate}}</p>
+                                <span *ngIf="unvalue">N/A</span>
+                                <span class="green span-an" *ngIf="calculateWeekRevenuHigh">{{math.round(calculateWeekRevenuHigh) | number}}
+                                    %</span>
+                                <span class="red span-an" *ngIf="calculateWeekRevenuLow">{{math.round(calculateWeekRevenuLow) | number}} %</span>
+                                <img src="{{nextArrow}}" class="img-icon" (click)="openModalAmount(popupChart)">
+                                <div class="excel-div">
+                                    <span class="download" (click)="exportAsXLSXRevenue()"><img src="{{downloadCSV}}"> {{'button.DownloadCSV' | translate}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-sm-6 col-md-6 col-lg-3 marginBottom">
+                            <div class="sub-four bg-white">
+                                <img class="img-trip" src="{{locationIcon}}" />
+                                <h2 *ngIf="completedTripsHigh">{{completedTripsHigh}}k+</h2>
+                                <h2 *ngIf="completedTripsLow">{{completedTripsLow}}</h2>
+                                <p>{{'Analytics.completedTrips' | translate}}</p>
+                                <span *ngIf="unvalue">N/A</span>
+                                <span class="green span-an" *ngIf="calculateWeekTripsHigh">{{math.round(calculateWeekTripsHigh) | number}}
+                                    %</span>
+                                <span class="red span-an" *ngIf="calculateWeekTripsLow">{{math.round(calculateWeekTripsLow) | number}} %</span>
+                                <img src="{{nextArrow}}" class="img-icon" (click)="openModalTrip(tripChart)">
+                                <div class="excel-div">
+                                    <span class="download" (click)="exportAsXLSXTrip()"><img src="{{downloadCSV}}"> {{'button.DownloadCSV' | translate}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-sm-6 col-md-6 col-lg-3 marginBottom">
+                            <div class="sub-four bg-white">
+                                <img class="img-trip" src="{{userBlue}}" />
+                                <h2>{{tripOverView?.availableDrivers}}</h2>
+                                <p>{{'Analytics.availableDrivers' | translate}}</p>                               
+                            </div>
+                        </div>
+                        <div class="col-6 col-sm-6 col-md-6 col-lg-3 marginBottom">
+                            <div class="sub-four bg-white">
+                                <img class="img-trip" src="{{userVoilet}}" />
+                                <h2>{{tripOverView?.OccupiedDrivers}}</h2>
+                                <p>{{'Analytics.occupiedDrivers' | translate}}</p>                               
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row analytics-sub noMarg">
+                        <div class="col-12 sub-one bg-white marginBottom">
+                            <div class="chart-head">
+                                <h3>{{'Analytics.todayTrips' | translate}}</h3>
+                            </div>
+                            <div class="row chart-trip">
+                                <div class="col-12 col-md-4 sub-chart-trip">
+                                    <ng-container *ngIf="chartData2">
+                                        <highcharts-chart class="small-chart" [Highcharts]="highcharts"
+                                            [options]="chartOptions2" [(update)]="updateFromInput2"
+                                            [callbackFunction]="chartCallback2">
+                                        </highcharts-chart>
+                                    </ng-container>
+                                </div>
+                                <div class="col-12 col-md-8 sub-info-trip">
+                                    <div class="row inner-trip">
+                                        <div class="col-12 col-lg-6">
+                                            <div class="head-chart">
+                                                <div class="img-chart">
+                                                    <img src="{{completedTrips}}" />
+                                                </div>
+                                                <div class="info-chart">
+                                                    <p>{{'Analytics.completedTrips' | translate}}</p>
+                                                    <h4>{{Completed}} {{'Analytics.trips' | translate}}</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-6">
+                                            <div class="head-chart">
+                                                <div class="img-chart">
+                                                    <img src="{{OngoingTrips}}" />
+                                                </div>
+                                                <div class="info-chart">
+                                                    <p>{{'Analytics.onGoing' | translate}}</p>
+                                                    <h4>{{Ongoing}} {{'Analytics.trips' | translate}}</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-6">
+                                            <div class="head-chart">
+                                                <div class="img-chart">
+                                                    <img src="{{scheduledTrips}}" />
+                                                </div>
+                                                <div class="info-chart">
+                                                    <p>{{'Analytics.scheduledTrips' | translate}}</p>
+                                                    <h4>{{Scheduled}} {{'Analytics.trips' | translate}}</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-6">
+                                            <div class="head-chart">
+                                                <div class="img-chart">
+                                                    <img src="{{cancelledTrips}}" />
+                                                </div>
+                                                <div class="info-chart">
+                                                    <p>{{'Analytics.cancelledTrips' | translate}}</p>
+                                                    <h4>{{Cancelled}} {{'Analytics.trips' | translate}}</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="excel-div" *ngIf="chartData2?.length > 0">
+                                <span class="download" (click)="exportAsXLSXTodayTrips()"><img src="{{downloadCSV}}"> {{'button.DownloadCSV' | translate}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row analytics-sub">
+                        <div class="col-12 col-lg-6 marginBottom">
+                            <div class="sub-two bg-white fullHeight">
+                                <div class="chart-head">
+                                    <h3>{{'Analytics.MostPopularPickLocations' | translate}}</h3>
+                                </div>
+                                <div class="chart-trip">
+                                    <div class="sub-chart-trip">
+                                        <ng-container *ngIf="chartData3">
+                                            <highcharts-chart class="small-chart" [Highcharts]="highcharts"
+                                                [options]="chartOptions3" [(update)]="updateFromInput3"
+                                                [callbackFunction]="chartCallback3">
+                                            </highcharts-chart>
+                                        </ng-container>
+                                    </div>
+                                    <div class="sub-info-trip">
+                                        <ng-container *ngFor="let row of chartData3; let i=index">
+                                            <div class="list-trip" *ngIf="i<20">
+                                                <div class="left-trip"><span class="cir-span"></span>{{row.name}}</div>
+                                                <div class="left-trip">{{row.y}}</div>
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                    <div class="excel-div" *ngIf="chartData3?.length > 0">
+                                        <span class="download" (click)="exportAsXLSXMostPickup()"><img src="{{downloadCSV}}"> {{'button.DownloadCSV' | translate}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 marginBottom">
+                            <div class="sub-two bg-white fullHeight">
+                                <div class="chart-head">
+                                    <h3>{{'Analytics.MostPopularDropLocations' | translate}}</h3>
+                                </div>
+                                <div class="chart-trip">
+                                    <div class="sub-chart-trip">
+                                        <ng-container *ngIf="chartData4">
+                                            <highcharts-chart class="small-chart" [Highcharts]="highcharts"
+                                                [options]="chartOptions4" [(update)]="updateFromInput4"
+                                                [callbackFunction]="chartCallback4">
+                                            </highcharts-chart>
+                                        </ng-container>
+                                    </div>
+                                    <div class="sub-info-trip">
+                                        <ng-container *ngFor="let row of chartData4; let i=index">
+                                            <div class="list-trip" *ngIf="i<20">
+                                                <div class="left-trip"><span class="cir-span"></span>{{row.name}}</div>
+                                                <div class="left-trip">{{row.y}}</div>
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                    <div class="excel-div" *ngIf="chartData4?.length > 0">
+                                        <span class="download" (click)="exportAsXLSXMostDrop()"><img src="{{downloadCSV}}"> {{'button.DownloadCSV' | translate}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-xl-3 analytics-right marginBottom">
+                    <div class="sub-one bg-white time-line fullHeight">
+                        <h3 class="mb-3">Live Feed</h3>
+                        <div *ngFor="let liveFeed of liveFeeds; index as i" class="row">
+                            <div class="col-3 time">
+                                {{liveFeed.createdAt | date: 'HH:mm'}}
+                            </div>
+                            <div class="col-9 discrip">
+                                {{liveFeed.name}} <i>{{liveFeed.message}}</i>
+                            </div>
+                        </div>
+                        <!-- <ul>
+                            <li *ngFor="let liveFeed of liveFeeds; index as i">
+                                <span class="time">{{liveFeed.createdAt | date: 'HH:mm'}}</span>
+                                <span class="discrip">{{liveFeed.name}} <i>{{liveFeed.message}}</i></span>
+                            </li>
+                        </ul> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<ng-template #templateDriver>
+    <div class="modal-body ">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide();">
+            <span aria-hidden="true"><img src="{{closeIcon}}"></span>
+        </button>
+        <div class="modal-analytics-main">
+            <div class="input-group-modal">
+                <label>{{'Analytics.SelectDriver' | translate}}</label>               
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><img src="{{searchIcon}}" alt="icon"></span>
+                    </div>
+                    <input class="form-control" type="text" name="search" [(ngModel)]="search" autocomplete="off"
+                        placeholder="{{'Analytics.searchForDrivers' | translate }}" />
+                </div>                
+            </div>
+            <div class="modal-analytics-outer">
+                <div class="modal-analytics" *ngFor="let driver of driverList | FilterPipeUser : search"
+                    (click)="onItemDriverChange(driver)" [class.active]="driver.id == driverId">
+                    <div class="modal-analytics-inner">
+                        <div class="profile-image">
+                            <img src="{{driver.profileImage || userDefault}}">
+                        </div>
+                        <div class="profile-content">
+                            <h4>{{driver.fullName}}</h4>
+                            <p>{{driver.role === 'DRIVER' ? 'Chauffeur' : driver.role}}</p>
+                        </div>
+                    </div>
+                    <div class="circle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+
+<ng-template #templateCustomer>
+    <div class="modal-body ">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide();">
+            <span aria-hidden="true"><img src="{{closeIcon}}"></span>
+        </button>
+        <div class="modal-analytics-main">
+            <div class="input-group-modal">
+                <label>{{'Analytics.SelectCustomer' | translate}}</label>               
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" ><img src="{{searchIcon}}" alt="icon"></span>
+                    </div>
+                    <input class="form-control" type="text" name="search" [(ngModel)]="search" autocomplete="off"
+                        placeholder="{{'Analytics.searchForCustomer' | translate }}" />
+                </div>
+            </div>
+            <div class="modal-analytics-outer">
+                <div class="modal-analytics" *ngFor="let customer of customerLists | FilterPipeUser : search"
+                    (click)="onItemCustomerChanges(customer)" [class.active]="customer.id == customerId">
+                    <div class="modal-analytics-inner">
+                        <div class="profile-image">
+                            <img src="{{customer.profileImage || userDefault}}">
+                        </div>
+                        <div class="profile-content">
+                            <h4>{{customer.fullName}}</h4>
+                            <p>{{customer.role}}</p>
+                        </div>
+                    </div>
+                    <div class="circle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #viewMore>
+    <div class="modal-body view-more">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide();">
+            <span aria-hidden="true"><img src="{{closeIcon}}"></span>
+        </button>
+        <div class="modal-analytics-main main-analytics">
+            <div class="input-group-modal m-0">
+                <div class="left-analytics-tap">
+                    <div class="profile-image profile-image-view">
+                        <img src="{{profileImg || userDefault}}">
+                    </div>
+                    <div class="profile-content profile-content-view">
+                        <h4>{{driverName}}</h4>
+                        <p>{{driverrole === 'DRIVER' ? 'Chauffeur' : driverrole}}</p>
+                    </div>
+                </div>
+                <div class="right-analytics-tap">
+                    <span class="reset-btn" (click)="resetDate()"><img src="{{reset}}"/> {{'button.Reset' | translate}}</span>
+                    <input type="date" class="div-date" [(ngModel)]="date" (change)="onChangeDriverDay($event)">
+                </div>               
+            </div>
+            <ng-container *ngIf="dayData">
+                <div class="customer-div" *ngFor="let dayDatalist of dayData">
+                    <h3>{{'Analytics.trips' | translate}} </h3>
+                    <div class="row customer-inner">
+                        <div class="col-6 col-lg-3 marginBottom">
+                            <div class="head-customer">
+                                <div class="img-chart">
+                                    <img src="{{Location4Icon}}" />
+                                </div>
+                                <div class="info-chart">
+                                    <p>{{'Analytics.totalTrips' | translate}}</p>
+                                    <h4>{{dayDatalist.perDayTrips || 0}} {{'Analytics.trips' | translate}}</h4>
+                                </div>
+                            </div>
+                        </div>                 
+                    </div>
+                    <h3 class="mt-3">{{'Analytics.earnings' | translate}}</h3>
+                    <div class="row customer-inner">
+                        <div class="col-6 col-lg-3 marginBottom">
+                            <div class="head-customer">
+                                <div class="img-chart">
+                                    <img src="{{dollarIcon}}" />
+                                </div>
+                                <div class="info-chart">
+                                    <p>{{'Analytics.TotalEarnings' | translate}}</p>                               
+                                        <h4>
+                                           {{math.round(dayDatalist.perDayAmount) || 0}} {{'Analytics.aed' | translate}}
+                                        </h4>
+                                </div>
+                            </div>
+                        </div>                   
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="!dayData">              
+                <div class="customer-div" *ngFor="let totalUserDatalist of totalUserData">
+                    <h3>{{'Analytics.trips' | translate}} </h3>
+                    <div class="row customer-inner">
+                        <div class="col-6 col-lg-3 marginBottom">
+                            <div class="head-customer">
+                                <div class="img-chart">
+                                    <img src="{{Location4Icon}}" />
+                                </div>
+                                <div class="info-chart">
+                                    <p>{{'Analytics.totalTrips' | translate}}</p>
+                                    <h4>{{totalUserDatalist.totalTrips | number}} {{'Analytics.trips' | translate}}</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-lg-3 marginBottom">
+                            <div class="head-customer">
+                                <div class="img-chart">
+                                    <img src="{{Location2Icon}}" />
+                                </div>
+                                <div class="info-chart">
+                                    <p>{{'Analytics.todaysTrips' | translate}}</p>
+                                    <h4>{{totalUserDatalist.todayTrips | number}} {{'Analytics.trips' | translate}}</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-lg-3 marginBottom">
+                            <div class="head-customer">
+                                <div class="img-chart">
+                                    <img src="{{Location2Icon}}" />
+                                </div>
+                                <div class="info-chart">
+                                    <p>{{'Analytics.weekTrips' | translate}}</p>
+                                    <h4>{{totalUserDatalist.totalCurrentWeekTrips | number}} {{'Analytics.trips' | translate}}</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-lg-3 marginBottom">
+                            <div class="head-customer">
+                                <div class="img-chart">
+                                    <img src="{{Location2Icon}}" />
+                                </div>
+                                <div class="info-chart">
+                                    <p>{{'Analytics.monthTrips' | translate}}</p>
+                                    <h4>{{totalUserDatalist.totalCurrentMonthTrips | number}} {{'Analytics.trips' | translate}}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="mt-3">{{'Analytics.earnings' | translate}}</h3>
+                    <div class="row customer-inner">
+                        <div class="col-6 col-lg-3 marginBottom">
+                            <div class="head-customer">
+                                <div class="img-chart">
+                                    <img src="{{dollarIcon}}" />
+                                </div>
+                                <div class="info-chart">
+                                    <p>{{'Analytics.TotalEarnings' | translate}}</p>                                  
+                                    <h4>{{math.round(totalUserDatalist.totalAmount) | number}}
+                                        {{'Analytics.aed' | translate}}</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-lg-3 marginBottom">
+                            <div class="head-customer">
+                                <div class="img-chart">
+                                    <img src="{{dollarColors}}" />
+                                </div>
+                                <div class="info-chart">
+                                    <p>{{'Analytics.todaysEarnings' | translate}}</p>                                   
+                                    <h4>{{math.round(totalUserDatalist.todayAmount) | number}}
+                                        {{'Analytics.aed' | translate}}</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-lg-3 marginBottom">
+                            <div class="head-customer">
+                                <div class="img-chart">
+                                    <img src="{{dollarColors}}" />
+                                </div>
+                                <div class="info-chart">
+                                    <p>{{'Analytics.weekEarnings' | translate}}</p>                                    
+                                    <h4>
+                                        {{math.round(totalUserDatalist.totalCurrentWeekAmount) | number}} {{'Analytics.aed' |
+                                        translate}}</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-lg-3 marginBottom">
+                            <div class="head-customer">
+                                <div class="img-chart">
+                                    <img src="{{dollarColors}}" />
+                                </div>
+                                <div class="info-chart">
+                                    <p>{{'Analytics.monthEarnings' | translate}}</p>                                  
+                                    <h4>
+                                        {{math.round(totalUserDatalist.totalCurrentMonthAmount) | number}} {{'Analytics.aed' |
+                                        translate}}</h4>
+                                       
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>       
+            <div class="data-not-found" *ngIf="totalUserData?.length <= 0 && dayData?.length <= 0"><img src="{{error}}" /> <br>{{'errors.noDataFound' | translate}}</div>      
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #popupChart>
+    <div class="modal-body chart-popup">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide();">
+            <span aria-hidden="true"><img src="{{closeIcon}}"></span>
+        </button>
+        <div class="modal-analytics-main main-analytics">
+            <div class="chart-left">
+                <div class="head-chart">
+                    <div class="img-chart gray-div">
+                        <img src="{{dollarIcon}}" />
+                        <div class="info-chart">
+                            <p>Total Revenue</p>
+                            <h4>{{math.round(totalRevenue) | number}} {{'Analytics.aed' | translate}}</h4>
+                        </div>
+                    </div>
+                    <div class="list">
+                        <span (click)="loadOverChart('week')"
+                            [class.active]="activeTabChat=='week'">{{'Analytics.weekly' | translate}}</span>
+                        <span (click)="loadOverChart('month')"
+                            [class.active]="activeTabChat=='month'">{{'Analytics.monthly' | translate}}</span>
+                        <span (click)="loadOverChart('year')"
+                            [class.active]="activeTabChat=='year'">{{'Analytics.yearly' | translate}}</span>
+                    </div>
+                </div>
+                <ng-container *ngIf="chartData5 && chartData5.length > 0">
+                    <highcharts-chart [Highcharts]="highcharts" [options]="chartOptions5" [(update)]="updateFromInput5"
+                        [callbackFunction]="chartCallback5" class="chart-responsive">
+                    </highcharts-chart>
+                </ng-container>
+                <div class="excel-div">
+                    <span class="download" (click)="exportAsXLSXtotalAmount()"><img src="{{downloadCSV}}"> {{'button.DownloadCSV' | translate}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #tripChart>
+    <div class="modal-body chart-popup">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide();">
+            <span aria-hidden="true"><img src="{{closeIcon}}"></span>
+        </button>
+        <div class="modal-analytics-main main-analytics">
+            <div class="chart-left">
+                <div class="head-chart">
+                    <div class="img-chart gray-div">
+                        <img src="{{locationIcon}}" />
+                        <div class="info-chart">
+                            <p>Completed Trips</p>
+                            <h4>{{math.round(totalTrips) | number}} {{'Analytics.trips' | translate}}</h4>
+                        </div>
+                    </div>
+                    <div class="list">
+                        <span (click)="loadTripChart('week')"
+                            [class.active]="activeTabChat=='week'">{{'Analytics.weekly' | translate}}</span>
+                        <span (click)="loadTripChart('month')"
+                            [class.active]="activeTabChat=='month'">{{'Analytics.monthly' | translate}}</span>
+                        <span (click)="loadTripChart('year')"
+                            [class.active]="activeTabChat=='year'">{{'Analytics.yearly' | translate}}</span>
+                    </div>
+                </div>
+                <ng-container *ngIf="chartData6 && chartData6.length > 0">
+                    <highcharts-chart [Highcharts]="highcharts" [options]="chartOptions6" [(update)]="updateFromInput6"
+                        [callbackFunction]="chartCallback6" class="chart-responsive">
+                    </highcharts-chart>
+                </ng-container>
+                <div class="excel-div">
+                    <span class="download" (click)="exportAsXLSXtotalAmount()"><img src="{{downloadCSV}}"> {{'button.DownloadCSV' | translate}}</span>
+                </div>
+            </div>            
+        </div>
+    </div>
+</ng-template>
+
+    

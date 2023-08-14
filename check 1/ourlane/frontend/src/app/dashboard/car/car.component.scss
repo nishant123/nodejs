@@ -1,0 +1,293 @@
+@import './../../scss/theme.scss';
+
+
+  button.add {
+    background: $color-dark;
+    width: 100px;
+    font-size: 12px;
+    font-family: "SF-Pro-Display-Bold";
+    border-radius: 4px;
+    border: none;
+    opacity: 1;
+    color: $color-white;
+  }
+  
+  button.delete {
+    background: #E25858;
+    border-radius: 4px;
+    opacity: 1;
+    color: $color-white;
+    border: none;
+    display: inline-block!important;
+    font-family: "SF-Pro-Display-Semibold";
+    font-size: 10px;
+    width: 79px;
+    height: 30px;
+    border-radius: 4px;
+    &.new {
+      width: 100px;
+      font-size: 12px;
+      font-family: "SF-Pro-Display-Bold";
+      height: 32px;
+    }
+    &.disabled {
+      opacity: 0.5;
+      pointer-events: none;
+      cursor: default;
+    }
+    img {
+      vertical-align: bottom;
+    }
+  }
+  
+  .add-car {
+    .modal-footer {
+      border-top: 0;
+      padding-top: 0;
+    }
+  }
+  
+
+  .car-update{
+    background: $color-brown1;
+    width: 132px;
+    height: 31px;
+    font-size: 12px;
+    font-family: "Helvetica-Neue-Bold";
+  }
+.iconcolor{
+ background-color: red($color: #000000);
+ width: 100px;
+ height: 100px;
+ color: red($color: #000000);
+}
+  
+.error {
+  color: red;
+  font-size: 10px;
+}
+.drag-drop {
+  height: 300px;
+  width: 100%;
+  border: 1px solid darkblue;
+}
+
+.upload {
+  width: 100%;
+  background-color: #FCFCFC;
+  height: 50px;
+  padding:7px;
+  border-width: 2px;
+  border-radius: 4px;
+  border: 1px dashed #DEDEDE;
+  position: relative;
+  .text {
+    position: absolute;
+    top: 8px;
+    left: 60px;
+  }
+  h6 {
+    font-size: 12px;
+    color: #3E3E3E;
+    margin: 0;
+    font-family: "SF-Pro-Display-Bold";
+  }
+
+  p {
+    color: #909090;
+    font-size: 10px;
+    margin: 0;
+    padding: 0;
+    font-family: SF-Pro-Display-Medium;
+  }
+}
+.modal-header {
+  h3.modal-title {
+    color: $color-light-black;
+    font-size: 17px;
+    font-family: "Helvetica-Neue-Bold";
+  }
+  button:focus {
+    outline: 1px dotted;
+    outline: none;
+  }
+}
+
+.modal-body {
+  label {
+    font-size: 10px;
+    color: $color-light-black;
+    font-family: "Helvetica-Neue-Bold";
+    cursor: pointer;
+  }
+  .form-control {
+    color: #9F9F9F;
+    background-color: #EFEFEF;
+    font-size: 13px;
+    font-family: "HelveticaNeueLt";
+    &.mychanges {
+      pointer-events: none;
+      cursor: default;
+      opacity: 0.5;
+    }
+  }
+}
+
+.modal-content {
+  .add-car {
+    padding: 50px;
+  }
+}
+
+.search {
+  .form-control {
+    font-size: 12px;
+  }
+}
+
+.edit {
+  width: 10px;
+  height: 10px;
+}
+
+.discrip {
+    position: relative;
+    margin-top: 10px;
+  .character {
+    color: #747474;
+    font-size: 10px;
+    position: absolute;
+    top: 10px;
+    right: 0;
+    &.update {
+      right: 17px;
+    }
+  }
+}
+.btn-dark {
+  color: $color-white;
+  background-color: $color-light7;
+  border-color: $color-light7;
+  font-size: 12px;
+  width: 132px;
+  height: 31px;
+  font-family: "Helvetica-Neue-Bold";
+}
+.add-car-popup {
+  margin: 30px 50px 20px;
+  .modal-footer {
+    border-top: none!important;
+    padding-top: 0;
+  }
+}
+.sum {
+  position: absolute;
+  right: 18px;
+  bottom: -16px;
+}
+.modal-header .close {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+
+button:focus {
+  outline: none!important;
+}
+
+.button-style {
+    text-align: center;
+    padding-bottom: 30px;
+  .btn-dark {
+    width: 150px!important;
+    display: inline-block;
+    font-size: 14px;
+    height: 35px;
+  }
+.car-update {
+    width: 150px!important;
+    height: 35px;
+    font-size: 14px;
+    color: $color-white;
+    background: $color-red2;
+    margin-right: 10px;
+  }
+}
+
+.delete-sec {
+  h4 {
+    font-size: 20px;
+    color: $color-dark;
+    font-family:"termina-bold";
+  }
+  .material-icons {
+    padding: 20px 0;
+    margin-left: 20px;
+  }
+}
+
+.form-control:focus {
+  box-shadow: none;
+  border-color: none;
+}
+
+.status-update {
+  cursor: not-allowed;
+}
+.image-fix {
+  width: 70px;
+  height: 40px;  
+  border: 1px solid $color-light6;
+  margin: 2px 0;
+  object-fit: cover;
+}
+.check{
+  position: absolute;
+    right: -5px;
+    top: 2px;
+    width: 15px;
+    img{
+    width: 100%;
+    }
+}
+
+.complete-success {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  .heading {
+    color: $color-green;
+    font-size: 19px;
+    font-family: "HelveticaNeueMed";
+  }
+
+  .details {
+    color: #ABB5BE;
+    white-space: nowrap;
+    font-size: 16px;   
+  }
+  .middle-sec{
+    width: 100%;
+    padding: 0 20px;
+  }
+  .fullImage {
+    min-width: 80px;
+    min-height: 80px;
+    &.img-con{
+      background: $color-green;
+      align-items: center;
+      justify-content: center;
+      display: flex;
+    }
+    &.view{
+      background: #EEF0F3;
+      color: #ABB5BE;
+      font-size: 14px;
+    }
+  }
+
+  .img-con {
+    border-radius: 4px 0 0 4px;
+  }
+}

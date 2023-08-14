@@ -1,0 +1,20 @@
+<div class="head">
+    <div class="left-head">
+        <a class="back" routerLink="/signup"><img src="{{arrayLeft}}"> <span> {{'staticPage.back' |
+                translate}}</span></a>
+    </div>
+    <div class="center-head">
+        {{title}}
+    </div>
+    <div class="right-head">
+        {{'staticPage.latestUpdate' | translate }}:
+        {{updatedAt | date: 'MMMM dd yyyy'}}
+    </div>
+</div>
+<div class="static-content">
+    <div [innerHtml]="description | SanitizeHtmlTerms: 'html'"></div>
+
+</div>
+<div class="foot">
+    {{'copyRight.content' | translate }}
+</div>

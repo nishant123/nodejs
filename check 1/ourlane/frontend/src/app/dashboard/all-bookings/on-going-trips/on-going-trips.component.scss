@@ -1,0 +1,139 @@
+@import '../../../scss/theme.scss';
+
+
+.blackBg {
+  background: $color-dark;
+}
+
+.greenBg {
+  background: $color-green;
+}
+
+.ok {
+  background: #EEF0F3;
+  color: #ABB5BE;
+  font-size: 14px;
+}
+
+.dummy-map {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0.1rem;
+  height: 0.1rem;
+  z-index: -999;
+}
+
+.complete {
+  background-color: $color-green;
+  color: $color-white;
+  min-width: 80px;
+  margin-left: 1rem;
+}
+
+.main-complete {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+
+  .heading {
+    color: $color-dark;
+    font: normal normal bold 20px/24px sf-pro-display-bold;
+    margin-bottom: 1rem;
+  }
+
+  .details {
+    color: $color-brown2;
+    font: normal normal normal 18px/21px sf-pro-display-regular;
+  }
+
+  .img-con {
+    margin-bottom: 2rem;
+  }
+}
+
+.main-complete, .complete-success {
+  .img-con {
+    min-height: 60px;
+    min-width: 60px;
+    background-color: $color-green;
+    border-radius: 4px;
+    position: relative;
+
+    img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      width: 30px;
+      height: 30px;
+    }
+  }
+}
+
+.complete-success {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .heading {
+    color: $color-green;
+    font-size: 22px;
+  }
+
+  .details {
+    color: #ABB5BE;
+    white-space: nowrap;
+    font-size: 14px;
+  }
+
+  .fullImage {
+    min-width: 80px;
+    min-height: 80px;
+  }
+
+  .img-con {
+    border-radius: 4px 0 0 4px;
+  }
+}
+
+:host ::ng-deep .success-modal {
+  .modal-content {
+    .modal-body {
+      padding: 0;
+    }
+  }
+}
+
+.modal-footer {
+  width: 100%;
+  justify-content: center;
+  border-top: none;
+
+  button.foot {
+    min-width: 35%;
+    height: 35px;
+    color: white;
+    font: normal normal bold 14px/17px sf-pro-display-regular;
+  }
+}
+
+::ng-deep {
+  .complete-modal {
+    max-width: 400px;
+  }
+
+  .custom-success-modal {
+    min-width: 510px;
+
+    .modal-content {
+      border: none;
+    }
+
+    .modal-body {
+      padding: 0;
+    }
+  }
+}

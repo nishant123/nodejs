@@ -1,0 +1,164 @@
+<section class="authContainer">
+  <div class="formContainer">
+    <div class="formcontent">
+      <div class="logo">
+        <img src="./../assets/images/logo.svg" alt="ourlane">
+      </div>
+      <form class="login_form" [formGroup]="signupForm" (ngSubmit)="signup(signupForm.value)">
+        <div class="header">
+          <h3 class="font-termina ">{{'signUpPage.title' | translate }}</h3>
+          <p>{{'signUpPage.subTitle' | translate }}</p>
+        </div>
+        <div class="form-group">
+          <label for="email">{{'label.emailAddress' | translate }}</label>
+          <div class="input">
+            <input type="email" class="form-control"
+              placeholder="{{'label.enterYourRegisteredEmailAddress' | translate }}" name="email"
+              formControlName="email" id="email" [(ngModel)]="userEmail" (keypress)="ONCHANGE($event)"
+              (keyup)="emailChanges()" />
+            <span class="icon">
+              <img src="./../assets/images/icon-email.png" alt="email" />
+            </span>
+          </div>
+
+          <div class="form_error_blk">
+            <span
+              *ngIf="signupForm.controls['email'].errors && signupForm.controls['email'].errors.required && signupForm.controls['password'].touched"
+              style="color: red" class="form_error_class">Username cannot be left blank</span>
+            <span *ngIf="signupForm.controls['email'].errors && signupForm.controls['email'].errors.email"
+              style="color: red" class="form_error_class">Please enter valid Email ID.</span>
+            <span *ngIf="emailExists && !signupForm.controls['email'].errors" style="color: red"
+              class="form_error_class">{{emailExistErr}}</span>
+          </div>
+
+        </div>
+        <div class="form-group">
+          <label for="password">{{'label.password' | translate }}</label>
+          <div class="input">
+            <input [type]="fieldTextType ? 'text' : 'password'" class="form-control" formControlName="password"
+              placeholder="{{'label.enterPassword' | translate }}" name="password" id="password" [(ngModel)]="password"
+              (cut)="$event.preventDefault()" (keyup)="passwordCheck(signupForm.value.password)" />
+            <span class="icon">
+              <img src="./../assets/images/icon-key.png" alt="password" />
+            </span>
+            <span class="icon viewPassword" (click)="toggleFieldTextType()">
+              <img *ngIf="!fieldTextType" src="./../assets/images/icon-red-eye.png" alt="password" />
+              <img *ngIf="fieldTextType" src="./../assets/images/icon-red-eye-active.png" alt="password" />
+            </span>
+          </div>
+
+          <div class="form_error_blk"
+            *ngIf="signupForm.controls['password'].touched && signupForm.controls['password'].errors">
+            <span *ngIf="signupForm.controls['password'].errors && signupForm.controls['password'].errors.required"
+              style="color: red" class="form_error_class">Password cannot be left blank</span>
+          </div>
+          <div class="form_error_blk" *ngIf=" signupForm.controls['password'].hasError('minlength') ">
+            <span style="color: red" class="form_error_class">
+              Must be at least 8 characters!</span>
+          </div>
+          <div class="form_error_blk" *ngIf=" signupForm.controls['password'].hasError('maxlength') ">
+            <span style="color: red" class="form_error_class">
+              Not more than 15 characters!</span>
+          </div>
+          <div class="form_error_blk" *ngIf="capitalLetterExists || LetterExists">
+            <span style="color: red" class="form_error_class">
+              Must contain both lower (a-z) and upper case letters (A-Z)
+            </span>
+          </div>
+          <div class="form_error_blk" *ngIf="numberExists">
+            <span style="color: red" class="form_error_class">
+              Must contain at least one number (0-9)
+            </span>
+          </div>
+          <div class="form_error_blk" *ngIf="specialCharExists">
+            <span style="color: red" class="form_error_class">
+              Must contain at least one special character
+            </span>
+          </div>
+
+        </div>
+        <div class="form-group">
+          <label for="cpassword">{{'label.confirmPassword' | translate }}</label>
+          <div class="input">
+            <input [type]="fieldTextTypeConfirm ? 'text' : 'password'" class="form-control"
+              placeholder="{{'label.confirmYourPassword' | translate }}" name="cpassword" id="cpassword"
+              formControlName="cpassword" [(ngModel)]="cpassword" />
+            <span class="icon">
+              <img src="./../assets/images/icon-key.png" alt="password" />
+            </span>
+            <span class="icon viewPassword" (click)="toggleFieldTextTypeConfirm()">
+              <img *ngIf="!fieldTextTypeConfirm" src="./../assets/images/icon-red-eye.png" alt="password" />
+              <img *ngIf="fieldTextTypeConfirm" src="./../assets/images/icon-red-eye-active.png" alt="password" />
+            </span>
+          </div>
+
+          <div class="form_error_blk"
+            *ngIf="signupForm.controls['cpassword'].touched && signupForm.controls['cpassword'].errors">
+            <span *ngIf="signupForm.controls['cpassword'].errors && signupForm.controls['cpassword'].errors.required"
+              style="color: red" class="form_error_class">Confirm Password cannot be left blank</span>
+          </div>
+          <div class="form_error_blk" *ngIf="cpassword !== password && !signupForm.controls['cpassword'].errors">
+            <span style="color: red" class="form_error_class">Password doesn't match.</span>
+          </div>
+        </div>
+
+
+        <div class="btnsGroup">
+          <button type="submit" [disabled]="signupForm.invalid || cpassword !== password || invalidPassword === false"
+            class="button-primary btn-bt">
+            {{'button.submit' | translate }}
+          </button>
+          <a routerLink="/webadmin" class="button-secondry btn-bt">
+            {{'button.login' | translate }}
+          </a>
+        </div>
+      </form>
+      <div class="copyright">
+        <p class="mb-0">{{'copyRights.text' | translate }}</p>
+        <a routerLink="/privacy-policy" class="link">Privacy Policy</a>
+        <a routerLink="/terms-conditions" class="link">Terms & Conditions
+        </a>  
+      </div>
+    </div>
+  </div>
+  <div class="authVectorcontent">
+    <div class="vectorContent">
+      <div class="register-link text-right">
+        <p>{{'signUpPage.alreadyHaveAnAccount' | translate }} <a routerLink="/webadmin">{{'signUpPage.singIn' |
+            translate
+            }}</a>
+        </p>
+      </div>
+      <div class="vectorImage">
+        <img src="./../assets/images/signup.png" alt="vector image">
+      </div>
+      <div class="manageContnet">
+        <h4 class="font-termina">{{'signUpPage.manageHeading' | translate}}</h4>
+        <p>{{'signUpPage.manageText' | translate}}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- <div bsModal #signupModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+  aria-labelledby="dialog-sizes-name2">
+  <div class="modal-dialog confirmation-modal">
+    <div class="modal-content">
+      <div class="modal-body">
+        <img class="icon" src="./../assets/images/icon-signup.png" alt="signup">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="signupModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="alertText font-md color-dark font-termina">{{'signUpPage.modalHeader' | translate}}</h4>
+        <p class="modalContent">{{'signUpPage.modalText1' | translate}} <a class="email">{{userEmail}}</a>
+          {{'signUpPage.modalText2' |
+          translate}}</p>
+        <div class="alertFooter">
+          <p>{{'signUpPage.modalFooterText' | translate}} <a class="link">{{'signUpPage.modalFooterLink' |
+              translate}}</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
