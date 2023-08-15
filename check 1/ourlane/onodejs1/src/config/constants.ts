@@ -88,7 +88,8 @@ export const applicationStatuses = {
 }
 
 export const firebaseConfig = {
-  FIREBASE_API_KEY: 'AAAASo_CGvg:APA91bH7e62CtTelw9IDnRDyKywIx_gLNTlgG-3t5QW6nac-dEBMFanTXn0FTEWZ7ArGbqigDhvnVAZ378x2i4zc3_YhACWVb5qQkHiuTIfo6rYcoRMEWrBOsUadxgegWTyIq37XP57E'
+  FIREBASE_API_KEY: ''
+
 }
 
 export const liveFeed = {

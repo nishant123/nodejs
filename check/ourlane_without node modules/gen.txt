@@ -222,7 +222,7 @@ https://dev-api.ourlane.com/userService/v1/auth/create
 payload is 
 {
   "email":"nishant@blockgemini.com",
-  "password":"@2Ksuresh",
+  "password":"",
   "confirmPassword":"@2Ksuresh",
   "role":"CONCIERGE"
 }
