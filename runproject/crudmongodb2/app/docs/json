@@ -1,0 +1,96 @@
+{
+"pictures": [],
+"view": 0,
+"IsVerified": false,
+"IsForRent": false,
+"_id": "6694ab60a786c6596fb726f8",
+"title": "2BHK Nirala Greenshire flat for sale in Greater Noida west",
+"cities": {
+
+"id": "5ceb869f4e925b370c6cc33e",
+
+"name": "Greater Noida" },
+
+"subArea": {
+"id": "5d03b1f443921b78b8a2c961",
+
+"name": "Greater Noida West" },
+
+"propType": {
+"id": "5ce99a7a1db99b2f8223494d",
+
+"name": "Residential" },
+
+"category": {
+"id": "5ce99b2c1db99b2f82234953",
+
+"name": "Flats" },
+
+"subCategory": {
+"id": "5ce99b861db99b2f82234959",
+
+"name": "2 BHK" },
+
+"websites": [
+
+{
+"_id": "6694ab60a786c6596fb726f9", "id": "w1",
+"name": "property.sale"
+
+} ],
+
+"amenities": [],
+"nearBy": [],
+"description": "Flat for sale in Nirala Greenshire society near sector 1 in Greater Noida west.
+
+Flat is semi furnished and is on second floor. Flat is available at below market price ", "expirationDate": "1731387231716",
+"constructionStatus": "Ready to move",
+"status": "Ready to move",
+
+"furnished": "Semi Furnished", "securityDeposit": "", "rentPriority": "All", "rentEscalationPeriod": "", "rentPriorityComment": "", "size": 940,
+
+"carpetArea": 520, "type": "",
+"builder": "Builder", "floor": "10", "totalFloor": "22", "facing": "Not Known", "location": "Gaur city", "posesionType": "", "locationId": "", "IsRented": false, "rent": null,
+
+"cost": 77, "extraCharge": null,
+
+"leaseTime": "", "leaseCompleted": "", "leaseBalance": "", "rentEscalation": "", "rentTo": "", "maintainance": "", "registary": "4.02", "transferCharge": null, "gst": "",
+"profitSharing": "",
+"roi": null,
+"longitude": null, "latitude": null, "profilePic": "", "shopFor": "Sale", "postedBy": "Broker", "posessionStatus": "true", "posessionDate": "", "IsCornerPlot": "false", "hiddedNotes": "", "lockIn": "", "powerBackupRate": "", "roadSize": "Wide", "publisher": {
+
+"gallery": [ "https://api.property.sale/uploads/photo-1610789278220..jpg", "https://api.property.sale/uploads/photo-1600487350813..jpg", "https://api.property.sale/uploads/photo-1597592659907..png", "https://api.property.sale/uploads/photo-1597554940630..png", "https://api.property.sale/uploads/photo-1597551100831..png", "https://api.property.sale/uploads/photo-1597549171867..png", "https://api.property.sale/uploads/photo-1597548802697..png", "https://api.property.sale/uploads/photo-1597548579046..png", "https://api.property.sale/uploads/photo-1597548519736..png", "https://api.property.sale/uploads/photo-1597548490718..png", "https://api.property.sale/uploads/photo-1597548412452..png", "https://api.property.sale/uploads/photo-1597461231474..jpeg", "https://api.property.sale/uploads/photo-1597460242947..jpeg", "https://api.property.sale/uploads/photo-1597459328565..jpeg", "https://api.property.sale/uploads/photo-1597458640756..jpeg", "https://api.property.sale/uploads/photo-1597457872879..jpeg", "https://api.property.sale/uploads/photo-1597457506249..jpeg", "https://api.property.sale/uploads/photo-1597457305498..jpeg", "https://api.property.sale/uploads/photo-1597456916085..jpeg", "https://api.property.sale/uploads/photo-1597431381285..jpg", "https://api.property.sale/uploads/photo-1597424502951..png", "https://api.property.sale/uploads/photo-1597301486436..webp", "https://api.property.sale/uploads/photo-1596732017760..png", "https://api.property.sale/uploads/photo-1596731819864..jpeg", "https://api.property.sale/uploads/photo-1596390106805..png", "https://api.property.sale/uploads/photo-1596389899798..png", "https://api.property.sale/uploads/photo-1596387865576..png", "https://api.property.sale/uploads/photo-1596387476740..jpeg", "https://api.property.sale/uploads/photo-1596375302289..jpg", "https://api.property.sale/uploads/photo-1596368966240..jpg", "https://api.property.sale/uploads/photo-1596360517120..jpg", "https://api.property.sale/uploads/photo-1596353094840..jpg", "https://api.property.sale/uploads/photo-1596344051422..jpeg", "https://api.property.sale/uploads/photo-1596343821286..jpg", "https://api.property.sale/uploads/photo-1596343267146..jpg"
+
+],
+"IsActive": false,
+"listing": 1246,
+"_id": "5ce9a74c1db99b2f82234976", "State": "",
+"City": "",
+"Department": "",
+"Designation": "",
+"Role": "A-S",
+"name": "G Bhati",
+"email": "www.property.sale@gmail.com", "Phone": "8375924100",
+"password": "",
+"Address": "Delhi",
+"CreatedOn": "2019-05-25T20:36:28.055Z", "__v": 0,
+"Id": "U-2",
+"listingDtae": "1566188178024",
+"planId": "5f44aa3ad2fb56733d08b337"
+
+},
+
+"metaDesc": "Flat for sale in Nirala Greenshire society near sector 1 in Greater Noida west. Flat is semi furnished and is on second floor. Flat is available at below market",
+
+"metaKey": "",
+"IsDistress": true,
+"reasonDistress": "",
+"costDistress": 67,
+"recommented": false,
+"plotSize": null,
+"constructionAge": "",
+"code": "INDRA001447",
+"listingDtae": "1721019232358",
+"slug": "2bhk-nirala-greenshire-flat-for-sale-in-greater-noida-west-xzebef", "__v": 0
+
+}
